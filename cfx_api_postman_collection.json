@@ -1,0 +1,925 @@
+{
+	"info": {
+		"_postman_id": "bbeb43eb-22ad-4224-8d93-19e6d9308811",
+		"name": "cfx Swagger Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25518950"
+	},
+	"item": [
+		{
+			"name": "Datasets",
+			"item": [
+				{
+					"name": "Dataset Data",
+					"item": [
+						{
+							"name": "Get Dataset Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/datasets/dataset/SiriTemp/data",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"datasets",
+										"dataset",
+										"SiriTemp",
+										"data"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Dataset Data Query",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/datasets/dataset/SiriTemp/data?cfxql_query=datacenter contains 'repl'",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"datasets",
+										"dataset",
+										"SiriTemp",
+										"data"
+									],
+									"query": [
+										{
+											"key": "cfxql_query",
+											"value": "datacenter contains 'repl'"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Replace Dataset Data - 30 rows",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"capacity\": 1789927620608,\n    \"capacity_GB\": 1667,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"naa.600605b009257580237343ae0fc1af57\",\n    \"freeSpace_GB\": 1661,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.61\",\n    \"host_path\": \"/vmfs/volumes/5be089af-90cd9dc0-410d-d072dca05ec8\",\n    \"is_accessible\": \"True\",\n    \"local\": \"True\",\n    \"multipleHostAccess\": \"False\",\n    \"name\": \"datastore26\",\n    \"num_of_hosts\": 1,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 6,\n    \"remoteHost\": \"\",\n    \"remotePath\": \"\",\n    \"ssd\": \"False\",\n    \"type\": \"VMFS\",\n    \"uncommitted_GB\": 0,\n    \"url\": \"ds:///vmfs/volumes/5be089af-90cd9dc0-410d-d072dca05ec8/\",\n    \"uuid\": \"5be089af-90cd9dc0-410d-d072dca05ec8\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": 5.81,\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 2340,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.64\",\n    \"host_path\": \"/vmfs/volumes/7b343af4-2b22585b\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-prod-only-01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 3708,\n    \"remoteHost\": \"192.168.107.33\",\n    \"remotePath\": \"/vol/vol_prod_only_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 1953,\n    \"url\": \"ds:///vmfs/volumes/7b343af4-2b22585b/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 2340,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.63\",\n    \"host_path\": \"/vmfs/volumes/7b343af4-2b22585b\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-prod-only-01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 3708,\n    \"remoteHost\": \"192.168.107.33\",\n    \"remotePath\": \"/vol/vol_prod_only_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 1953,\n    \"url\": \"ds:///vmfs/volumes/7b343af4-2b22585b/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 2340,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.62\",\n    \"host_path\": \"/vmfs/volumes/7b343af4-2b22585b\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-prod-only-01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 3708,\n    \"remoteHost\": \"192.168.107.33\",\n    \"remotePath\": \"/vol/vol_prod_only_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 1953,\n    \"url\": \"ds:///vmfs/volumes/7b343af4-2b22585b/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 2340,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.61\",\n    \"host_path\": \"/vmfs/volumes/7b343af4-2b22585b\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-prod-only-01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 3708,\n    \"remoteHost\": \"192.168.107.33\",\n    \"remotePath\": \"/vol/vol_prod_only_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 1953,\n    \"url\": \"ds:///vmfs/volumes/7b343af4-2b22585b/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 2340,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.65\",\n    \"host_path\": \"/vmfs/volumes/7b343af4-2b22585b\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-prod-only-01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 3708,\n    \"remoteHost\": \"192.168.107.33\",\n    \"remotePath\": \"/vol/vol_prod_only_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 1953,\n    \"url\": \"ds:///vmfs/volumes/7b343af4-2b22585b/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": 1789927620608,\n    \"capacity_GB\": 1667,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"naa.600605b008f63b50236e84f113d2e3da\",\n    \"freeSpace_GB\": 1662,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.62\",\n    \"host_path\": \"/vmfs/volumes/5be0a90a-a82ad056-637b-f8c288acc7fe\",\n    \"is_accessible\": \"True\",\n    \"local\": \"True\",\n    \"multipleHostAccess\": \"False\",\n    \"name\": \"datastore27\",\n    \"num_of_hosts\": 1,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 5,\n    \"remoteHost\": \"\",\n    \"remotePath\": \"\",\n    \"ssd\": \"False\",\n    \"type\": \"VMFS\",\n    \"uncommitted_GB\": 0,\n    \"url\": \"ds:///vmfs/volumes/5be0a90a-a82ad056-637b-f8c288acc7fe/\",\n    \"uuid\": \"5be0a90a-a82ad056-637b-f8c288acc7fe\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": 5.81,\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": 1789927620608,\n    \"capacity_GB\": 1667,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"naa.600605b00925b1802377f5d107efff34\",\n    \"freeSpace_GB\": 1662,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.63\",\n    \"host_path\": \"/vmfs/volumes/5c2a0274-c3d4f7c2-f1c1-60735c698ae2\",\n    \"is_accessible\": \"True\",\n    \"local\": \"True\",\n    \"multipleHostAccess\": \"False\",\n    \"name\": \"datastore28\",\n    \"num_of_hosts\": 1,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 5,\n    \"remoteHost\": \"\",\n    \"remotePath\": \"\",\n    \"ssd\": \"False\",\n    \"type\": \"VMFS\",\n    \"uncommitted_GB\": 0,\n    \"url\": \"ds:///vmfs/volumes/5c2a0274-c3d4f7c2-f1c1-60735c698ae2/\",\n    \"uuid\": \"5c2a0274-c3d4f7c2-f1c1-60735c698ae2\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": 5.81,\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": 1789927620608,\n    \"capacity_GB\": 1667,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"naa.600605b00925b2702374915c0acd24eb\",\n    \"freeSpace_GB\": 1413,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.65\",\n    \"host_path\": \"/vmfs/volumes/5be1dcc8-0e7868e6-b2b1-4c00821d0b0c\",\n    \"is_accessible\": \"True\",\n    \"local\": \"True\",\n    \"multipleHostAccess\": \"False\",\n    \"name\": \"datastore71\",\n    \"num_of_hosts\": 1,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 644,\n    \"remoteHost\": \"\",\n    \"remotePath\": \"\",\n    \"ssd\": \"False\",\n    \"type\": \"VMFS\",\n    \"uncommitted_GB\": 390,\n    \"url\": \"ds:///vmfs/volumes/5be1dcc8-0e7868e6-b2b1-4c00821d0b0c/\",\n    \"uuid\": \"5be1dcc8-0e7868e6-b2b1-4c00821d0b0c\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": 6.81,\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"vim.alarm.Alarm:alarm-11: yellow\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 959,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.64\",\n    \"host_path\": \"/vmfs/volumes/f150c6ba-8b42797f\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-prod-only-02\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 51,\n    \"provisioned_GB\": 6223,\n    \"remoteHost\": \"192.168.107.34\",\n    \"remotePath\": \"/vol/vol_prod_only_02\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 3086,\n    \"url\": \"ds:///vmfs/volumes/f150c6ba-8b42797f/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"vim.alarm.Alarm:alarm-11: yellow\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 959,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.63\",\n    \"host_path\": \"/vmfs/volumes/f150c6ba-8b42797f\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-prod-only-02\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 51,\n    \"provisioned_GB\": 6223,\n    \"remoteHost\": \"192.168.107.34\",\n    \"remotePath\": \"/vol/vol_prod_only_02\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 3086,\n    \"url\": \"ds:///vmfs/volumes/f150c6ba-8b42797f/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"vim.alarm.Alarm:alarm-11: yellow\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 959,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.62\",\n    \"host_path\": \"/vmfs/volumes/f150c6ba-8b42797f\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-prod-only-02\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 51,\n    \"provisioned_GB\": 6223,\n    \"remoteHost\": \"192.168.107.34\",\n    \"remotePath\": \"/vol/vol_prod_only_02\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 3086,\n    \"url\": \"ds:///vmfs/volumes/f150c6ba-8b42797f/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"vim.alarm.Alarm:alarm-11: yellow\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 959,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.61\",\n    \"host_path\": \"/vmfs/volumes/f150c6ba-8b42797f\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-prod-only-02\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 51,\n    \"provisioned_GB\": 6223,\n    \"remoteHost\": \"192.168.107.34\",\n    \"remotePath\": \"/vol/vol_prod_only_02\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 3086,\n    \"url\": \"ds:///vmfs/volumes/f150c6ba-8b42797f/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"vim.alarm.Alarm:alarm-11: yellow\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 959,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.65\",\n    \"host_path\": \"/vmfs/volumes/f150c6ba-8b42797f\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-prod-only-02\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 51,\n    \"provisioned_GB\": 6223,\n    \"remoteHost\": \"192.168.107.34\",\n    \"remotePath\": \"/vol/vol_prod_only_02\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 3086,\n    \"url\": \"ds:///vmfs/volumes/f150c6ba-8b42797f/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": 1789927620608,\n    \"capacity_GB\": 1667,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"naa.600605b00925b970237389810873e479\",\n    \"freeSpace_GB\": 1574,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.64\",\n    \"host_path\": \"/vmfs/volumes/5be0cfe6-921022a3-9446-7426acc99550\",\n    \"is_accessible\": \"True\",\n    \"local\": \"True\",\n    \"multipleHostAccess\": \"False\",\n    \"name\": \"datastore29\",\n    \"num_of_hosts\": 1,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 834,\n    \"remoteHost\": \"\",\n    \"remotePath\": \"\",\n    \"ssd\": \"False\",\n    \"type\": \"VMFS\",\n    \"uncommitted_GB\": 741,\n    \"url\": \"ds:///vmfs/volumes/5be0cfe6-921022a3-9446-7426acc99550/\",\n    \"uuid\": \"5be0cfe6-921022a3-9446-7426acc99550\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": 5.81,\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 1024,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 547,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.64\",\n    \"host_path\": \"/vmfs/volumes/1c0d6d65-698bb5b8\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp_oia_dev_01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 477,\n    \"remoteHost\": \"192.168.107.33\",\n    \"remotePath\": \"/vol/vol_oia_dev_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 0,\n    \"url\": \"ds:///vmfs/volumes/1c0d6d65-698bb5b8/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 1024,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 547,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.63\",\n    \"host_path\": \"/vmfs/volumes/1c0d6d65-698bb5b8\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp_oia_dev_01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 477,\n    \"remoteHost\": \"192.168.107.33\",\n    \"remotePath\": \"/vol/vol_oia_dev_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 0,\n    \"url\": \"ds:///vmfs/volumes/1c0d6d65-698bb5b8/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 1024,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 547,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.62\",\n    \"host_path\": \"/vmfs/volumes/1c0d6d65-698bb5b8\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp_oia_dev_01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 477,\n    \"remoteHost\": \"192.168.107.33\",\n    \"remotePath\": \"/vol/vol_oia_dev_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 0,\n    \"url\": \"ds:///vmfs/volumes/1c0d6d65-698bb5b8/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 1024,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 547,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.61\",\n    \"host_path\": \"/vmfs/volumes/1c0d6d65-698bb5b8\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp_oia_dev_01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 477,\n    \"remoteHost\": \"192.168.107.33\",\n    \"remotePath\": \"/vol/vol_oia_dev_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 0,\n    \"url\": \"ds:///vmfs/volumes/1c0d6d65-698bb5b8/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 1024,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 547,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.65\",\n    \"host_path\": \"/vmfs/volumes/1c0d6d65-698bb5b8\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp_oia_dev_01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 477,\n    \"remoteHost\": \"192.168.107.33\",\n    \"remotePath\": \"/vol/vol_oia_dev_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 0,\n    \"url\": \"ds:///vmfs/volumes/1c0d6d65-698bb5b8/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": 8796093022208,\n    \"ds_cluster_datastores\": \"netapp-pm-nfs-10g-01, netapp-pm-nfs-10g-02\",\n    \"ds_cluster_freeSpace\": 3443219832832,\n    \"ds_cluster_name\": \"netapp-pm-cluster01\",\n    \"ds_cluster_overallStatus\": \"yellow\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 1942,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.64\",\n    \"host_path\": \"/vmfs/volumes/dcc7386e-67893a84\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-pm-nfs-10g-01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 214,\n    \"provisioned_GB\": 12897,\n    \"remoteHost\": \"192.168.101.101\",\n    \"remotePath\": \"/vol/vol_pm_nfs_10g_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 10743,\n    \"url\": \"ds:///vmfs/volumes/dcc7386e-67893a84/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": 8796093022208,\n    \"ds_cluster_datastores\": \"netapp-pm-nfs-10g-01, netapp-pm-nfs-10g-02\",\n    \"ds_cluster_freeSpace\": 3443219832832,\n    \"ds_cluster_name\": \"netapp-pm-cluster01\",\n    \"ds_cluster_overallStatus\": \"yellow\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 1942,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.63\",\n    \"host_path\": \"/vmfs/volumes/dcc7386e-67893a84\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-pm-nfs-10g-01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 214,\n    \"provisioned_GB\": 12897,\n    \"remoteHost\": \"192.168.101.101\",\n    \"remotePath\": \"/vol/vol_pm_nfs_10g_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 10743,\n    \"url\": \"ds:///vmfs/volumes/dcc7386e-67893a84/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": 8796093022208,\n    \"ds_cluster_datastores\": \"netapp-pm-nfs-10g-01, netapp-pm-nfs-10g-02\",\n    \"ds_cluster_freeSpace\": 3443219832832,\n    \"ds_cluster_name\": \"netapp-pm-cluster01\",\n    \"ds_cluster_overallStatus\": \"yellow\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 1942,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.62\",\n    \"host_path\": \"/vmfs/volumes/dcc7386e-67893a84\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-pm-nfs-10g-01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 214,\n    \"provisioned_GB\": 12897,\n    \"remoteHost\": \"192.168.101.101\",\n    \"remotePath\": \"/vol/vol_pm_nfs_10g_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 10743,\n    \"url\": \"ds:///vmfs/volumes/dcc7386e-67893a84/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": 8796093022208,\n    \"ds_cluster_datastores\": \"netapp-pm-nfs-10g-01, netapp-pm-nfs-10g-02\",\n    \"ds_cluster_freeSpace\": 3443219832832,\n    \"ds_cluster_name\": \"netapp-pm-cluster01\",\n    \"ds_cluster_overallStatus\": \"yellow\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 1942,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.61\",\n    \"host_path\": \"/vmfs/volumes/dcc7386e-67893a84\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-pm-nfs-10g-01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 214,\n    \"provisioned_GB\": 12897,\n    \"remoteHost\": \"192.168.101.101\",\n    \"remotePath\": \"/vol/vol_pm_nfs_10g_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 10743,\n    \"url\": \"ds:///vmfs/volumes/dcc7386e-67893a84/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": 8796093022208,\n    \"ds_cluster_datastores\": \"netapp-pm-nfs-10g-01, netapp-pm-nfs-10g-02\",\n    \"ds_cluster_freeSpace\": 3443219832832,\n    \"ds_cluster_name\": \"netapp-pm-cluster01\",\n    \"ds_cluster_overallStatus\": \"yellow\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 1942,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.65\",\n    \"host_path\": \"/vmfs/volumes/dcc7386e-67893a84\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-pm-nfs-10g-01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 214,\n    \"provisioned_GB\": 12897,\n    \"remoteHost\": \"192.168.101.101\",\n    \"remotePath\": \"/vol/vol_pm_nfs_10g_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 10743,\n    \"url\": \"ds:///vmfs/volumes/dcc7386e-67893a84/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": 8796093022208,\n    \"ds_cluster_datastores\": \"netapp-pm-nfs-10g-01, netapp-pm-nfs-10g-02\",\n    \"ds_cluster_freeSpace\": 3443219832832,\n    \"ds_cluster_name\": \"netapp-pm-cluster01\",\n    \"ds_cluster_overallStatus\": \"yellow\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 1265,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.64\",\n    \"host_path\": \"/vmfs/volumes/c2bd50bc-62f7efe5\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-pm-nfs-10g-02\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 354,\n    \"provisioned_GB\": 18621,\n    \"remoteHost\": \"192.168.101.102\",\n    \"remotePath\": \"/vol/vol_pm_nfs_10g_02\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 15790,\n    \"url\": \"ds:///vmfs/volumes/c2bd50bc-62f7efe5/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": 8796093022208,\n    \"ds_cluster_datastores\": \"netapp-pm-nfs-10g-01, netapp-pm-nfs-10g-02\",\n    \"ds_cluster_freeSpace\": 3443219832832,\n    \"ds_cluster_name\": \"netapp-pm-cluster01\",\n    \"ds_cluster_overallStatus\": \"yellow\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 1265,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.63\",\n    \"host_path\": \"/vmfs/volumes/c2bd50bc-62f7efe5\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-pm-nfs-10g-02\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 354,\n    \"provisioned_GB\": 18621,\n    \"remoteHost\": \"192.168.101.102\",\n    \"remotePath\": \"/vol/vol_pm_nfs_10g_02\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 15790,\n    \"url\": \"ds:///vmfs/volumes/c2bd50bc-62f7efe5/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": 8796093022208,\n    \"ds_cluster_datastores\": \"netapp-pm-nfs-10g-01, netapp-pm-nfs-10g-02\",\n    \"ds_cluster_freeSpace\": 3443219832832,\n    \"ds_cluster_name\": \"netapp-pm-cluster01\",\n    \"ds_cluster_overallStatus\": \"yellow\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 1265,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.62\",\n    \"host_path\": \"/vmfs/volumes/c2bd50bc-62f7efe5\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-pm-nfs-10g-02\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 354,\n    \"provisioned_GB\": 18621,\n    \"remoteHost\": \"192.168.101.102\",\n    \"remotePath\": \"/vol/vol_pm_nfs_10g_02\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 15790,\n    \"url\": \"ds:///vmfs/volumes/c2bd50bc-62f7efe5/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": 8796093022208,\n    \"ds_cluster_datastores\": \"netapp-pm-nfs-10g-01, netapp-pm-nfs-10g-02\",\n    \"ds_cluster_freeSpace\": 3443219832832,\n    \"ds_cluster_name\": \"netapp-pm-cluster01\",\n    \"ds_cluster_overallStatus\": \"yellow\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 1265,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.61\",\n    \"host_path\": \"/vmfs/volumes/c2bd50bc-62f7efe5\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-pm-nfs-10g-02\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 354,\n    \"provisioned_GB\": 18621,\n    \"remoteHost\": \"192.168.101.102\",\n    \"remotePath\": \"/vol/vol_pm_nfs_10g_02\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 15790,\n    \"url\": \"ds:///vmfs/volumes/c2bd50bc-62f7efe5/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": 8796093022208,\n    \"ds_cluster_datastores\": \"netapp-pm-nfs-10g-01, netapp-pm-nfs-10g-02\",\n    \"ds_cluster_freeSpace\": 3443219832832,\n    \"ds_cluster_name\": \"netapp-pm-cluster01\",\n    \"ds_cluster_overallStatus\": \"yellow\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 1265,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.65\",\n    \"host_path\": \"/vmfs/volumes/c2bd50bc-62f7efe5\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-pm-nfs-10g-02\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 354,\n    \"provisioned_GB\": 18621,\n    \"remoteHost\": \"192.168.101.102\",\n    \"remotePath\": \"/vol/vol_pm_nfs_10g_02\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 15790,\n    \"url\": \"ds:///vmfs/volumes/c2bd50bc-62f7efe5/\",\n    \"uuid\": \"\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/datasets/dataset/SiriTemp/data?replace=true",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"datasets",
+										"dataset",
+										"SiriTemp",
+										"data"
+									],
+									"query": [
+										{
+											"key": "replace",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Dataset Data - With Keys",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"capacity\": 1789927620608,\n    \"capacity_GB\": 1667,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter-replaced\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"naa.600605b009257580237343ae0fc1af57\",\n    \"freeSpace_GB\": 1661,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.61\",\n    \"host_path\": \"/vmfs/volumes/5be089af-90cd9dc0-410d-d072dca05ec8\",\n    \"is_accessible\": \"True\",\n    \"local\": \"True\",\n    \"multipleHostAccess\": \"False\",\n    \"name\": \"datastore26\",\n    \"num_of_hosts\": 1,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 6,\n    \"remoteHost\": \"\",\n    \"remotePath\": \"\",\n    \"ssd\": \"False\",\n    \"type\": \"VMFS\",\n    \"uncommitted_GB\": 0,\n    \"url\": \"ds:///vmfs/volumes/5be089af-90cd9dc0-410d-d072dca05ec8/\",\n    \"uuid\": \"5be089af-90cd9dc0-410d-d072dca05ec8\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": 5.81,\n    \"cluster\": \"\"\n  },\n  {\n    \"capacity\": \"\",\n    \"capacity_GB\": 4096,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter-new\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"\",\n    \"freeSpace_GB\": 2340,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.64\",\n    \"host_path\": \"/vmfs/volumes/7b343af4-2b22585b\",\n    \"is_accessible\": \"True\",\n    \"local\": \"\",\n    \"multipleHostAccess\": \"True\",\n    \"name\": \"netapp-prod-only-01\",\n    \"num_of_hosts\": 5,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 3708,\n    \"remoteHost\": \"192.168.107.33\",\n    \"remotePath\": \"/vol/vol_prod_only_01\",\n    \"ssd\": \"\",\n    \"type\": \"NFS\",\n    \"uncommitted_GB\": 1953,\n    \"url\": \"ds:///vmfs/volumes/7b343af4-2b22585b/\",\n    \"uuid\": \"new\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": \"\",\n    \"cluster\": \"\"\n  }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/datasets/dataset/SiriTemp/data?replace=False&keys=uuid",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"datasets",
+										"dataset",
+										"SiriTemp",
+										"data"
+									],
+									"query": [
+										{
+											"key": "replace",
+											"value": "False"
+										},
+										{
+											"key": "keys",
+											"value": "uuid"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Dataset Data Rows",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"capacity\": 1789927620608,\n    \"capacity_GB\": 1667,\n    \"collection_timestamp\": 1652391085119,\n    \"datacenter\": \"acme-datacenter-replaced\",\n    \"dsActiveAlarms\": \"\",\n    \"ds_cluster_capacity\": \"\",\n    \"ds_cluster_datastores\": \"\",\n    \"ds_cluster_freeSpace\": \"\",\n    \"ds_cluster_name\": \"\",\n    \"ds_cluster_overallStatus\": \"\",\n    \"extents\": \"naa.600605b009257580237343ae0fc1af57\",\n    \"freeSpace_GB\": 1661,\n    \"host_accessMode\": \"readWrite\",\n    \"host_accessible\": \"True\",\n    \"host_mounted\": \"True\",\n    \"host_name\": \"192.168.131.61\",\n    \"host_path\": \"/vmfs/volumes/5be089af-90cd9dc0-410d-d072dca05ec8\",\n    \"is_accessible\": \"True\",\n    \"local\": \"True\",\n    \"multipleHostAccess\": \"False\",\n    \"name\": \"datastore26\",\n    \"num_of_hosts\": 1,\n    \"overallStatus\": \"\",\n    \"overprovisioned_pct\": 0,\n    \"provisioned_GB\": 6,\n    \"remoteHost\": \"\",\n    \"remotePath\": \"\",\n    \"ssd\": \"False\",\n    \"type\": \"VMFS\",\n    \"uncommitted_GB\": 0,\n    \"url\": \"ds:///vmfs/volumes/5be089af-90cd9dc0-410d-d072dca05ec8/\",\n    \"uuid\": \"5be089af-90cd9dc0-410d-d072dca05ec8\",\n    \"vcenter_address\": \"192.168.125.61\",\n    \"vmfs_version\": 5.81,\n    \"cluster\": \"\"\n  }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/datasets/dataset/SiriTemp/data?keys=datacenter",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"datasets",
+										"dataset",
+										"SiriTemp",
+										"data"
+									],
+									"query": [
+										{
+											"key": "keys",
+											"value": "datacenter"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete All Rows",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/datasets/dataset/SiriTemp/data/all",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"datasets",
+										"dataset",
+										"SiriTemp",
+										"data",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Replace Dataset Data",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"message\": \"This should be the only row in this dataset\"\n  }\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/datasets/dataset/SiriTemp/data?replace=true",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"datasets",
+										"dataset",
+										"SiriTemp",
+										"data"
+									],
+									"query": [
+										{
+											"key": "replace",
+											"value": "true"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Dataset Data - Query+Sort",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/datasets/dataset/asset data/data?sort=-DNS Name&query=Alert State is 'ACTIVE'",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"datasets",
+										"dataset",
+										"asset data",
+										"data"
+									],
+									"query": [
+										{
+											"key": "sort",
+											"value": "-DNS Name"
+										},
+										{
+											"key": "query",
+											"value": "Alert State is 'ACTIVE'"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Datasets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/datasets",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"datasets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Datasets - Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/datasets?search=Siri",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"datasets"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Siri"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Datasets - Multi Sort",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/datasets?sort=folder&sort=-name",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"datasets"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "folder"
+								},
+								{
+									"key": "sort",
+									"value": "-name"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Datasets - Query1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/datasets?cfxql_query=name='test'",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"datasets"
+							],
+							"query": [
+								{
+									"key": "cfxql_query",
+									"value": "name='test'"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Datasets - Query2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/datasets?cfxql_query=saved_time is after -1 months",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"datasets"
+							],
+							"query": [
+								{
+									"key": "cfxql_query",
+									"value": "saved_time is after -1 months"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Datasets - Query+Sort+Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/datasets?cfxql_query=saved_time is after -1 months&sort=-name&search=test",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"datasets"
+							],
+							"query": [
+								{
+									"key": "cfxql_query",
+									"value": "saved_time is after -1 months"
+								},
+								{
+									"key": "sort",
+									"value": "-name"
+								},
+								{
+									"key": "search",
+									"value": "test"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Dataset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"SiriTemp\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/datasets",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"datasets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Dataset",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/datasets/dataset/SiriTemp",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"datasets",
+								"dataset",
+								"SiriTemp"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Dashboards",
+			"item": [
+				{
+					"name": "Get Dashboards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/dashboards",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"dashboards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Dashboards - Sorting",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/dashboards?sort=-name&offset=100",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"dashboards"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-name"
+								},
+								{
+									"key": "offset",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Persistent Streams",
+			"item": [
+				{
+					"name": "Pstream Data",
+					"item": [
+						{
+							"name": "Get Pstream Data",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/pstreams/pstream/rda_datasets_meta/data",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"pstreams",
+										"pstream",
+										"rda_datasets_meta",
+										"data"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Pstream Data - Query",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/pstreams/pstream/rda_datasets_meta/data?cfxql_query=name contains 'test'",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"pstreams",
+										"pstream",
+										"rda_datasets_meta",
+										"data"
+									],
+									"query": [
+										{
+											"key": "cfxql_query",
+											"value": "name contains 'test'"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get Pstreams",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/pstreams",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"pstreams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pstreams - Query, Sort, Pagination",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/pstreams?cfxql_query=system_defined is 'yes'&sort=-name&offset=5&limit=2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"pstreams"
+							],
+							"query": [
+								{
+									"key": "cfxql_query",
+									"value": "system_defined is 'yes'"
+								},
+								{
+									"key": "sort",
+									"value": "-name"
+								},
+								{
+									"key": "offset",
+									"value": "5"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pstreams - Query, Sort, Pagination - 2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/pstreams?cfxql_query=name is 'example_pstream'",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"pstreams"
+							],
+							"query": [
+								{
+									"key": "cfxql_query",
+									"value": "name is 'example_pstream'"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Pstreams - Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/pstreams?search=meta",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"pstreams"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "meta"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Pstream",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"example_pstream\",\n    \"attributes\": {\n        \"unique_keys\": [\n            \"key1\",\n            \"key2\"\n        ],\n        \"retention_days\": 31\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/pstreams",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"pstreams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Pstream",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"attributes\": {\n        \"unique_keys\": [\n            \"key3\",\n            \"key4\"\n        ],\n        \"retention_days\": 180\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/pstreams/pstream/example_pstream",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"pstreams",
+								"pstream",
+								"example_pstream"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Pstream",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/pstreams/pstream/example_pstream",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"pstreams",
+								"pstream",
+								"example_pstream"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get Current User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/current_user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"current_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"remoteUser\": false,\n    \"group\": \"Admin\",\n    \"id\": \"siri2@cfx.com\",\n    \"firstname\": \"Siri\",\n    \"lastname\": \"Kothe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/user/siri1@cfx.com/status?activate=false",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"user",
+								"siri1@cfx.com",
+								"status"
+							],
+							"query": [
+								{
+									"key": "activate",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Group",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/users/user/siri1@cfx.com/group?group=Admin",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"user",
+								"siri1@cfx.com",
+								"group"
+							],
+							"query": [
+								{
+									"key": "group",
+									"value": "Admin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var t2 = postman.getResponseCookie(\"__cfxsession\").value",
+							"pm.environment.set(\"__cfxsession\", t2)",
+							"var t2 = postman.getResponseCookie(\"cfx_saas_session\").value",
+							"pm.environment.set(\"cfx_saas_session\", t2)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"user\": \"acme@cfx.com\", \"password\": \"abcd123$\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v2/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
