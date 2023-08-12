@@ -18,15 +18,23 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/datasets/dataset/SiriTemp/data",
+									"raw": "{{host}}/api/v2/datasets/dataset/Siri/data?offset=1",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
+										"api",
+										"v2",
 										"datasets",
 										"dataset",
-										"SiriTemp",
+										"Siri",
 										"data"
+									],
+									"query": [
+										{
+											"key": "offset",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -38,12 +46,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/datasets/dataset/SiriTemp/data?cfxql_query=datacenter contains 'repl'",
+									"raw": "{{host}}/api/v2datasets/dataset/SiriTemp/data?cfxql_query=datacenter contains 'repl'",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
-										"datasets",
+										"",
+										"api",
+										"v2datasets",
 										"dataset",
 										"SiriTemp",
 										"data"
@@ -73,11 +83,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/datasets/dataset/SiriTemp/data?replace=true",
+									"raw": "{{host}}/api/v2/datasets/dataset/SiriTemp/data?replace=true",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
+										"api",
+										"v2",
 										"datasets",
 										"dataset",
 										"SiriTemp",
@@ -108,11 +120,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/datasets/dataset/SiriTemp/data?replace=False&keys=uuid",
+									"raw": "{{host}}/api/v2/datasets/dataset/SiriTemp/data?replace=False&keys=uuid",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
+										"api",
+										"v2",
 										"datasets",
 										"dataset",
 										"SiriTemp",
@@ -147,11 +161,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/datasets/dataset/SiriTemp/data?keys=datacenter",
+									"raw": "{{host}}/api/v2/datasets/dataset/SiriTemp/data?keys=datacenter",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
+										"api",
+										"v2",
 										"datasets",
 										"dataset",
 										"SiriTemp",
@@ -182,11 +198,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/datasets/dataset/SiriTemp/data/all",
+									"raw": "{{host}}/api/v2/datasets/dataset/SiriTemp/data/all",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
+										"api",
+										"v2",
 										"datasets",
 										"dataset",
 										"SiriTemp",
@@ -212,11 +230,13 @@
 									}
 								},
 								"url": {
-									"raw": "{{host}}/datasets/dataset/SiriTemp/data?replace=true",
+									"raw": "{{host}}/api/v2/datasets/dataset/SiriTemp/data?replace=true",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
+										"api",
+										"v2",
 										"datasets",
 										"dataset",
 										"SiriTemp",
@@ -238,11 +258,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/datasets/dataset/asset data/data?sort=-DNS Name&query=Alert State is 'ACTIVE'",
+									"raw": "{{host}}/api/v2/datasets/dataset/asset data/data?sort=-DNS Name&query=Alert State is 'ACTIVE'",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
+										"api",
+										"v2",
 										"datasets",
 										"dataset",
 										"asset data",
@@ -270,11 +292,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/datasets",
+							"raw": "{{host}}/api/v2/datasets",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"datasets"
 							]
 						}
@@ -287,11 +311,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/datasets?search=Siri",
+							"raw": "{{host}}/api/v2/datasets?search=Siri",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"datasets"
 							],
 							"query": [
@@ -310,11 +336,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/datasets?sort=folder&sort=-name",
+							"raw": "{{host}}/api/v2/datasets?sort=folder&sort=-name",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"datasets"
 							],
 							"query": [
@@ -337,11 +365,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/datasets?cfxql_query=name='test'",
+							"raw": "{{host}}/api/v2/datasets?cfxql_query=name='test'",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"datasets"
 							],
 							"query": [
@@ -360,11 +390,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/datasets?cfxql_query=saved_time is after -1 months",
+							"raw": "{{host}}/api/v2/datasets?cfxql_query=saved_time is after -1 months",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"datasets"
 							],
 							"query": [
@@ -383,11 +415,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/datasets?cfxql_query=saved_time is after -1 months&sort=-name&search=test",
+							"raw": "{{host}}/api/v2/datasets?cfxql_query=saved_time is after -1 months&sort=-name&search=test",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"datasets"
 							],
 							"query": [
@@ -423,11 +457,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/datasets",
+							"raw": "{{host}}/api/v2/datasets",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"datasets"
 							]
 						}
@@ -440,11 +476,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/datasets/dataset/SiriTemp",
+							"raw": "{{host}}/api/v2/datasets/dataset/SiriTemp",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"datasets",
 								"dataset",
 								"SiriTemp"
@@ -464,12 +502,91 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/dashboards",
+							"raw": "{{host}}/api/v2/dashboards",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"dashboards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Dashboard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"network-topology-copy\",\n  \"label\": \"Network Topology\",\n  \"description\": \"Network Topology\",\n  \"dashboard_style\": \"auto\",\n  \"version\": \"23.7.8.1\",\n  \"enabled\": true,\n  \"dashboard_type\": \"dashboard\",\n  \"custom_context\": {\n    \"alert-context\": true,\n    \"node_view_params\": {\n      \"stream\": \"oia-alerts-stream\",\n      \"extra_filter\": \"a_asset_ip_address is '${node_id}' and a_status = 'ACTIVE' and a_en_link_type is not empty and a_source_systemname is not 'Alert Group' and a_correlation_status is not 'AGGREGATE'\",\n      \"title\": \"Active Alerts ${node_id}\",\n      \"duration_hours\": 1,\n      \"columns\": {\n        \"a_asset_ip_address\": { \"title\": \"Device\" },\n        \"a_en_local_interface\": { \"title\": \"Interface\" },\n        \"a_en_remote_ip\": { \"title\": \"Remote Device\" },\n        \"a_en_remote_interface\": { \"title\": \"Remote Interface\" },\n        \"a_en_alert_name\": { \"title\": \"Alert Name\" },\n        \"a_en_link_type\": { \"title\": \"Link Type\" },\n        \"a_severity\": { \"title\": \"Alert severity\" },\n        \"a_incident_id\": { \"title\": \"Incident ID\" },\n        \"a_message\": { \"title\": \"Message\" },\n        \"timestamp\": { \"title\": \"timestamp\" }\n      },\n      \"severity_columns\": [\"a_severity\"]\n    },\n    \"link_view_params\": {\n      \"stream\": \"oia-alerts-stream\",\n      \"extra_filter\": \"(a_asset_ip_address is '${source}' and a_en_remote_ip is '${target}') or (a_asset_ip_address is '${target}' and a_en_remote_ip is '${source}') and a_status = 'ACTIVE' and a_en_link_type is not empty and a_source_systemname is not 'Alert Group' and a_correlation_status is not 'AGGREGATE'\",\n      \"title\": \"Active Alerts on ${source} <-> ${target}\",\n      \"duration_hours\": 1,\n      \"columns\": {\n        \"a_asset_ip_address\": { \"title\": \"Device\" },\n        \"a_en_local_interface\": { \"title\": \"Interface\" },\n        \"a_en_remote_ip\": { \"title\": \"Remote Device\" },\n        \"a_en_remote_interface\": { \"title\": \"Remote Interface\" },\n        \"a_en_alert_name\": { \"title\": \"Alert Name\" },\n        \"a_en_link_type\": { \"title\": \"Link Type\" },\n        \"a_severity\": { \"title\": \"Alert severity\" },\n        \"a_incident_id\": { \"title\": \"Incident ID\" },\n        \"a_message\": { \"title\": \"Message\" },\n        \"timestamp\": { \"title\": \"timestamp\" }\n      },\n      \"severity_columns\": [\"a_severity\"]\n    }\n  },\n  \"dashboard_filters\": {\n    \"time_filter\": true,\n    \"columns_filter\": []\n  },\n  \"dashboard_sections\": [\n    {\n      \"title\": \"Topology\",\n      \"show_filter\": true,\n      \"widgets\": [\n        {\n          \"widget_type\": \"topology\",\n          \"title\": \"Topology\",\n          \"actions\": [\n            {\n              \"permission\": \"rda:dataset:add\",\n              \"actionCondition\": {\n                \"actionControl\": \"SHOW_IF\",\n                \"conditionalField\": [\n                  {\n                    \"conditionType\": \"EQUAL\",\n                    \"conditionValue\": \"Network\",\n                    \"fieldId\": \"layer\"\n                  }\n                ]\n              },\n              \"api-endpoint\": {\n                \"service-name\": \"saas-reports\",\n                \"methodName\": \"getReport\",\n                \"stringified-params\": false,\n                \"parse-output\": false,\n                \"params\": [\n                  {\n                    \"reportId\": \"rda.saas.topology.stream.nodes.alerts\"\n                  }\n                ]\n              },\n              \"icon\": \"mdi mdi-plus\",\n              \"identifier\": \"rda.saas.topology.stream.nodes.alerts.view\",\n              \"selectionType\": \"SINGLE\",\n              \"title\": \"Show Node Alerts\",\n              \"type\": \"POPUP_REPORT\"\n            },\n            {\n              \"permission\": \"rda:dataset:add\",\n              \"actionCondition\": {\n                \"actionControl\": \"SHOW_IF\",\n                \"conditionalField\": [\n                  {\n                    \"conditionType\": \"EQUAL\",\n                    \"conditionValue\": \"connects-to\",\n                    \"fieldId\": \"edgeType\"\n                  }\n                ]\n              },\n              \"api-endpoint\": {\n                \"service-name\": \"saas-reports\",\n                \"methodName\": \"getReport\",\n                \"stringified-params\": false,\n                \"parse-output\": false,\n                \"params\": [\n                  {\n                    \"reportId\": \"rda.saas.topology.stream.links.alerts\",\n                    \"hello\": \"world SIRI\"\n                  }\n                ]\n              },\n              \"icon\": \"mdi mdi-plus\",\n              \"identifier\": \"rda.saas.topology.stream.links.alerts.view\",\n              \"selectionType\": \"SINGLE\",\n              \"title\": \"Show Link Alerts\",\n              \"type\": \"POPUP_REPORT\"\n            }\n          ],\n          \"chartProperties\": {\n            \"hasToolbar\": true,\n            \"shortToolbar\": true,\n            \"userZoomingEnabled\": false\n          },\n          \"stack\": \"topology_stack\",\n          \"max_width\": 12,\n          \"min_width\": 12,\n          \"height\": 12,\n          \"alert_source\": {\n            \"stream\": \"oia-alerts-stream\",\n            \"group_by\": [\"a_asset_ip_address\", \"a_severity\", \"a_status\"],\n            \"ts_column\": \"timestamp\",\n            \"duration_hours\": 1,\n            \"agg\": \"value_count\",\n            \"column\": \"_id\",\n            \"type\": \"int\",\n            \"extra_filter\": \"a_en_link_type is not empty and a_source_systemname is not 'Alert Group' and a_correlation_status is not 'AGGREGATE' and a_status = 'ACTIVE'\"\n          },\n          \"link_alert_source\": {\n            \"stream\": \"oia-alerts-stream\",\n            \"group_by\": [\"left_id\", \"right_id\"],\n            \"agg\": \"min\",\n            \"column\": \"alert_severity_num\",\n            \"ts_column\": \"timestamp\",\n            \"duration_hours\": 1440,\n            \"extra_filter\": \"a_en_link_type is not empty and a_source_systemname is not 'Alert Group' and a_correlation_status is not 'AGGREGATE' and a_status = 'ACTIVE'\"\n          },\n          \"widget_id\": \"9db5a36f\"\n        }\n      ]\n    }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/dashboards",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"dashboards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Dashboard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"network-topology-copy\",\n  \"label\": \"Network Topology\",\n  \"description\": \"Network Topology\",\n  \"dashboard_style\": \"auto\",\n  \"version\": \"23.7.8.1\",\n  \"enabled\": true,\n  \"dashboard_type\": \"dashboard\",\n  \"custom_context\": {\n    \"alert-context\": true,\n    \"node_view_params\": {\n      \"stream\": \"oia-alerts-stream\",\n      \"extra_filter\": \"a_asset_ip_address is '${node_id}' and a_status = 'ACTIVE' and a_en_link_type is not empty and a_source_systemname is not 'Alert Group' and a_correlation_status is not 'AGGREGATE'\",\n      \"title\": \"Active Alerts ${node_id}\",\n      \"duration_hours\": 1,\n      \"columns\": {\n        \"a_asset_ip_address\": { \"title\": \"Device\" },\n        \"a_en_local_interface\": { \"title\": \"Interface\" },\n        \"a_en_remote_ip\": { \"title\": \"Remote Device\" },\n        \"a_en_remote_interface\": { \"title\": \"Remote Interface\" },\n        \"a_en_alert_name\": { \"title\": \"Alert Name\" },\n        \"a_en_link_type\": { \"title\": \"Link Type\" },\n        \"a_severity\": { \"title\": \"Alert severity\" },\n        \"a_incident_id\": { \"title\": \"Incident ID\" },\n        \"a_message\": { \"title\": \"Message\" },\n        \"timestamp\": { \"title\": \"timestamp\" }\n      },\n      \"severity_columns\": [\"a_severity\"]\n    },\n    \"link_view_params\": {\n      \"stream\": \"oia-alerts-stream\",\n      \"extra_filter\": \"(a_asset_ip_address is '${source}' and a_en_remote_ip is '${target}') or (a_asset_ip_address is '${target}' and a_en_remote_ip is '${source}') and a_status = 'ACTIVE' and a_en_link_type is not empty and a_source_systemname is not 'Alert Group' and a_correlation_status is not 'AGGREGATE'\",\n      \"title\": \"Active Alerts on ${source} <-> ${target}\",\n      \"duration_hours\": 1,\n      \"columns\": {\n        \"a_asset_ip_address\": { \"title\": \"Device\" },\n        \"a_en_local_interface\": { \"title\": \"Interface\" },\n        \"a_en_remote_ip\": { \"title\": \"Remote Device\" },\n        \"a_en_remote_interface\": { \"title\": \"Remote Interface\" },\n        \"a_en_alert_name\": { \"title\": \"Alert Name\" },\n        \"a_en_link_type\": { \"title\": \"Link Type\" },\n        \"a_severity\": { \"title\": \"Alert severity\" },\n        \"a_incident_id\": { \"title\": \"Incident ID\" },\n        \"a_message\": { \"title\": \"Message\" },\n        \"timestamp\": { \"title\": \"timestamp\" }\n      },\n      \"severity_columns\": [\"a_severity\"]\n    }\n  },\n  \"dashboard_filters\": {\n    \"time_filter\": true,\n    \"columns_filter\": []\n  },\n  \"dashboard_sections\": [\n    {\n      \"title\": \"Topology\",\n      \"show_filter\": true,\n      \"widgets\": [\n        {\n          \"widget_type\": \"topology\",\n          \"title\": \"Topology\",\n          \"actions\": [\n            {\n              \"permission\": \"rda:dataset:add\",\n              \"actionCondition\": {\n                \"actionControl\": \"SHOW_IF\",\n                \"conditionalField\": [\n                  {\n                    \"conditionType\": \"EQUAL\",\n                    \"conditionValue\": \"Network\",\n                    \"fieldId\": \"layer\"\n                  }\n                ]\n              },\n              \"api-endpoint\": {\n                \"service-name\": \"saas-reports\",\n                \"methodName\": \"getReport\",\n                \"stringified-params\": false,\n                \"parse-output\": false,\n                \"params\": [\n                  {\n                    \"reportId\": \"rda.saas.topology.stream.nodes.alerts\"\n                  }\n                ]\n              },\n              \"icon\": \"mdi mdi-plus\",\n              \"identifier\": \"rda.saas.topology.stream.nodes.alerts.view\",\n              \"selectionType\": \"SINGLE\",\n              \"title\": \"Show Node Alerts\",\n              \"type\": \"POPUP_REPORT\"\n            },\n            {\n              \"permission\": \"rda:dataset:add\",\n              \"actionCondition\": {\n                \"actionControl\": \"SHOW_IF\",\n                \"conditionalField\": [\n                  {\n                    \"conditionType\": \"EQUAL\",\n                    \"conditionValue\": \"connects-to\",\n                    \"fieldId\": \"edgeType\"\n                  }\n                ]\n              },\n              \"api-endpoint\": {\n                \"service-name\": \"saas-reports\",\n                \"methodName\": \"getReport\",\n                \"stringified-params\": false,\n                \"parse-output\": false,\n                \"params\": [\n                  {\n                    \"reportId\": \"rda.saas.topology.stream.links.alerts\",\n                    \"hello\": \"world SIRI\"\n                  }\n                ]\n              },\n              \"icon\": \"mdi mdi-plus\",\n              \"identifier\": \"rda.saas.topology.stream.links.alerts.view\",\n              \"selectionType\": \"SINGLE\",\n              \"title\": \"Show Link Alerts\",\n              \"type\": \"POPUP_REPORT\"\n            }\n          ],\n          \"chartProperties\": {\n            \"hasToolbar\": true,\n            \"shortToolbar\": true,\n            \"userZoomingEnabled\": false\n          },\n          \"stack\": \"topology_stack\",\n          \"max_width\": 12,\n          \"min_width\": 12,\n          \"height\": 12,\n          \"alert_source\": {\n            \"stream\": \"oia-alerts-stream\",\n            \"group_by\": [\"a_asset_ip_address\", \"a_severity\", \"a_status\"],\n            \"ts_column\": \"timestamp\",\n            \"duration_hours\": 1,\n            \"agg\": \"value_count\",\n            \"column\": \"_id\",\n            \"type\": \"int\",\n            \"extra_filter\": \"a_en_link_type is not empty and a_source_systemname is not 'Alert Group' and a_correlation_status is not 'AGGREGATE' and a_status = 'ACTIVE'\"\n          },\n          \"link_alert_source\": {\n            \"stream\": \"oia-alerts-stream\",\n            \"group_by\": [\"left_id\", \"right_id\"],\n            \"agg\": \"min\",\n            \"column\": \"alert_severity_num\",\n            \"ts_column\": \"timestamp\",\n            \"duration_hours\": 1440,\n            \"extra_filter\": \"a_en_link_type is not empty and a_source_systemname is not 'Alert Group' and a_correlation_status is not 'AGGREGATE' and a_status = 'ACTIVE'\"\n          },\n          \"widget_id\": \"9db5a36f\"\n        }\n      ]\n    }\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/dashboards",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"dashboards"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Dashboard",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/dashboards/dashboard/hello",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"dashboards",
+								"dashboard",
+								"hello"
 							]
 						}
 					},
@@ -481,11 +598,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/dashboards?sort=-name&offset=100",
+							"raw": "{{host}}/api/v2/dashboards?sort=-name&offset=100",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"dashboards"
 							],
 							"query": [
@@ -516,11 +635,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/pstreams/pstream/rda_datasets_meta/data",
+									"raw": "{{host}}/api/v2/pstreams/pstream/rda_datasets_meta/data",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
+										"api",
+										"v2",
 										"pstreams",
 										"pstream",
 										"rda_datasets_meta",
@@ -536,11 +657,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/pstreams/pstream/rda_datasets_meta/data?cfxql_query=name contains 'test'",
+									"raw": "{{host}}/api/v2/pstreams/pstream/rda_datasets_meta/data?cfxql_query=name contains 'test'&sort=-name",
 									"host": [
 										"{{host}}"
 									],
 									"path": [
+										"api",
+										"v2",
 										"pstreams",
 										"pstream",
 										"rda_datasets_meta",
@@ -550,6 +673,10 @@
 										{
 											"key": "cfxql_query",
 											"value": "name contains 'test'"
+										},
+										{
+											"key": "sort",
+											"value": "-name"
 										}
 									]
 								}
@@ -564,11 +691,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/pstreams",
+							"raw": "{{host}}/api/v2/pstreams",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"pstreams"
 							]
 						}
@@ -581,11 +710,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/pstreams?cfxql_query=system_defined is 'yes'&sort=-name&offset=5&limit=2",
+							"raw": "{{host}}/api/v2/pstreams?cfxql_query=system_defined is 'yes'&sort=-name&offset=5&limit=2",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"pstreams"
 							],
 							"query": [
@@ -616,11 +747,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/pstreams?cfxql_query=name is 'example_pstream'",
+							"raw": "{{host}}/api/v2/pstreams?cfxql_query=name is 'example_pstream'",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"pstreams"
 							],
 							"query": [
@@ -639,11 +772,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/pstreams?search=meta",
+							"raw": "{{host}}/api/v2/pstreams?search=meta",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"pstreams"
 							],
 							"query": [
@@ -671,11 +806,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/pstreams",
+							"raw": "{{host}}/api/v2/pstreams",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"pstreams"
 							]
 						}
@@ -697,11 +834,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/pstreams/pstream/example_pstream",
+							"raw": "{{host}}/api/v2/pstreams/pstream/example_pstream",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"pstreams",
 								"pstream",
 								"example_pstream"
@@ -725,11 +864,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/pstreams/pstream/example_pstream",
+							"raw": "{{host}}/api/v2/pstreams/pstream/example_pstream",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"pstreams",
 								"pstream",
 								"example_pstream"
@@ -791,6 +932,34 @@
 					"response": []
 				},
 				{
+					"name": "Add User Non Existing Group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"remoteUser\": false,\n    \"group\": \"xxxxx\",\n    \"id\": \"siri14@cfx.com\",\n    \"firstname\": \"Siri\",\n    \"lastname\": \"Kothe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/users",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Deactivate User",
 					"request": {
 						"method": "PUT",
@@ -805,14 +974,53 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/users/user/siri1@cfx.com/status?activate=false",
+							"raw": "{{host}}/api/v2/users/user/acme@cfx.com/status?activate=true",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"users",
 								"user",
-								"siri1@cfx.com",
+								"acme@cfx.com",
+								"status"
+							],
+							"query": [
+								{
+									"key": "activate",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate Non Existing User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/users/user/siri111111111@cfx.com/status?activate=false",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"users",
+								"user",
+								"siri111111111@cfx.com",
 								"status"
 							],
 							"query": [
@@ -840,11 +1048,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/users/user/siri1@cfx.com/group?group=Admin",
+							"raw": "{{host}}/api/v2/users/user/siri1@cfx.com/group?group=Admin",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"users",
 								"user",
 								"siri1@cfx.com",
@@ -866,11 +1076,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/users",
+							"raw": "{{host}}/api/v2/users",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"api",
+								"v2",
 								"users"
 							]
 						}
@@ -900,7 +1112,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"user\": \"acme@cfx.com\", \"password\": \"abcd123$\"}",
+					"raw": "{\"user\": \"acme@cfx.com\", \"password\": \"admin1234\"}",
 					"options": {
 						"raw": {
 							"language": "json"
