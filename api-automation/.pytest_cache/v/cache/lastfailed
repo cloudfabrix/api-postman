@@ -1,5 +1,0 @@
-{
-  "tests/test_05_dataset.py::test_GET_add_dataset": true,
-  "tests/test_07_dashboards.py::test_POST_add_dashboard": true,
-  "tests/test_07_dashboards.py::test_GET_dashboard": true
-}
