@@ -1,11 +1,11 @@
-from extras.reporting import CustomLogger
-
 import time
+from tests.conftest import logging
 
-logger = CustomLogger().get_logger()
+logger = logging.getLogger(__name__)
 
-def test_GET_metadata_dashboard(api_session):
-    session, base_url = api_session
+def test_get_metadata_dashboard(api_session, base_url):
+    session = api_session
+    base_url = base_url
     url = base_url + "/api/v2/dashboards"
     data = {
         "cfxql_query":"*",
@@ -22,13 +22,14 @@ def test_GET_metadata_dashboard(api_session):
     else:
         logger.info(f"---------API Response----------\n{response.text}")
 
-    assert response.status_code == 200
+    response.raise_for_status()
 
-def test_POST_add_dashboard(api_session):
-    session, base_url = api_session
+def test_post_add_dashboard(api_session, base_url):
+    session = api_session
+    base_url = base_url
     url = base_url + "/api/v2/dashboards"
     data = {
-        "name": "test_api_dashboard9",
+        "name": "test_api_dashboard",
         "label": "API testing dashboard",
         "description": "Dashboard",
         "enabled": True,
@@ -56,13 +57,14 @@ def test_POST_add_dashboard(api_session):
     else:
         logger.info(f"---------API Response----------\n{response.text}")
 
-    assert response.status_code == 200
+    response.raise_for_status()
 
-def test_PUT_update_dashboard_data(api_session):
-    session, base_url = api_session
-    url = base_url + "/api/v2/dashboards/dashboard/test_api_dashboard9"
+def test_put_update_dashboard_data(api_session, base_url):
+    session = api_session
+    base_url = base_url
+    url = base_url + "/api/v2/dashboards/dashboard/test_api_dashboard"
     data = {
-        "name": "test_api_dashboard9",
+        "name": "test_api_dashboard",
         "label": "API testing dashboard",
         "description": "Dashboard",
         "enabled": True,
@@ -90,5 +92,18 @@ def test_PUT_update_dashboard_data(api_session):
     else:
         logger.info(f"---------API Response----------\n{response.text}")
 
-    assert response.status_code == 200
+    response.raise_for_status()
 
+def test_delete_dashboard(api_session, base_url):
+    session = api_session
+    base_url = base_url
+    url = base_url + "/api/v2/dashboards/dashboard/test_api_dashboard"
+    time.sleep(10)
+    response = session.delete(url, headers=session.headers, verify=False)
+    logger.info(f"----API Log---- {url}:::{response.status_code}")
+    if response.status_code != 200:
+        logger.error(f"---------API Error---------\n{response.text}")
+    else:
+        logger.info(f"---------API Response----------\n{response.text}")
+
+    response.raise_for_status()

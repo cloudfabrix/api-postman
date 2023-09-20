@@ -1,11 +1,11 @@
-from extras.reporting import CustomLogger
-
 import time
+from tests.conftest import logging
 
-logger = CustomLogger().get_logger()
+logger = logging.getLogger(__name__)
 
-def test_GET_metadata_pstream(api_session):
-    session, base_url = api_session
+def test_get_metadata_pstream(api_session, base_url):
+    session = api_session
+    base_url = base_url
     url = base_url + "/api/v2/pstreams"
     data = {
         "cfxql_query":"*",
@@ -22,10 +22,11 @@ def test_GET_metadata_pstream(api_session):
     else:
         logger.info(f"---------API Response----------\n{response.text}")
 
-    assert response.status_code == 200
+    response.raise_for_status()
 
-def test_POST_add_pstream(api_session):
-    session, base_url = api_session
+def test_post_add_pstream(api_session, base_url):
+    session = api_session
+    base_url = base_url
     url = base_url + "/api/v2/pstreams"
     request_body = {
         "attributes": {
@@ -45,10 +46,11 @@ def test_POST_add_pstream(api_session):
     else:
         logger.info(f"----------API Response----------\n{response.text}")
     
-    assert response.status_code == 200
+    response.raise_for_status()
 
-def test_PUT_edit_pstream(api_session):
-    session, base_url = api_session
+def test_put_edit_pstream(api_session, base_url):
+    session = api_session
+    base_url = base_url
     url = base_url + "/api/v2/pstreams/pstream/test_api_pstream"
     request_body = {
         "attributes": {
@@ -67,10 +69,11 @@ def test_PUT_edit_pstream(api_session):
     else:
         logger.info(f"----------API Response----------\n{response.text}")
 
-    assert response.status_code == 200
+    response.raise_for_status()
 
-def test_GET_single_pstream(api_session):
-    session, base_url = api_session
+def test_get_single_pstream(api_session, base_url):
+    session = api_session
+    base_url = base_url
     url = base_url + "/api/v2/pstreams/pstream/rda_secrets_meta/data"
     data = {
         "cfxql_query":"*",
@@ -85,5 +88,21 @@ def test_GET_single_pstream(api_session):
     else:
         logger.info(f"----------API Response----------\n{response.text}")
 
-    assert response.status_code == 200
+    response.raise_for_status()
 
+def test_delete_pstream(api_session, base_url):
+    session = api_session
+    base_url = base_url
+    url = base_url + "/api/v2/pstreams/pstream/test_api_pstream"
+    data = {
+        "delete_data": True
+    }
+    time.sleep(10)
+    response = session.delete(url, params=data, headers=session.headers, verify=False)
+    logger.info(f"---- API Log ---- {url} == {response.status_code}")
+    if response.status_code != 200:
+        logger.error(f"----------API Error----------\n{response.text}")
+    else:
+        logger.info(f"----------API Response----------\n{response.text}")
+    
+    response.raise_for_status()

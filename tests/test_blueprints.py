@@ -1,11 +1,11 @@
-from extras.reporting import CustomLogger
-
 import time
+from tests.conftest import logging
 
-logger = CustomLogger().get_logger()
+logger = logging.getLogger(__name__)
 
-def test_GET_metadata_blueprints(api_session):
-    session, base_url = api_session
+def test_get_metadata_blueprints(api_session, base_url):
+    session = api_session
+    base_url = base_url
     url = base_url + "/api/v2/pipelines"
     data = {
         "cfxql_query":"*",
@@ -21,4 +21,4 @@ def test_GET_metadata_blueprints(api_session):
     else:
         logger.info(f"---------API Response----------\n{response.text}")
 
-    assert response.status_code == 200
+    response.raise_for_status()

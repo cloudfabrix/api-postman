@@ -1,9 +1,11 @@
-from extras.reporting import CustomLogger
+from tests.conftest import logging
 
-logger = CustomLogger().get_logger()
+logger = logging.getLogger(__name__)
 
-def test_GET_current_user(api_session):
-    session, base_url = api_session
+
+def test_get_current_user(api_session, base_url):
+    session = api_session
+    base_url = base_url
     url = base_url + "/api/v2/current_user"
     response = session.get(url, headers=session.headers, verify=False)
     logger.info(f"---- API Log ---- {url} == {response.status_code}")
@@ -12,10 +14,11 @@ def test_GET_current_user(api_session):
     else:
         logger.info(f"----------API Response----------\n{response.text}")
     
-    assert response.status_code == 200
+    response.raise_for_status()
 
-def test_GET_users(api_session):
-    session, base_url = api_session
+def test_get_users(api_session, base_url):
+    session = api_session
+    base_url = base_url
     url = base_url + "/api/v2/users"
     response = session.get(url, headers=session.headers, verify=False)
     logger.info(f"---- API Log ---- {url} == {response.status_code}")
@@ -24,10 +27,11 @@ def test_GET_users(api_session):
     else:
         logger.info(f"----------API Response----------\n{response.text}")
 
-    assert response.status_code == 200
+    response.raise_for_status()
 
-def test_POST_add_user(api_session):
-    session, base_url = api_session
+def test_post_add_user(api_session, base_url):
+    session = api_session
+    base_url = base_url
     url = base_url + "/api/v2/users"
     data = {
         "remoteUser": False,
@@ -35,7 +39,7 @@ def test_POST_add_user(api_session):
         "group": "test_user_group",
         "firstname": "test",
         "lastname": "api",
-        "id": "user_test9@cfx.com"
+        "id": "user_test@cfx.com"
     }
     response = session.post(url, json=data, headers=session.headers, verify=False)
     logger.info(f"---- API Log ---- {url} == {response.status_code}")
@@ -44,11 +48,12 @@ def test_POST_add_user(api_session):
     else:
         logger.info(f"----------API Response----------\n{response.text}")
     
-    assert response.status_code == 200
+    response.raise_for_status()
 
-def test_PUT_deactivate_user(api_session):
-    session, base_url = api_session
-    url = base_url + "/api/v2/users/user/user_test9@cfx.com/status"
+def test_put_deactivate_user(api_session, base_url):
+    session = api_session
+    base_url = base_url
+    url = base_url + "/api/v2/users/user/user_test@cfx.com/status"
     data = {
         "activate": False
     }
@@ -59,10 +64,11 @@ def test_PUT_deactivate_user(api_session):
     else:
         logger.info(f"----------API Response----------\n{response.text}")
     
-    assert response.status_code == 200
+    response.raise_for_status()
 
-def test_PUT_activate_user(api_session):
-    session, base_url = api_session
+def test_put_activate_user(api_session, base_url):
+    session = api_session
+    base_url = base_url
     url = base_url + "/api/v2/users/user/user_test@cfx.com/status"
     data = {
         "activate": True
@@ -74,11 +80,12 @@ def test_PUT_activate_user(api_session):
     else:
         logger.info(f"----------API Response----------\n{response.text}")
     
-    assert response.status_code == 200
+    response.raise_for_status()
 
-def test_PUT_change_user_group(api_session):
-    session, base_url = api_session
-    url = base_url + f"/api/v2/users/user/user_test@cfx.com/group"
+def test_put_change_user_group(api_session, base_url):
+    session = api_session
+    base_url = base_url
+    url = base_url + "/api/v2/users/user/user_test@cfx.com/group"
     data = {
         "group": "test_user_group"
     }
@@ -89,4 +96,4 @@ def test_PUT_change_user_group(api_session):
     else:
         logger.info(f"----------API Response----------\n{response.text}")
     
-    assert response.status_code == 200
+    response.raise_for_status()
