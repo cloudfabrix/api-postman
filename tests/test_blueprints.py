@@ -8,7 +8,6 @@ def test_get_metadata_blueprints(api_session, base_url):
     base_url = base_url
     url = base_url + "/api/v2/pipelines"
     data = {
-        "cfxql_query":"*",
         "offset":0,
         "limit":100,
         "sort":"-timestamp"

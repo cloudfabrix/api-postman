@@ -4,6 +4,7 @@ import os
 import requests
 import logging.config
 import yaml
+import datetime
 
 def setup_logging():
     with open('custom_logger.yaml', 'r') as config_file:
@@ -44,6 +45,13 @@ def cleanup(request):
                 if filename.startswith("cfx_api_test_") and filename.endswith(".html"):
                     file_path = os.path.join(reports_folder, filename)
                     os.remove(file_path)
+
+@pytest.fixture(scope="session")
+def unique_id():  # sourcery skip: inline-immediately-returned-variable
+    current_datetime = datetime.datetime.now()
+    formatted_datetime = current_datetime.strftime("%Y%m%d%H%M")
+    uniqueID = f"test_api_{formatted_datetime}"
+    return uniqueID
 
 @pytest.fixture(scope="session")
 def base_url(request):

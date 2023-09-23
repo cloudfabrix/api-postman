@@ -8,8 +8,6 @@ def test_get_metadata_pstream(api_session, base_url):
     base_url = base_url
     url = base_url + "/api/v2/pstreams"
     data = {
-        "cfxql_query":"*",
-        "search":"",
         "offset":0,
         "limit":100,
         "sort":"-timestamp"
@@ -19,9 +17,10 @@ def test_get_metadata_pstream(api_session, base_url):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_post_add_pstream(api_session, base_url):
+def test_post_add_pstream(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
+    unique_id = unique_id
     url = base_url + "/api/v2/pstreams"
     request_body = {
         "attributes": {
@@ -31,17 +30,18 @@ def test_post_add_pstream(api_session, base_url):
             "AIA"
             ]
         },
-        "name": "test_api_pstream"
+        "name": unique_id
     }
     response = session.post(url, json=request_body, headers=session.headers, verify=False)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_put_edit_pstream(api_session, base_url):
+def test_put_edit_pstream(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
-    url = base_url + "/api/v2/pstreams/pstream/test_api_pstream"
+    unique_id = unique_id
+    url = base_url + f"/api/v2/pstreams/pstream/{unique_id}"
     request_body = {
         "attributes": {
             "retention_days": 62,
@@ -62,7 +62,6 @@ def test_get_single_pstream(api_session, base_url):
     base_url = base_url
     url = base_url + "/api/v2/pstreams/pstream/rda_secrets_meta/data"
     data = {
-        "cfxql_query":"*",
         "offset":0,
         "limit":100
     }
@@ -72,10 +71,11 @@ def test_get_single_pstream(api_session, base_url):
 
     response.raise_for_status()
 
-def test_delete_pstream(api_session, base_url):
+def test_delete_pstream(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
-    url = base_url + "/api/v2/pstreams/pstream/test_api_pstream"
+    unique_id = unique_id
+    url = base_url + f"/api/v2/pstreams/pstream/{unique_id}"
     data = {
         "delete_data": True
     }

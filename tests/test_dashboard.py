@@ -8,8 +8,6 @@ def test_get_metadata_dashboard(api_session, base_url):
     base_url = base_url
     url = base_url + "/api/v2/dashboards"
     data = {
-        "cfxql_query":"*",
-        "search":"",
         "offset":0,
         "limit":100,
         "sort":"-timestamp"
@@ -19,19 +17,20 @@ def test_get_metadata_dashboard(api_session, base_url):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_post_add_dashboard(api_session, base_url):
+def test_post_add_dashboard(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
+    unique_id = unique_id
     url = base_url + "/api/v2/dashboards"
     data = {
-        "name": "test_api_dashboard",
+        "name": unique_id,
         "label": "API testing dashboard",
         "description": "Dashboard",
         "enabled": True,
         "dashboard_filters": {},
         "dashboard_sections": [
             {
-                "title": "test_api_example",
+                "title": unique_id,
                 "widgets": [
                     {
                         "widget_type": "label",
@@ -49,19 +48,20 @@ def test_post_add_dashboard(api_session, base_url):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_put_update_dashboard_data(api_session, base_url):
+def test_put_update_dashboard_data(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
-    url = base_url + "/api/v2/dashboards/dashboard/test_api_dashboard"
+    unique_id = unique_id
+    url = base_url + f"/api/v2/dashboards/dashboard/{unique_id}"
     data = {
-        "name": "test_api_dashboard",
+        "name": unique_id,
         "label": "API testing dashboard",
         "description": "Dashboard",
         "enabled": True,
         "dashboard_filters": {},
         "dashboard_sections": [
             {
-                "title": "test_api_example",
+                "title": unique_id,
                 "widgets": [
                     {
                         "widget_type": "label",
@@ -79,10 +79,11 @@ def test_put_update_dashboard_data(api_session, base_url):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_delete_dashboard(api_session, base_url):
+def test_delete_dashboard(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
-    url = base_url + "/api/v2/dashboards/dashboard/test_api_dashboard"
+    unique_id = unique_id
+    url = base_url + f"/api/v2/dashboards/dashboard/{unique_id}"
     time.sleep(10)
     response = session.delete(url, headers=session.headers, verify=False)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")

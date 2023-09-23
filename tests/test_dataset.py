@@ -8,8 +8,6 @@ def test_get_metadata_dataset(api_session, base_url):
     base_url = base_url
     url = base_url + "/api/v2/datasets"
     data = {
-        "cfxql_query":"*",
-        "search":"",
         "offset":0,
         "limit":100,
         "sort":"-timestamp"
@@ -19,30 +17,28 @@ def test_get_metadata_dataset(api_session, base_url):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_post_add_dataset(api_session, base_url):
+def test_post_add_dataset(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
+    unique_id = unique_id
     url = base_url + "/api/v2/datasets"
     data = {
-        "name": "test_api_dataset",
+        "name": unique_id,
         "folder": "Default",
         "schema_name": "",
         "tag": ""
     }
     response = session.post(url, json=data, headers=session.headers, verify=False)
-    logger.info(f"----API Log---- {url}:::{response.status_code}")
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     time.sleep(10)
-    if response.status_code != 200:
-        logger.error(f"---------API Error---------\n{response.text}")
-    else:
-        logger.info(f"---------API Response----------\n{response.text}")
 
     response.raise_for_status()
 
-def test_put_update_dataset_data(api_session, base_url):
+def test_put_update_dataset_data(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
-    url = base_url + "/api/v2/datasets/dataset/test_api_dataset/data"
+    unique_id = unique_id
+    url = base_url + f"/api/v2/datasets/dataset/{unique_id}/data"
     data = {
         "replace": True
     }
@@ -53,13 +49,13 @@ def test_put_update_dataset_data(api_session, base_url):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_get_added_dataset(api_session, base_url):
+def test_get_added_dataset(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
-    url = base_url + "/api/v2/datasets/dataset/test_api_dataset/data"
+    unique_id = unique_id
+    url = base_url + f"/api/v2/datasets/dataset/{unique_id}/data"
     data = {
-        "cfxql_query":"*",
-        "search":"test_api_dashboard",
+        "search":unique_id,
         "offset":0,
         "limit":100
     }
@@ -68,10 +64,11 @@ def test_get_added_dataset(api_session, base_url):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_delete_row_dataset(api_session, base_url):
+def test_delete_row_dataset(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
-    url = base_url + "/api/v2/datasets/dataset/test_api_dataset/data"
+    unique_id = unique_id
+    url = base_url + f"/api/v2/datasets/dataset/{unique_id}/data"
     data = {
         "keys":"column2"
     }
@@ -82,18 +79,20 @@ def test_delete_row_dataset(api_session, base_url):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_delete_all_data_dataset(api_session, base_url):
+def test_delete_all_data_dataset(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
-    url = base_url + "/api/v2/datasets/dataset/test_api_dataset/data/all"
+    unique_id = unique_id
+    url = base_url + f"/api/v2/datasets/dataset/{unique_id}/data/all"
     response = session.delete(url, headers=session.headers, verify=False)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_delete_dataset(api_session, base_url):
+def test_delete_dataset(api_session, base_url, unique_id):
     session = api_session
     base_url = base_url
-    url = base_url + "/api/v2/datasets/dataset/test_api_dataset"
+    unique_id = unique_id
+    url = base_url + f"/api/v2/datasets/dataset/{unique_id}"
     time.sleep(10)
     response = session.delete(url, headers=session.headers, verify=False)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
