@@ -15,12 +15,7 @@ def test_get_metadata_pipelines(api_session, base_url):
     }
     response = session.get(url, params=data, headers=session.headers, verify=False)
     time.sleep(10)
-    logger.info(f"----API Log---- {url}:::{response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"---------API Error---------\n{response.text}")
-    else:
-        logger.info(f"---------API Response----------\n{response.text}")
-
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
 def test_get_draft_pipelines(api_session, base_url):
@@ -35,12 +30,7 @@ def test_get_draft_pipelines(api_session, base_url):
     }
     response = session.get(url, params=data, headers=session.headers, verify=False)
     time.sleep(10)
-    logger.info(f"----API Log---- {url}:::{response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"---------API Error---------\n{response.text}")
-    else:
-        logger.info(f"---------API Response----------\n{response.text}")
-
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
 def test_post_run_pipelines(api_session, base_url):
@@ -57,10 +47,5 @@ def test_post_run_pipelines(api_session, base_url):
     ]
     response = session.post(url, params=data, json=request_body, headers=session.headers, verify=False)
     time.sleep(10)
-    logger.info(f"----API Log---- {url}:::{response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"---------API Error---------\n{response.text}")
-    else:
-        logger.info(f"---------API Response----------\n{response.text}")
-
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()

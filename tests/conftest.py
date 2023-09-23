@@ -71,12 +71,7 @@ def api_session(base_url, username, password):
         login_url = f"{base_url}/api/v2/login"
         response = session.post(login_url, json=post_data, headers=headers, verify=False)
 
-        if response.status_code != 200:
-            logger.error(f"Login failed with status code {response.status_code}:\n {response.text}")
-        else:
-            logger.info("::::::SESSION OPENED::::::")
-            logger.info(f"Login Success with status code {response.status_code}:\n {response.text}")
-
+        logger.info(f"----Login session----:::{response.status_code}::::\n{response.text}")
         response.raise_for_status()
 
         yield session  # Provide the session object function to test functions
@@ -87,9 +82,9 @@ def api_session(base_url, username, password):
         logger.info("::::::SESSION CLOSED::::::")
 
 def pytest_addoption(parser):
-    parser.addoption("--host", action="store", default=None, help="Platform IP address")
-    parser.addoption("--user", action="store", default=None, help="Platform username")
-    parser.addoption("--password", action="store", default=None, help="Platform password")
+    parser.addoption("--host", action="store", required=True, default=None, help="Platform IP address")
+    parser.addoption("--user", action="store", required=True, default=None, help="Platform username")
+    parser.addoption("--password", action="store", required=True, default=None, help="Platform password")
     parser.addoption("--cleanup", action="store", default=False, help="Clean logs and reports")
 
 @pytest.fixture(scope="session")

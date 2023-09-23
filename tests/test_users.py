@@ -8,11 +8,7 @@ def test_get_current_user(api_session, base_url):
     base_url = base_url
     url = base_url + "/api/v2/current_user"
     response = session.get(url, headers=session.headers, verify=False)
-    logger.info(f"---- API Log ---- {url} == {response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"----------API Error----------\n{response.text}")
-    else:
-        logger.info(f"----------API Response----------\n{response.text}")
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     
     response.raise_for_status()
 
@@ -21,11 +17,7 @@ def test_get_users(api_session, base_url):
     base_url = base_url
     url = base_url + "/api/v2/users"
     response = session.get(url, headers=session.headers, verify=False)
-    logger.info(f"---- API Log ---- {url} == {response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"----------API Error----------\n{response.text}")
-    else:
-        logger.info(f"----------API Response----------\n{response.text}")
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
 
     response.raise_for_status()
 
@@ -42,11 +34,7 @@ def test_post_add_user(api_session, base_url):
         "id": "user_test@cfx.com"
     }
     response = session.post(url, json=data, headers=session.headers, verify=False)
-    logger.info(f"---- API Log ---- {url} == {response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"----------API Error----------\n{response.text}")
-    else:
-        logger.info(f"----------API Response----------\n{response.text}")
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     
     response.raise_for_status()
 
@@ -58,11 +46,7 @@ def test_put_deactivate_user(api_session, base_url):
         "activate": False
     }
     response = session.put(url, params=data, headers=session.headers, verify=False)
-    logger.info(f"---- API Log ---- {url} == {response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"----------API Error----------\n{response.text}")
-    else:
-        logger.info(f"----------API Response----------\n{response.text}")
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     
     response.raise_for_status()
 
@@ -74,11 +58,7 @@ def test_put_activate_user(api_session, base_url):
         "activate": True
     }
     response = session.put(url, params=data, headers=session.headers, verify=False)
-    logger.info(f"---- API Log ---- {url} == {response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"----------API Error----------\n{response.text}")
-    else:
-        logger.info(f"----------API Response----------\n{response.text}")
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     
     response.raise_for_status()
 
@@ -90,10 +70,6 @@ def test_put_change_user_group(api_session, base_url):
         "group": "test_user_group"
     }
     response = session.put(url, params=data, headers=session.headers, verify=False)
-    logger.info(f"---- API Log ---- {url} == {response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"----------API Error----------\n{response.text}")
-    else:
-        logger.info(f"----------API Response----------\n{response.text}")
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     
     response.raise_for_status()

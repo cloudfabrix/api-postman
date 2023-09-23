@@ -16,12 +16,7 @@ def test_get_metadata_dashboard(api_session, base_url):
     }
     response = session.get(url, params=data, headers=session.headers, verify=False)
     time.sleep(10)
-    logger.info(f"----API Log---- {url}:::{response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"---------API Error---------\n{response.text}")
-    else:
-        logger.info(f"---------API Response----------\n{response.text}")
-
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
 def test_post_add_dashboard(api_session, base_url):
@@ -51,12 +46,7 @@ def test_post_add_dashboard(api_session, base_url):
     }
     response = session.post(url, json=data, headers=session.headers, verify=False)
     time.sleep(10)
-    logger.info(f"----API Log---- {url}:::{response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"---------API Error---------\n{response.text}")
-    else:
-        logger.info(f"---------API Response----------\n{response.text}")
-
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
 def test_put_update_dashboard_data(api_session, base_url):
@@ -86,12 +76,7 @@ def test_put_update_dashboard_data(api_session, base_url):
     }
     time.sleep(10)
     response = session.put(url, json=data, headers=session.headers, verify=False)
-    logger.info(f"----API Log---- {url}:::{response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"---------API Error---------\n{response.text}")
-    else:
-        logger.info(f"---------API Response----------\n{response.text}")
-
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
 def test_delete_dashboard(api_session, base_url):
@@ -100,10 +85,5 @@ def test_delete_dashboard(api_session, base_url):
     url = base_url + "/api/v2/dashboards/dashboard/test_api_dashboard"
     time.sleep(10)
     response = session.delete(url, headers=session.headers, verify=False)
-    logger.info(f"----API Log---- {url}:::{response.status_code}")
-    if response.status_code != 200:
-        logger.error(f"---------API Error---------\n{response.text}")
-    else:
-        logger.info(f"---------API Response----------\n{response.text}")
-
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
