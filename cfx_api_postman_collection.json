@@ -18,7 +18,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/v2/datasets/dataset/Siri/data?offset=1",
+									"raw": "{{host}}/api/v2/datasets/dataset/vrops-resources-summary-new/data?offset=1",
 									"host": [
 										"{{host}}"
 									],
@@ -27,7 +27,7 @@
 										"v2",
 										"datasets",
 										"dataset",
-										"Siri",
+										"vrops-resources-summary-new",
 										"data"
 									],
 									"query": [
@@ -728,7 +728,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/v2/pstreams/pstream/rda_datasets_meta/data?cfxql_query=name contains 'test'&sort=-name",
+									"raw": "{{host}}/api/v2/pstreams/pstream/rda_datasets_meta/data?sort=folder&sort=-timestamp",
 									"host": [
 										"{{host}}"
 									],
@@ -742,12 +742,12 @@
 									],
 									"query": [
 										{
-											"key": "cfxql_query",
-											"value": "name contains 'test'"
+											"key": "sort",
+											"value": "folder"
 										},
 										{
 											"key": "sort",
-											"value": "-name"
+											"value": "-timestamp"
 										}
 									]
 								}
@@ -796,7 +796,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/v2/pstreams/pstream/rda_microservice_traces/data?group_by=source&group_by=destination&agg_function=avg&agg_column=duration",
+									"raw": "{{host}}/api/v2/pstreams/pstream/rda_microservice_traces/data?group_by=source&group_by=destination&aggs=sum:duration&aggs=value_count:count_:num_records",
 									"host": [
 										"{{host}}"
 									],
@@ -818,12 +818,12 @@
 											"value": "destination"
 										},
 										{
-											"key": "agg_function",
-											"value": "avg"
+											"key": "aggs",
+											"value": "sum:duration"
 										},
 										{
-											"key": "agg_column",
-											"value": "duration"
+											"key": "aggs",
+											"value": "value_count:count_:num_records"
 										}
 									]
 								}
@@ -836,7 +836,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{host}}/api/v2/pstreams/pstream/rda_microservice_traces/data?group_by=source&group_by=destination&agg_function=avg&agg_column=duration",
+									"raw": "{{host}}/api/v2/pstreams/pstream/rda_microservice_traces/data?group_by=source&group_by=destination&agg_function=value_count&agg_column=count_&cfxql_query=source is 'collector' or destination is 'collector'",
 									"host": [
 										"{{host}}"
 									],
@@ -859,11 +859,15 @@
 										},
 										{
 											"key": "agg_function",
-											"value": "avg"
+											"value": "value_count"
 										},
 										{
 											"key": "agg_column",
-											"value": "duration"
+											"value": "count_"
+										},
+										{
+											"key": "cfxql_query",
+											"value": "source is 'collector' or destination is 'collector'"
 										}
 									]
 								}
@@ -1161,7 +1165,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/v2/users/user/acme@cfx.com/status?activate=true",
+							"raw": "{{host}}/api/v2/users/user/siri4@cfx.com/status?activate=false",
 							"host": [
 								"{{host}}"
 							],
@@ -1170,14 +1174,44 @@
 								"v2",
 								"users",
 								"user",
-								"acme@cfx.com",
+								"siri4@cfx.com",
 								"status"
 							],
 							"query": [
 								{
 									"key": "activate",
-									"value": "true"
+									"value": "false"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/users/user/siri4@cfx.com",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"users",
+								"user",
+								"siri4@cfx.com"
 							]
 						}
 					},
@@ -1279,6 +1313,326 @@
 			]
 		},
 		{
+			"name": "Pipelines",
+			"item": [
+				{
+					"name": "Get Published Pipelines",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/pipelines",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"pipelines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Draft Pipelines",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/pipelines/draft",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"pipelines",
+								"draft"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Run published pipeline",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/pipelines/pipeline/siri/version/1.0/run",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"pipelines",
+								"pipeline",
+								"siri",
+								"version",
+								"1.0",
+								"run"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get pipeline job status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/pstreams/pstream/rda_system_job_tracker/data?cfxql_query=jobid='214ce8401aaa48de89fcd022416d2167'",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"pstreams",
+								"pstream",
+								"rda_system_job_tracker",
+								"data"
+							],
+							"query": [
+								{
+									"key": "cfxql_query",
+									"value": "jobid='214ce8401aaa48de89fcd022416d2167'"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get pipeline run history",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/pstreams/pstream/rda_system_job_tracker/data?cfxql_query=jobid='214ce8401aaa48de89fcd022416d2167'",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"pstreams",
+								"pstream",
+								"rda_system_job_tracker",
+								"data"
+							],
+							"query": [
+								{
+									"key": "cfxql_query",
+									"value": "jobid='214ce8401aaa48de89fcd022416d2167'"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get pipeline Traces summary",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/pstreams/pstream/rda_system_job_tracker/data?cfxql_query=jobid='214ce8401aaa48de89fcd022416d2167'",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"pstreams",
+								"pstream",
+								"rda_system_job_tracker",
+								"data"
+							],
+							"query": [
+								{
+									"key": "cfxql_query",
+									"value": "jobid='214ce8401aaa48de89fcd022416d2167'"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Groups",
+			"item": [
+				{
+					"name": "Get User Groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/user_groups",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"user_groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User Group - MSP Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"chatbot_policy\":\"xyz\",\n    \"description\":\"Siri MSP Admin\",\n    \"name\":\"siri-mst-admin1\",\n    \"profile\":\"msp-admin\",\n    \"projects\":[{\"customerName\":\"oia\",\"customerId\":\"a1f20dc2-3184-11ee-89c7-0242ac140006\"}]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/user_groups",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"user_groups"
+							]
+						},
+						"description": "Add User Group as MSP Admin and use orginzation selection"
+					},
+					"response": []
+				},
+				{
+					"name": "Add User Group - MSP User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"chatbot_policy\":\"xyz\",\n    \"description\":\"Siri MSP User\",\n    \"name\":\"siri-msp-user\",\n    \"profile\":\"msp-user\",\n    \"cfxql_filter\": \"custtomerName='siri'\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/user_groups",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"user_groups"
+							]
+						},
+						"description": "Add a usergroup as MSP User and use cfxql_query for Organizations"
+					},
+					"response": []
+				},
+				{
+					"name": "Modify User Group",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"chatbot_policy\":\"xyz\",\n    \"description\":\"Siri MSP User\",\n    \"name\":\"siri-msp-user\",\n    \"profile\":\"l3-user\",\n    \"cfxql_filter\": \"custtomerName='new_siri'\",\n    \"tenantId\":\"f76806c0-1a99-48fb-b3d0-c0d8bf43300e\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/user_groups/user_group/siri-msp-user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"user_groups",
+								"user_group",
+								"siri-msp-user"
+							]
+						},
+						"description": "Add a usergroup as MSP User and use cfxql_query for Organizations"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User Group",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tenantId\":\"f76806c0-1a99-48fb-b3d0-c0d8bf43300e\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/user_groups/user_group/siri-msp-user",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"user_groups",
+								"user_group",
+								"siri-msp-user"
+							]
+						},
+						"description": "Add a usergroup as MSP User and use cfxql_query for Organizations"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Organizations",
+			"item": [
+				{
+					"name": "Get Organizations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/organizations",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"organizations"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Login",
 			"event": [
 				{
@@ -1299,7 +1653,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"user\": \"acme@cfx.com\", \"password\": \"abcd123$\"}",
+					"raw": "{\"user\": \"admin@cfx.com\", \"password\": \"abcd123$\"}",
 					"options": {
 						"raw": {
 							"language": "json"
