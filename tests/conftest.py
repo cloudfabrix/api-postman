@@ -47,11 +47,10 @@ def cleanup(request):
                     os.remove(file_path)
 
 @pytest.fixture(scope="session")
-def unique_id():  # sourcery skip: inline-immediately-returned-variable
+def unique_id(): 
     current_datetime = datetime.datetime.now()
-    formatted_datetime = current_datetime.strftime("%Y%m%d%H%M")
-    uniqueID = f"test_api_{formatted_datetime}"
-    return uniqueID
+    formatted_datetime = current_datetime.strftime("%Y%m%d%H%M%S")
+    return f"test_api_{formatted_datetime}"
 
 @pytest.fixture(scope="session")
 def base_url(request):
@@ -59,7 +58,7 @@ def base_url(request):
     return f"https://{host}"
 
 @pytest.fixture(scope="session")
-def api_session(base_url, username, password):
+def session(base_url, username, password):
     # Create a session to maintain the connection
     session = requests.Session()
 

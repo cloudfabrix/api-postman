@@ -3,83 +3,248 @@ from tests.conftest import logging
 
 logger = logging.getLogger(__name__)
 
-def test_get_metadata_pstream(api_session, base_url):
-    session = api_session
-    base_url = base_url
+def test_get_pstream(session, base_url):
+    url = base_url + "/api/v2/pstreams"
+    response = session.get(url, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+def test_get_pstream_cfxql(session, base_url):
     url = base_url + "/api/v2/pstreams"
     data = {
-        "offset":0,
-        "limit":100,
-        "sort":"-timestamp"
+        "cfxql_query":"name ~ 'rda'"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_post_add_pstream(api_session, base_url, unique_id):
-    session = api_session
-    base_url = base_url
-    unique_id = unique_id
+    response_json = response.json()
+    assert response_json["num_items"] != 0
+    assert "rda" in response_json["pstreams"][0]["name"]
+
+def test_get_pstream_search(session, base_url):
+    url = base_url + "/api/v2/pstreams"
+    data = {
+        "search":"rda_datasets_meta"
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["search"] == "rda_datasets_meta"
+    assert response_json["num_items"] != 0
+
+def test_get_pstream_sort(session, base_url):
+    url = base_url + "/api/v2/pstreams"
+    data = {
+        "sort":"-name"
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["sort"] == ['-name']
+
+def test_get_pstream_limit(session, base_url):
+    url = base_url + "/api/v2/pstreams"
+    data = {
+        "limit":10
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["limit"] == 10
+
+def test_add_pstream(session, base_url, unique_id):
     url = base_url + "/api/v2/pstreams"
     request_body = {
         "attributes": {
-            "retention_days": 31,
-            "unique_keys": [
-            "OIA",
-            "AIA"
-            ]
+        "retention_days": 31,
+        "unique_keys": [
+            "AIA",
+            "OIA"
+        ]
         },
-        "name": unique_id
+        "name": f"{unique_id}_pstream"
+    }
+    response = session.post(url, json=request_body, headers=session.headers, verify=False)
+    time.sleep(15)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["serviceResult"]["status"] == "SUBMIT_OK"
+
+def test_added_pstream_verf(session, base_url, unique_id):
+    url = base_url + "/api/v2/pstreams"
+    data = {
+        "search":f"{unique_id}_pstream"
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["search"] == f"{unique_id}_pstream"
+    assert response_json["num_items"] != 0
+    assert response_json["pstreams"][0]["retention_days"] == 31
+    assert response_json["pstreams"][0]["attrs"]["unique_keys"] == ["AIA","OIA"]
+
+def test_add_empty_name_pstream_verf(session, base_url):
+    url = base_url + "/api/v2/pstreams"
+    request_body = {
+        "attributes": {
+            "retention_days": 31
+        },
+        "name": ""
     }
     response = session.post(url, json=request_body, headers=session.headers, verify=False)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    response.raise_for_status()
+    # response.raise_for_status()
 
-def test_put_edit_pstream(api_session, base_url, unique_id):
-    session = api_session
-    base_url = base_url
-    unique_id = unique_id
-    url = base_url + f"/api/v2/pstreams/pstream/{unique_id}"
+    expected_response = {"detail":"Persistent Stream name must not be empty"}
+    actual_response = response.json()
+    assert actual_response == expected_response
+
+def test_update_pstream(session, base_url, unique_id):
+    url = base_url + f"/api/v2/pstreams/pstream/{unique_id}_pstream"
     request_body = {
         "attributes": {
             "retention_days": 62,
             "unique_keys": [
-            "AIA",
-            "OIA"
+                "OIA",
+                "AIA"
             ]
         }
     }
-    time.sleep(10)
     response = session.put(url, json=request_body, headers=session.headers, verify=False)
-    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-
-    response.raise_for_status()
-
-def test_get_single_pstream(api_session, base_url):
-    session = api_session
-    base_url = base_url
-    url = base_url + "/api/v2/pstreams/pstream/rda_secrets_meta/data"
-    data = {
-        "offset":0,
-        "limit":100
-    }
     time.sleep(10)
-    response = session.get(url, params=data, headers=session.headers, verify=False)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-
     response.raise_for_status()
 
-def test_delete_pstream(api_session, base_url, unique_id):
-    session = api_session
+    response_json = response.json()
+    assert response_json["serviceResult"]["status"] == "SUBMIT_OK"
+
+def test_updated_pstream_verf(session, base_url, unique_id):
+    url = base_url + "/api/v2/pstreams"
+    data = {
+        "search":f"{unique_id}_pstream"
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["num_items"] != 0
+    assert response_json["pstreams"][0]["retention_days"] == 62
+    assert response_json["pstreams"][0]["attrs"]["unique_keys"] == ["OIA","AIA"]
+
+def test_delete_pstream(session, base_url, unique_id):
     base_url = base_url
     unique_id = unique_id
-    url = base_url + f"/api/v2/pstreams/pstream/{unique_id}"
+    url = base_url + f"/api/v2/pstreams/pstream/{unique_id}_pstream"
     data = {
         "delete_data": True
     }
-    time.sleep(10)
     response = session.delete(url, params=data, headers=session.headers, verify=False)
+    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["serviceResult"]["status"] == "SUBMIT_OK"
+
+def test_deleted_pstream_verf(session, base_url, unique_id):
+    url = base_url + "/api/v2/pstreams"
+    data = {
+        "search":f"{unique_id}_pstream"
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["search"] == f"{unique_id}_pstream"
+    assert response_json["num_items"] == 0
+
+def test_get_pstream_data(session, base_url):
+    # used existsing pstream
+    url = base_url + "/api/v2/pstreams/pstream/rda_system_worker_traces/data"
+    response = session.get(url, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["num_items"] != 0
+
+def test_get_pstream_data_cfxql(session, base_url):
+    # used existsing pstream
+    url = base_url + "/api/v2/pstreams/pstream/rda_system_worker_traces/data"
+    data = {
+        "cfxql_query":"status_type ~ 'completed'"
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["num_items"] != 0
+    assert "completed" in response_json["pstream_data"][0]["status_type"]
+
+def test_get_pstream_data_search(session, base_url):
+    # used existsing pstream
+    url = base_url + "/api/v2/pstreams/pstream/rda_system_worker_traces/data"
+    data = {
+        "search":"oia-sources-streams-merge"
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    
+    response_json = response.json()
+    assert response_json["search"] == "oia-sources-streams-merge"
+    assert response_json["num_items"] != 0
+
+def test_get_pstream_data_sort(session, base_url):
+    # used existsing pstream
+    url = base_url + "/api/v2/pstreams/pstream/rda_system_worker_traces/data"
+    data = {
+        "sort":"-name"
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["sort"] == ['-name']
+
+def test_get_pstream_data_limit(session, base_url):
+    # used existsing pstream
+    url = base_url + "/api/v2/pstreams/pstream/rda_system_worker_traces/data"
+    data = {
+        "limit":10
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False)
+    time.sleep(10)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+    response_json = response.json()
+    assert response_json["limit"] == 10
