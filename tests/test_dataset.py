@@ -182,6 +182,7 @@ def test_deleted_datasets_verf_cfxql(session, base_url, unique_id):
         "limit":100,
         "sort":"-timestamp"
     }
+    time.sleep(20)
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")

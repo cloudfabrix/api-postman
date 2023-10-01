@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 def test_get_dashboard(session, base_url):
     url = base_url + "/api/v2/dashboards"
-    response = session.get(url, headers=session.headers, verify=False)
+    response = session.get(url, headers=session.headers, verify=False, timeout=30)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -15,7 +15,7 @@ def test_get_dashboard_cfxql(session, base_url):
     data = {
         "cfxql_query":"dashboard_type ~ 'app'"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -29,7 +29,7 @@ def test_get_dashboard_search(session, base_url):
     data = {
         "search":"topology-details-app-template"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -43,7 +43,7 @@ def test_get_dashboard_sort(session, base_url):
     data = {
         "sort":"-name"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -56,13 +56,13 @@ def test_get_dashboard_limit(session, base_url):
     data = {
         "limit":10
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
-    assert response_json["limit"] == 10
+    assert response_json["num_items"] == 10
 
 def test_add_dashboard(session, base_url, unique_id):
     url = base_url + "/api/v2/dashboards"
@@ -87,7 +87,7 @@ def test_add_dashboard(session, base_url, unique_id):
             }
         ]
     }
-    response = session.post(url, json=data, headers=session.headers, verify=False)
+    response = session.post(url, json=data, headers=session.headers, verify=False, timeout=30)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -100,7 +100,7 @@ def test_added_dashboard_verf(session, base_url, unique_id):
     data = {
         "search":f"{unique_id}_dashboard"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -133,7 +133,7 @@ def test_update_dashboard(session, base_url, unique_id):
         ]
     }
     time.sleep(10)
-    response = session.put(url, json=data, headers=session.headers, verify=False)
+    response = session.put(url, json=data, headers=session.headers, verify=False, timeout=30)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -146,7 +146,7 @@ def test_updated_dashboard_verf(session, base_url, unique_id):
         "search":f"{unique_id}_dashboard"
     }
     time.sleep(10)
-    response = session.get(url, json=data, headers=session.headers, verify=False)
+    response = session.get(url, json=data, headers=session.headers, verify=False, timeout=30)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -156,7 +156,7 @@ def test_updated_dashboard_verf(session, base_url, unique_id):
 
 def test_delete_dashboard(session, base_url, unique_id):
     url = base_url + f"/api/v2/dashboards/dashboard/{unique_id}_dashboard"
-    response = session.delete(url, headers=session.headers, verify=False)
+    response = session.delete(url, headers=session.headers, verify=False, timeout=30)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     time.sleep(20)
     response.raise_for_status()
@@ -169,7 +169,7 @@ def test_deleted_dashboard_verf(session, base_url, unique_id):
     data = {
         "search":f"{unique_id}_dashboard"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()

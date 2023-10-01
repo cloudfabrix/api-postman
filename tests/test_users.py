@@ -50,13 +50,13 @@ def test_add_user_negative(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     assert response.status_code == 409
 
-def test_add_user_usergroup_negative(session, base_url, unique_id):
+def test_add_user_unkonw_usergroup(session, base_url, unique_id):
     
     url = base_url + "/api/v2/users"
     data = {
         "remoteUser": False,
         "authenticationType": "ad",
-        "group": "msp_admin_group777",
+        "group": "unkonw_user_group",
         "firstname": "test1234",
         "lastname": "t",
         "id": "test_user1234@cfx.com"
@@ -120,7 +120,7 @@ def test_change_user_group(session, base_url, unique_id):
     
     response.raise_for_status()
 
-def test_change_unknown_user_group_negative(session, base_url, unique_id):
+def test_change_unknown_user_group(session, base_url, unique_id):
     
     url = base_url + f"/api/v2/users/user/{unique_id}@cfx.com/group"
     data = {
@@ -131,7 +131,7 @@ def test_change_unknown_user_group_negative(session, base_url, unique_id):
     
     assert response.status_code == 404
 
-def test_change_user_group_unknow_user_negative(session, base_url, unique_id):
+def test_change_user_group_unknow_user(session, base_url, unique_id):
     
     url = base_url + f"/api/v2/users/user/unkonwn@cfx.com/group"
     data = {
