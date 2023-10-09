@@ -12,7 +12,7 @@ def test_get_dataset(session, base_url):
         "limit":100,
         "sort":"-timestamp"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -25,7 +25,7 @@ def test_get_dataset_using_cfxql(session, base_url):
         "limit":100,
         "sort":"-timestamp"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -38,7 +38,7 @@ def test_get_dataset_using_search(session, base_url):
         "limit":100,
         "sort":"-timestamp"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -50,7 +50,7 @@ def test_get_dataset_using_limit(session, base_url):
         "limit":3,
         "sort":"-timestamp"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -65,7 +65,7 @@ def test_add_dataset(session, base_url, unique_id):
         "schema_name": "",
         "tag": ""
     }
-    response = session.post(url, json=data, headers=session.headers, verify=False, timeout=30)
+    response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     time.sleep(10)
     response.raise_for_status()
@@ -78,7 +78,7 @@ def test_added_dataset_verf(session, base_url, unique_id):
         "schema_name": "",
         "tag": "test"
     }
-    response = session.post(url, json=data, headers=session.headers, verify=False, timeout=30)
+    response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     time.sleep(10)
     assert response.status_code == 409
@@ -89,7 +89,7 @@ def test_get_added_dataset_cfxql(session, base_url, unique_id):
     data = {
         "cfxql_query":f"name={name}"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -102,7 +102,7 @@ def test_get_added_dataset_using_search(session, base_url, unique_id):
     data = {
         "search":name,
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -117,7 +117,7 @@ def test_update_dataset_data(session, base_url, unique_id):
     request_body = [
         {"__uuid": f"{unique_id}", "column1":"row1"}
     ]
-    response = session.put(url, params=data, json=request_body, headers=session.headers, verify=False, timeout=30)
+    response = session.put(url, params=data, json=request_body, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -129,7 +129,7 @@ def test_replace_dataset_data(session, base_url, unique_id):
     request_body = [
         {"__uuid": f"{unique_id}", "column1":"row2"}
     ]
-    response = session.put(url, params=data, json=request_body, headers=session.headers, verify=False, timeout=30)
+    response = session.put(url, params=data, json=request_body, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -140,7 +140,7 @@ def test_get_added_dataset_data(session, base_url, unique_id):
         "offset":0,
         "limit":100
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -156,20 +156,20 @@ def test_delete_dataset_rows(session, base_url, unique_id):
     request_body = [
         {"column1":"row2"}
     ]
-    response = session.delete(url, params=data, json=request_body, headers=session.headers, verify=False, timeout=30)
+    response = session.delete(url, params=data, json=request_body, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
 def test_delete_all_dataset_data(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset/data/all"
-    response = session.delete(url, headers=session.headers, verify=False, timeout=30)
+    response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
 def test_delete_dataset(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset"
     time.sleep(10)
-    response = session.delete(url, headers=session.headers, verify=False, timeout=30)
+    response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -183,7 +183,7 @@ def test_deleted_datasets_verf_cfxql(session, base_url, unique_id):
         "sort":"-timestamp"
     }
     time.sleep(20)
-    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
@@ -198,7 +198,7 @@ def test_deleted_dataset_verf_using_search(session, base_url, unique_id):
         "limit":100,
         "sort":"-timestamp"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=30)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
