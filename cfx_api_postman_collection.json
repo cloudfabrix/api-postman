@@ -1493,7 +1493,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"chatbot_policy\":\"xyz\",\n    \"description\":\"Siri MSP Admin\",\n    \"name\":\"siri-mst-admin1\",\n    \"profile\":\"msp-admin\",\n    \"projects\":[{\"customerName\":\"oia\",\"customerId\":\"a1f20dc2-3184-11ee-89c7-0242ac140006\"}]\n}",
+							"raw": "{\n    \"chatbot_policy\":\"xyz\",\n    \"description\":\"Siri MSP Admin\",\n    \"name\":\"siri-mst-admin2\",\n    \"profile\":\"msp-admin\",\n    \"selection_type\": \"tabular_report\",\n    \"projects\":[{\"customerName\":\"oia\",\"customerId\":\"a1f20dc2-3184-11ee-89c7-0242ac140006\"}]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1522,7 +1522,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"chatbot_policy\":\"xyz\",\n    \"description\":\"Siri MSP User\",\n    \"name\":\"siri-msp-user\",\n    \"profile\":\"msp-user\",\n    \"cfxql_filter\": \"custtomerName='siri'\"\n}",
+							"raw": "{\n    \"chatbot_policy\":\"xyz\",\n    \"description\":\"Siri MSP User\",\n    \"name\":\"siri-msp-user1\",\n    \"profile\":\"msp-user\",\n    \"selection_type\": \"cfxql_filter\",\n    \"project_cfxql\": \"customerName='OIA'\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1551,7 +1551,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"chatbot_policy\":\"xyz\",\n    \"description\":\"Siri MSP User\",\n    \"name\":\"siri-msp-user\",\n    \"profile\":\"l3-user\",\n    \"cfxql_filter\": \"custtomerName='new_siri'\",\n    \"tenantId\":\"f76806c0-1a99-48fb-b3d0-c0d8bf43300e\"\n}",
+							"raw": "{\n    \"chatbot_policy\":\"xyz\",\n    \"description\":\"Siri MSP User\",\n    \"name\":\"siri-msp-user1\",\n    \"profile\":\"l3-user\",\n    \"selection_type\": \"cfxql_filter\",\n    \"project_cfxql\": \"customerName='oia'\",\n    \"tenantId\":\"f76806c0-1a99-48fb-b3d0-c0d8bf43300e\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
