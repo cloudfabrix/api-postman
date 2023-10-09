@@ -38,4 +38,3 @@ def test_POST_login_negative_password(base_url, username, password):
     logger.info(f"---- API Log ---- {url}:::{response.status_code}::::{response.text}")
     assert response.status_code == 401
 
-

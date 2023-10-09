@@ -3,9 +3,7 @@
 Things to be checked before executing api testcases (Manual Execution) :
 1. Add Worker if not already present. Needed for running pipeline API
 2. Add Organization in the portal. Needed for creating user group
-3. Add User Group as "test_user_group". Needed for adding user via users API 
-4. Publish `generate-alerts-suppression-policy-dataset` of `version` pipeline from draft pipelines. Remember to change version of pipeline as it is present in draft pipelines.
-5. Make sure to Deactivate & Delete in the portal. USER: `user_test@cfx.com` created via API after every run of api automation.
+3. Publish `generate-alerts-suppression-policy-dataset` of `version` pipeline from draft pipelines. Remember to change version of pipeline as it is present in draft pipelines.
 
 ## Steps to follow to launch the API automation
 
@@ -40,13 +38,13 @@ Things to be checked before executing api testcases (Manual Execution) :
 6. Run the command from `project_directory` folder to trigger automation  
 
     To run particular testcase  
-    `pytest -vv -s tests/{test_file_name}.py --hostip=10.95.00.000 --user=admin@cfx.com --password=admin1234`
+    `pytest -vv -s tests/{test_file_name}.py --host=10.95.00.000 --user=admin@cfx.com --password=admin1234`
     
     or 
     
     To run all testcases  
     `cd tests/`  
-    `pytest -vv -s --hostip=10.95.00.000 --user=admin@cfx.com --password=admin1234`  
+    `pytest -vv -s --host=10.95.00.000 --user=admin@cfx.com --password=admin1234`  
 
 
 #### CFX API Swagger Documentation:

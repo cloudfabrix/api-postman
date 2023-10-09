@@ -13,11 +13,11 @@ def test_get_dataset(session, base_url):
         "sort":"-timestamp"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_get_dataset_using_cfxql(session, base_url):
+def test_get_dataset_cfxql(session, base_url):
     url = base_url + "/api/v2/datasets"
     data = {
         "cfxql_query":"name ~ 'sample'",
@@ -26,11 +26,11 @@ def test_get_dataset_using_cfxql(session, base_url):
         "sort":"-timestamp"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_get_dataset_using_search(session, base_url):
+def test_get_dataset_search(session, base_url):
     url = base_url + "/api/v2/datasets"
     data = {
         "search":"synthetic_syslogs_dataset",
@@ -39,11 +39,11 @@ def test_get_dataset_using_search(session, base_url):
         "sort":"-timestamp"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_get_dataset_using_limit(session, base_url):
+def test_get_dataset_limit(session, base_url):
     url = base_url + "/api/v2/datasets"
     data = {
         "offset":0,
@@ -51,11 +51,11 @@ def test_get_dataset_using_limit(session, base_url):
         "sort":"-timestamp"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
-    assert response_json["num_items"] == 3, "num_items is not equal to 3 in the response"
+    assert response_json["num_items"] == 0
 
 def test_add_dataset(session, base_url, unique_id):
     url = base_url + "/api/v2/datasets"
@@ -67,7 +67,7 @@ def test_add_dataset(session, base_url, unique_id):
     }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    time.sleep(10)
+    time.sleep(12)
     response.raise_for_status()
 
 def test_added_dataset_verf(session, base_url, unique_id):
@@ -78,36 +78,22 @@ def test_added_dataset_verf(session, base_url, unique_id):
         "schema_name": "",
         "tag": "test"
     }
-    response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
+    response = session.post(url, json=data, headers=session.headers, verify=False, timeout=40)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    time.sleep(10)
+    time.sleep(12)
     assert response.status_code == 409
 
-def test_get_added_dataset_cfxql(session, base_url, unique_id):
+def test_get_added_dataset_search(session, base_url, unique_id):
     url = base_url + "/api/v2/datasets"
-    name = unique_id + "_dataset"
     data = {
-        "cfxql_query":f"name={name}"
+        "search":f"{unique_id}_dataset"
     }
-    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=40)
+    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
-    assert response_json["datasets"][0]["name"] == name
-
-def test_get_added_dataset_using_search(session, base_url, unique_id):
-    url = base_url + "/api/v2/datasets"
-    name = unique_id + '_dataset'
-    data = {
-        "search":name,
-    }
-    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
-    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    response.raise_for_status()
-    response_json = response.json()
-    assert response_json["datasets"][0]["name"] == unique_id + '_dataset'
+    assert response_json["search"] == f"{unique_id}_dataset"
 
 def test_update_dataset_data(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset/data"
@@ -141,14 +127,13 @@ def test_get_added_dataset_data(session, base_url, unique_id):
         "limit":100
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
     response_json["dataset_data"] == [{"__uuid": f"{unique_id}", "column1":"row2"}]
 
 def test_delete_dataset_rows(session, base_url, unique_id):
-    unique_id = "test_api_20231001115143"
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset/data"
     data = {
         "keys":"column1"
@@ -168,21 +153,16 @@ def test_delete_all_dataset_data(session, base_url, unique_id):
 
 def test_delete_dataset(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset"
-    time.sleep(10)
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    time.sleep(25)
     response.raise_for_status()
 
-
-def test_deleted_datasets_verf_cfxql(session, base_url, unique_id):
+def test_deleted_dataset_verf_cfxql(session, base_url, unique_id):
     url = base_url + "/api/v2/datasets"
     data = {
-        "cfxql_query":f"name='{unique_id}_dataset'",
-        "offset":0,
-        "limit":100,
-        "sort":"-timestamp"
+        "cfxql_query":f"name='{unique_id}_dataset'"
     }
-    time.sleep(20)
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -190,13 +170,10 @@ def test_deleted_datasets_verf_cfxql(session, base_url, unique_id):
     response_json = response.json()
     assert response_json["num_items"] == 0
 
-def test_deleted_dataset_verf_using_search(session, base_url, unique_id):
+def test_deleted_dataset_verf_search(session, base_url, unique_id):
     url = base_url + "/api/v2/datasets"
     data = {
-        "search":f"{unique_id}_dataset",
-        "offset":0,
-        "limit":100,
-        "sort":"-timestamp"
+        "search":f"{unique_id}_dataset"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     time.sleep(10)

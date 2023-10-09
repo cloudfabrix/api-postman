@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 def test_get_blueprints(session, base_url):
     url = base_url + "/api/v2/Blueprints"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -16,7 +16,7 @@ def test_get_blueprints_cfxql(session, base_url):
         "cfxql_query":"name ~ 'Alerts'"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -30,7 +30,7 @@ def test_get_blueprints_search(session, base_url):
         "search":"Alerts Enricher"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -44,7 +44,7 @@ def test_get_blueprints_sort(session, base_url):
         "sort":"-name"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -57,7 +57,7 @@ def test_get_blueprints_limit(session, base_url):
         "limit":1
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
