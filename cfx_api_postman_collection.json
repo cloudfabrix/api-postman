@@ -1633,6 +1633,121 @@
 			]
 		},
 		{
+			"name": "Dashboard Groups",
+			"item": [
+				{
+					"name": "Get Dashboard Groups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/v2/dashboard_groups",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"dashboard_groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Dashboard Group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"siri14\",\n    \"label\": \"Label\",\n    \"description\": \"Descrition\",\n    \"userGroups\": [\n        {\n            \"tenantId\": \"f76806c0-1a99-48fb-b3d0-c0d8bf43300e\",\n            \"name\": \"admin\"\n        },\n        {\n            \"tenantId\": \"f76806c0-1a99-48fb-b3d0-c0d8bf43300e\",\n            \"name\": \"siri\"\n        },\n        {\n            \"tenantId\": \"f76806c0-1a99-48fb-b3d0-c0d8bf43300e\",\n            \"name\": \"siri-msp-user1\",\n            \"profile\": \"msp-user\"\n        }\n    ],\n    \"dashboardList\": [\n        {\n            \"id\": \"user-dashboard-topology-details-app\",\n            \"name\": \"topology-details-app\"\n        },\n        {\n            \"id\": \"user-dashboard-oia-alert-analytics-os\",\n            \"name\": \"oia-alert-analytics-os\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/dashboard_groups",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"dashboard_groups"
+							]
+						},
+						"description": "Add User Group as MSP Admin and use orginzation selection"
+					},
+					"response": []
+				},
+				{
+					"name": "Modify Dashboard Group",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"siri14\",\n    \"label\": \"Label\",\n    \"description\": \"Descrition\",\n    \"userGroups\": [\n        {\n            \"tenantId\": \"f76806c0-1a99-48fb-b3d0-c0d8bf43300e\",\n            \"name\": \"admin\"\n        },\n        {\n            \"tenantId\": \"f76806c0-1a99-48fb-b3d0-c0d8bf43300e\",\n            \"name\": \"siri\"\n        }\n    ],\n    \"dashboardList\": [\n        {\n            \"id\": \"user-dashboard-topology-details-app\",\n            \"name\": \"topology-details-app\"\n        },\n        {\n            \"id\": \"user-dashboard-oia-alert-analytics-os\",\n            \"name\": \"oia-alert-analytics-os\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/dashboard_groups/dashboard_group/siri14",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"dashboard_groups",
+								"dashboard_group",
+								"siri14"
+							]
+						},
+						"description": "Add User Group as MSP Admin and use orginzation selection"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Dashboard Group",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/v2/dashboard_groups/dashboard_group/siri9",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"dashboard_groups",
+								"dashboard_group",
+								"siri9"
+							]
+						},
+						"description": "Add a usergroup as MSP User and use cfxql_query for Organizations"
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Login",
 			"event": [
 				{
