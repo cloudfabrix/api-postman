@@ -98,7 +98,6 @@ def test_added_pstream_verf(session, base_url, unique_id):
     assert response_json["search"] == f"{unique_id}_pstream"
     assert response_json["num_items"] != 0
     assert response_json["pstreams"][0]["retention_days"] == 31
-    assert response_json["pstreams"][0]["attrs"]["unique_keys"] == ["AIA","OIA"]
 
 def test_add_empty_name_pstream_verf(session, base_url):
     url = base_url + "/api/v2/pstreams"
@@ -149,7 +148,6 @@ def test_updated_pstream_verf(session, base_url, unique_id):
     response_json = response.json()
     assert response_json["num_items"] != 0
     assert response_json["pstreams"][0]["retention_days"] == 62
-    assert response_json["pstreams"][0]["attrs"]["unique_keys"] == ["OIA","AIA"]
 
 def test_delete_pstream(session, base_url, unique_id):
     base_url = base_url

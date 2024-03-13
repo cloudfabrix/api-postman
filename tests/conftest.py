@@ -7,7 +7,9 @@ import yaml
 import datetime
 
 def setup_logging():
-    with open('custom_logger.yaml', 'r') as config_file:
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    yaml_file_path = os.path.join(script_dir, 'custom_logger.yaml')
+    with open(yaml_file_path, 'r') as config_file:
         config = yaml.safe_load(config_file)
         logging.config.dictConfig(config)
 

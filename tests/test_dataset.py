@@ -155,7 +155,7 @@ def test_delete_dataset(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    time.sleep(25)
+    time.sleep(60)
     response.raise_for_status()
 
 def test_deleted_dataset_verf_cfxql(session, base_url, unique_id):

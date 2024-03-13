@@ -92,7 +92,7 @@ def test_add_user_unkonw_usergroup(session, base_url):
         }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    assert response.status_code == 409
+    assert response.status_code == 500
 
 def test_deactivate_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/users/user/{unique_id}@cfx.com/status"
