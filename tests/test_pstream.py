@@ -6,7 +6,6 @@ logger = logging.getLogger(__name__)
 def test_get_pstream(session, base_url):
     url = base_url + "/api/v2/pstreams"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -16,7 +15,6 @@ def test_get_pstream_cfxql(session, base_url):
         "cfxql_query":"name ~ 'rda'"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -30,7 +28,6 @@ def test_get_pstream_search(session, base_url):
         "search":"rda_datasets_meta"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -44,7 +41,6 @@ def test_get_pstream_sort(session, base_url):
         "sort":"-name"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -57,7 +53,6 @@ def test_get_pstream_limit(session, base_url):
         "limit":10
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -90,7 +85,6 @@ def test_added_pstream_verf(session, base_url, unique_id):
         "search":f"{unique_id}_pstream"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -141,7 +135,6 @@ def test_updated_pstream_verf(session, base_url, unique_id):
         "search":f"{unique_id}_pstream"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -170,7 +163,6 @@ def test_deleted_pstream_verf(session, base_url, unique_id):
         "search":f"{unique_id}_pstream"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -182,7 +174,6 @@ def test_get_pstream_data(session, base_url):
     # used existsing pstream
     url = base_url + "/api/v2/pstreams/pstream/rda_pstreams_meta/data"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -196,7 +187,6 @@ def test_get_pstream_data_cfxql(session, base_url):
         "cfxql_query":"system_defined = 'no'"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -211,7 +201,6 @@ def test_get_pstream_data_search(session, base_url):
         "search":"oia-events-stream"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     
@@ -226,7 +215,6 @@ def test_get_pstream_data_sort(session, base_url):
         "sort":"-name"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -240,7 +228,6 @@ def test_get_pstream_data_limit(session, base_url):
         "limit":10
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 

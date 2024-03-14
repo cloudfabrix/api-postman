@@ -6,14 +6,12 @@ logger = logging.getLogger(__name__)
 def test_get_user_groups(session, base_url):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
 def test_get_org_data(session, base_url):
     url = base_url + "/api/v2/organizations"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -40,12 +38,22 @@ def test_add_user_group(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    time.sleep(20)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
+
+def test_get_added_user_groups(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response_json = response.json()
+    response.raise_for_status()
+    user_groups = response_json.get('user_groups', [])
+
+    assert any(group['name'] == f'{unique_id}_user_group' for group in user_groups)
 
 def test_edit_usergroup_msp_admin(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
@@ -59,12 +67,25 @@ def test_edit_usergroup_msp_admin(session, base_url, unique_id):
     "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
+
+def test_get_edit_usergroup_msp_admin(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response_json = response.json()
+    response.raise_for_status()
+    user_group = next((group for group in response_json.get('user_groups', []) if group['name'] == f'{unique_id}_user_group'), None)
+
+    if user_group and user_group.get('chatbot_policy') == 'policy-update':
+        assert True
+    else:
+        assert False
 
 def test_edit_usergroup_msp_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
@@ -78,12 +99,26 @@ def test_edit_usergroup_msp_user(session, base_url, unique_id):
     "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
+
+def test_get_edit_usergroup_msp_user(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+
+    response_json = response.json()
+    response.raise_for_status()
+    user_group = next((group for group in response_json.get('user_groups', []) if group['name'] == f'{unique_id}_user_group'), None)
+
+    if user_group and user_group.get('profile') == 'msp-user':
+        assert True
+    else:
+        assert False
 
 def test_edit_usergroup_msp_user_read_only(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
@@ -97,12 +132,26 @@ def test_edit_usergroup_msp_user_read_only(session, base_url, unique_id):
     "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
+
+def test_get_edit_usergroup_msp_user_read_only(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+
+    response_json = response.json()
+    response.raise_for_status()
+    user_group = next((group for group in response_json.get('user_groups', []) if group['name'] == f'{unique_id}_user_group'), None)
+
+    if user_group and user_group.get('profile') == 'msp-user-read-only':
+        assert True
+    else:
+        assert False
 
 def test_edit_usergroup_tenant_admin_profile(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
@@ -121,12 +170,26 @@ def test_edit_usergroup_tenant_admin_profile(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
+
+def test_get_edit_usergroup_tenant_admin_profile(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+
+    response_json = response.json()
+    response.raise_for_status()
+    user_group = next((group for group in response_json.get('user_groups', []) if group['name'] == f'{unique_id}_user_group'), None)
+
+    if user_group and user_group.get('profile') == 'tenant-admin-profile':
+        assert True
+    else:
+        assert False
 
 def test_edit_usergroup_tenant_user_profile(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
@@ -145,12 +208,26 @@ def test_edit_usergroup_tenant_user_profile(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
+
+def test_get_edit_usergroup_tenant_user_profile(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+
+    response_json = response.json()
+    response.raise_for_status()
+    user_group = next((group for group in response_json.get('user_groups', []) if group['name'] == f'{unique_id}_user_group'), None)
+
+    if user_group and user_group.get('profile') == 'tenant-user-profile':
+        assert True
+    else:
+        assert False
 
 def test_edit_usergroup_tenant_user_read_only(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
@@ -169,12 +246,26 @@ def test_edit_usergroup_tenant_user_read_only(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
+
+def test_get_edit_usergroup_tenant_user_read_only(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+
+    response_json = response.json()
+    response.raise_for_status()
+    user_group = next((group for group in response_json.get('user_groups', []) if group['name'] == f'{unique_id}_user_group'), None)
+
+    if user_group and user_group.get('profile') == 'tenant-user-read-only':
+        assert True
+    else:
+        assert False
 
 def test_edit_usergroup_l3_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
@@ -193,12 +284,26 @@ def test_edit_usergroup_l3_user(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
+
+def test_get_edit_usergroup_l3_user(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+
+    response_json = response.json()
+    response.raise_for_status()
+    user_group = next((group for group in response_json.get('user_groups', []) if group['name'] == f'{unique_id}_user_group'), None)
+
+    if user_group and user_group.get('profile') == 'l3-user':
+        assert True
+    else:
+        assert False
 
 def test_edit_usergroup_l1_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
@@ -217,12 +322,26 @@ def test_edit_usergroup_l1_user(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
+
+def test_get_edit_usergroup_l1_user(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+
+    response_json = response.json()
+    response.raise_for_status()
+    user_group = next((group for group in response_json.get('user_groups', []) if group['name'] == f'{unique_id}_user_group'), None)
+
+    if user_group and user_group.get('profile') == 'l1-user':
+        assert True
+    else:
+        assert False
 
 def test_delete_user_group(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
@@ -236,3 +355,14 @@ def test_delete_user_group(session, base_url, unique_id):
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
+
+def test_get_deleted_user_groups(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    response_json = response.json()
+    user_groups = response_json.get('user_groups', [])
+
+    if any(group['name'] == f'{unique_id}_user_group' for group in user_groups):
+        assert False

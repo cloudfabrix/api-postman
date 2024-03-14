@@ -6,7 +6,6 @@ logger = logging.getLogger(__name__)
 def test_get_pipelines(session, base_url):
     url = base_url + "/api/v2/pipelines"
     response = session.get(url, headers=session.headers, verify=False, timeout=40)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -16,7 +15,6 @@ def test_get_pipelines_cfxql(session, base_url):
         "cfxql_query":"version ~ '2024'"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -29,7 +27,6 @@ def test_get_pipelines_search(session, base_url):
         "search":"rda"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -43,7 +40,6 @@ def test_get_pipelines_limit(session, base_url):
         "limit":10
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -56,7 +52,6 @@ def test_get_pipelines_sort(session, base_url):
         "sort":"-name"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -66,7 +61,6 @@ def test_get_pipelines_sort(session, base_url):
 def test_get_draft_pipelines(session, base_url):
     url = base_url + "/api/v2/pipelines/draft"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -76,7 +70,6 @@ def test_get_draft_pipelines_cfxql(session, base_url):
         "cfxql_query":"name ~ 'db_alerts'"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -90,7 +83,6 @@ def test_get_draft_pipelines_search(session, base_url):
         "search":"db_incidents_clustering"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -104,7 +96,6 @@ def test_get_draft_pipelines_sort(session, base_url):
         "sort":"-name"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -117,7 +108,6 @@ def test_get_draft_pipelines_limit(session, base_url):
         "limit":5
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 

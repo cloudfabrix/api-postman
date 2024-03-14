@@ -6,14 +6,12 @@ logger = logging.getLogger(__name__)
 def test_get_dashgroup(session, base_url):
     url = base_url + "/api/v2/dashboard_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
 def test_dashboard_group_get_organizations(session, base_url):
     url = base_url + "/api/v2/organizations"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -40,12 +38,21 @@ def test_dashboard_group_add_usergroup(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
+
+def test_dashboard_group_get_added_user_group(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response_json = response.json()
+    response.raise_for_status()
+    user_groups = response_json.get('user_groups', [])
+
+    assert any(group['name'] == f'{unique_id}_user_group' for group in user_groups)
 
 def test_dashboard_group_add_user(session, base_url, unique_id):
     url = base_url + "/api/v2/users"
@@ -61,20 +68,18 @@ def test_dashboard_group_add_user(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_dashboard_group_get_users(session, base_url):
+def test_dashboard_group_get_user(session, base_url, unique_id):
     url = base_url + "/api/v2/users"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
+    response_json = response.json()
+    email_address = f'{unique_id}@cfx.com'
 
-def test_dashboard_group_get_users(session, base_url):
-    url = base_url + "/api/v2/users"
-    response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    response.raise_for_status()
+    if not any(user['emailId'] == email_address for user in response_json.get('users', [])):
+        assert False
 
-
-def test_add_dashhroup(session, base_url, unique_id):
+def test_add_dashgroup(session, base_url, unique_id):
     url = base_url + "/api/v2/dashboard_groups"
     data = {
     "name": f"{unique_id}_dashboard_group",
@@ -97,21 +102,19 @@ def test_add_dashhroup(session, base_url, unique_id):
     ]
 }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(15)
+    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
 def test_get_dashgroup_verf(session, base_url, unique_id):
     url = base_url + "/api/v2/dashboard_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     data = response.json()
     dashboard_group_name = f"{unique_id}_dashboard_group"
     is_dashboard_group_present = any(group['name'] == dashboard_group_name for group in data.get('dashboard_groups', []))
     assert is_dashboard_group_present
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
-
 
 def test_update_dashgroup(session, base_url, unique_id):
     url = base_url + f"/api/v2/dashboard_groups/dashboard_group/{unique_id}_dashboard_group"
@@ -144,7 +147,7 @@ def test_update_dashgroup(session, base_url, unique_id):
 }
 
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(15)
+    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -152,11 +155,21 @@ def test_update_dashgroup(session, base_url, unique_id):
     assert response_json["status"] == "SUBMIT_OK"
     assert response_json['statusMessage'] == f"Dashboard Group {unique_id}_dashboard_group:test_api_edited_api_edited added successfully"
 
-def test_delete_dashboard(session, base_url, unique_id):
+def test_updated_dashgroup_verf(session, base_url, unique_id):
+    url = base_url + "/api/v2/dashboard_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    data = response.json()
+    dashboard_group_name = f"test_api_edited_api_edited"
+    is_dashboard_group_present = any(group['label'] == dashboard_group_name for group in data.get('dashboard_groups', []))
+    assert is_dashboard_group_present
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+
+def test_delete_dashgroup(session, base_url, unique_id):
     url = base_url + f"/api/v2/dashboard_groups/dashboard_group/{unique_id}_dashboard_group"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    time.sleep(15)
+    time.sleep(10)
     response.raise_for_status()
 
     response_json = response.json()
@@ -166,7 +179,6 @@ def test_delete_dashboard(session, base_url, unique_id):
 def test_get_dashgroup_deleted_verf(session, base_url, unique_id):
     url = base_url + "/api/v2/dashboard_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     data = response.json()
     dashboard_group_name = f"{unique_id}_dashboard_group"
     dashboard_groups = data.get("dashboard_groups", [])
@@ -181,16 +193,24 @@ def test_dashboard_group_deactivate_added_user(session, base_url, unique_id):
         "activate": False
     }
     response = session.put(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
 def test_dashboard_group_delete_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/users/user/{unique_id}@cfx.com"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
+
+def test_dashboard_group_deleted_users_verf(session, base_url, unique_id):
+    url = base_url + "/api/v2/users"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    response_json = response.json()
+    user = next((user for user in response_json.get('users', []) if user['emailId'] == f'{unique_id}@cfx.com'), None)
+    if user:
+        assert False
 
 def test_dashboard_group_delete_added_usergroup(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
@@ -198,10 +218,19 @@ def test_dashboard_group_delete_added_usergroup(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.delete(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
-    
+
+def test_dashboard_group_deleted_user_groups_verf(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    response_json = response.json()
+    user_groups = response_json.get('user_groups', [])
+
+    if any(group['name'] == f'{unique_id}_user_group' for group in user_groups):
+        assert False

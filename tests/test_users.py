@@ -18,7 +18,6 @@ def test_get_users(session, base_url):
 def test_get_organizations(session, base_url):
     url = base_url + "/api/v2/organizations"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -52,6 +51,17 @@ def test_add_usergroup(session, base_url, unique_id):
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
 
+def test_get_added_user_group_users(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response_json = response.json()
+    response.raise_for_status()
+    user_groups = response_json.get('user_groups', [])
+
+    assert any(group['name'] == f'{unique_id}_user_group' for group in user_groups)
+
+
 def test_add_user(session, base_url, unique_id):
     url = base_url + "/api/v2/users"
     data = {
@@ -65,6 +75,17 @@ def test_add_user(session, base_url, unique_id):
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
+
+def test_get_added_users(session, base_url, unique_id):
+    url = base_url + "/api/v2/users"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    response_json = response.json()
+    email_address = f'{unique_id}@cfx.com'
+
+    if not any(user['emailId'] == email_address for user in response_json.get('users', [])):
+        assert False
 
 def test_add_user_negative(session, base_url, unique_id):
     url = base_url + "/api/v2/users"
@@ -80,7 +101,7 @@ def test_add_user_negative(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     assert response.status_code == 409
 
-def test_add_user_unkonw_usergroup(session, base_url):
+def test_add_user_unknown_usergroup(session, base_url, unique_id):
     url = base_url + "/api/v2/users"
     data = {
         "remoteUser": False,
@@ -92,7 +113,7 @@ def test_add_user_unkonw_usergroup(session, base_url):
         }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    assert response.status_code == 500
+    assert response.status_code == 409
 
 def test_deactivate_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/users/user/{unique_id}@cfx.com/status"
@@ -102,6 +123,16 @@ def test_deactivate_user(session, base_url, unique_id):
     response = session.put(url, params=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
+
+def test_decativate_status(session, base_url, unique_id):
+    url = base_url + "/api/v2/users"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    response_json = response.json()
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    user = next((user for user in response_json.get('users', []) if user['emailId'] == f'{unique_id}@cfx.com'), None)
+    if not user.get('status') == 'Suspended':
+        assert False
 
 def test_deactivate_user_negative(session, base_url, unique_id):
     url = base_url + "/api/v2/users/user/unknow@cfx.com/status"
@@ -120,6 +151,16 @@ def test_activate_user(session, base_url, unique_id):
     response = session.put(url, params=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
+
+def test_activate_status(session, base_url, unique_id):
+    url = base_url + "/api/v2/users"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    response_json = response.json()
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    user = next((user for user in response_json.get('users', []) if user['emailId'] == f'{unique_id}@cfx.com'), None)
+    if not user.get('status') == 'Active':
+        assert False
 
 def test_activate_user_negative(session, base_url, unique_id):
     url = base_url + "/api/v2/users/user/unknow@cfx.com/status"
@@ -167,12 +208,32 @@ def test_deactivate_added_user(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
+def test_get_deactivated_users(session, base_url, unique_id):
+    url = base_url + "/api/v2/users"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    response_json = response.json()
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    user = next((user for user in response_json.get('users', []) if user['emailId'] == f'{unique_id}@cfx.com'), None)
+    if not user and user.get('status') == 'Suspended':
+        assert False
+
 def test_delete_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/users/user/{unique_id}@cfx.com"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
+
+def test_get_deleted_users(session, base_url, unique_id):
+    url = base_url + "/api/v2/users"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    response_json = response.json()
+    user = next((user for user in response_json.get('users', []) if user['emailId'] == f'{unique_id}@cfx.com'), None)
+    if user:
+        assert False
 
 def test_delete_added_usergroup(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
@@ -186,4 +247,13 @@ def test_delete_added_usergroup(session, base_url, unique_id):
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
-    
+
+def test_get_deleted_usergroup(session, base_url, unique_id):
+    url = base_url + "/api/v2/user_groups"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    response_json = response.json()
+    user = next((user for user in response_json.get('users', []) if user['emailId'] == f'test_user{unique_id}@cfx.com'), None)
+    if user:
+        assert False

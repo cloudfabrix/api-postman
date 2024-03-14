@@ -13,7 +13,6 @@ def test_get_dataset(session, base_url):
         "sort":"-timestamp"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -26,7 +25,6 @@ def test_get_dataset_cfxql(session, base_url):
         "sort":"-timestamp"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -39,7 +37,6 @@ def test_get_dataset_search(session, base_url):
         "sort":"-timestamp"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -51,7 +48,6 @@ def test_get_dataset_limit(session, base_url):
         "sort":"-timestamp"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
@@ -80,7 +76,6 @@ def test_added_dataset_verf(session, base_url, unique_id):
     }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=40)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    time.sleep(12)
     assert response.status_code == 409
 
 def test_get_added_dataset_search(session, base_url, unique_id):
@@ -89,7 +84,6 @@ def test_get_added_dataset_search(session, base_url, unique_id):
         "search":f"{unique_id}_dataset"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=40)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
@@ -127,7 +121,6 @@ def test_get_added_dataset_data(session, base_url, unique_id):
         "limit":100
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
@@ -155,7 +148,7 @@ def test_delete_dataset(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    time.sleep(60)
+    time.sleep(30)
     response.raise_for_status()
 
 def test_deleted_dataset_verf_cfxql(session, base_url, unique_id):
@@ -164,7 +157,6 @@ def test_deleted_dataset_verf_cfxql(session, base_url, unique_id):
         "cfxql_query":f"name='{unique_id}_dataset'"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
@@ -176,7 +168,6 @@ def test_deleted_dataset_verf_search(session, base_url, unique_id):
         "search":f"{unique_id}_dataset"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
