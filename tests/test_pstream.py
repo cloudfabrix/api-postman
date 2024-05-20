@@ -72,7 +72,7 @@ def test_add_pstream(session, base_url, unique_id):
         "name": f"{unique_id}_pstream"
     }
     response = session.post(url, json=request_body, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    time.sleep(15)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -102,7 +102,7 @@ def test_add_empty_name_pstream_verf(session, base_url):
         "name": ""
     }
     response = session.post(url, json=request_body, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     # response.raise_for_status()
 
@@ -150,7 +150,7 @@ def test_delete_pstream(session, base_url, unique_id):
         "delete_data": True
     }
     response = session.delete(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(15)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 

@@ -17,9 +17,12 @@ def test_get_org_data(session, base_url):
 
     response_json = response.json()
     global c_name, c_id, tenentId
-    c_name = response_json["organizations"][0]["name"]
-    c_id = response_json["organizations"][0]["id"]
-    tenentId = response_json["organizations"][0]["parentResourceId"]
+    for org in response_json['organizations']:
+        if org['name'] == 'CloudFabrix-1':
+            c_name = org['customerName']
+            c_id = org['customerId']
+            tenentId = org['parentResourceId']
+            break
 
 def test_add_user_group(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
@@ -38,7 +41,7 @@ def test_add_user_group(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(20)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -67,7 +70,7 @@ def test_edit_usergroup_msp_admin(session, base_url, unique_id):
     "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -99,7 +102,7 @@ def test_edit_usergroup_msp_user(session, base_url, unique_id):
     "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -132,7 +135,7 @@ def test_edit_usergroup_msp_user_read_only(session, base_url, unique_id):
     "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -170,7 +173,7 @@ def test_edit_usergroup_tenant_admin_profile(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -208,7 +211,7 @@ def test_edit_usergroup_tenant_user_profile(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -246,7 +249,7 @@ def test_edit_usergroup_tenant_user_read_only(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -284,7 +287,7 @@ def test_edit_usergroup_l3_user(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -322,7 +325,7 @@ def test_edit_usergroup_l1_user(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -349,7 +352,7 @@ def test_delete_user_group(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.delete(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 

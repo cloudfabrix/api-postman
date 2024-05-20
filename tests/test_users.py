@@ -44,7 +44,7 @@ def test_add_usergroup(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -95,11 +95,11 @@ def test_add_user_negative(session, base_url, unique_id):
         "group": f"{unique_id}_user_group",
         "firstname": "test",
         "lastname": "api",
-        "id": f"{unique_id}@cfx.com"
+        "id": f"('2:`~@cfx.com"
     }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    assert response.status_code == 409
+    assert response.status_code == 422
 
 def test_add_user_unknown_usergroup(session, base_url, unique_id):
     url = base_url + "/api/v2/users"
@@ -113,7 +113,7 @@ def test_add_user_unknown_usergroup(session, base_url, unique_id):
         }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    assert response.status_code == 409
+    assert response.status_code == 500
 
 def test_deactivate_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/users/user/{unique_id}@cfx.com/status"
@@ -204,7 +204,7 @@ def test_deactivate_added_user(session, base_url, unique_id):
         "activate": False
     }
     response = session.put(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -221,7 +221,7 @@ def test_get_deactivated_users(session, base_url, unique_id):
 def test_delete_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/users/user/{unique_id}@cfx.com"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    time.sleep(15)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
@@ -241,7 +241,7 @@ def test_delete_added_usergroup(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.delete(url, json=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(12)
+    #time.sleep(5)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 

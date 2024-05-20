@@ -82,13 +82,42 @@ def session(base_url, username, password):
 
         logger.info(f"----Login session----:::{response.status_code}::::\n{response.text}")
         response.raise_for_status()
-
+        org_creation(base_url, session)    
         yield session  # Provide the session object function to test functions
+        
 
     finally:
         # Close the session when all tests are done
         session.close()
+        print("=+++++++++++++++++++++++++++++++")
         logger.info("::::::SESSION CLOSED::::::")
+
+def org_creation(base_url, session):
+    # check if the org exists
+    url = base_url + "/api/v2/organizations"
+    response = session.get(url, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    data = response.json()
+    organizations = data.get('organizations', [])
+    found = False
+    for org in organizations:
+        if org.get('name') == 'CloudFabrix-1':
+            found = True
+            break
+
+    if not found:
+        # org creation
+        org_url = f"{base_url}/api/v2/organizations"
+        print(org_url, '---')
+        data = {
+    "description": "Description",
+    "name": "CloudFabrix-1",
+    "tag": "CFX"
+    }
+        response = session.post(org_url, json=data, headers=session.headers, verify=False, timeout=60)
+        logger.info(f"----API Log---- {org_url}:::{response.status_code}::::\n{response.text}")
+        response.raise_for_status()
 
 def pytest_addoption(parser):
     parser.addoption("--host", action="store", required=True, default=None, help="Platform IP address")
