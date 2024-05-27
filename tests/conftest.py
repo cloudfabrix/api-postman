@@ -24,8 +24,8 @@ def pytest_cmdline_preparse(args):
     global html_report_path
     if not os.path.exists('./reports'):
         os.makedirs('./reports')
-    dt_str = time.strftime("%Y_%m_%d_%H_%M_%S")
-    html_file_name = "cfx_api_test_" + dt_str + ".html"
+    dt_str = time.strftime("%Y%m%d_%H%M")
+    html_file_name = "API_" + dt_str + ".html"
     html_report_path = "./reports/" + html_file_name
     print(html_report_path)
     args.extend(['--html', html_report_path])
@@ -60,36 +60,43 @@ def base_url(request):
     return f"https://{host}"
 
 @pytest.fixture(scope="session")
-def session(base_url, username, password):
+def session(base_url, username, password, reset_password):
     # Create a session to maintain the connection
     session = requests.Session()
-
+    admin_session = requests.Session()
     try:
-        # Define test data for POST request (login)
-        post_data = {
+        login_data = {
             "user": username,
             "password": password
         }
-
-        # Define headers
         headers = {
             'Content-Type': 'application/json'
         }
 
-        # Perform login
+        if reset_password:
+            reset_pswd = {
+            "new_password": "admin1234",
+            "confirm_password": "admin1234"
+        }
+            admin_login_url = base_url + "/api/v2/login"
+            admin_login_response = admin_session.post(admin_login_url, json=login_data, headers=headers, verify=False, timeout=60)
+            logger.info(f"---- API Log ---- {admin_login_url}:::{admin_login_response.status_code}::::{admin_login_response.text}")
+            admin_login_response.raise_for_status()
+            
+            reset_pswd_url = base_url + "/api/v2/users/resetpassword"
+            reset_pswd_response = admin_session.post(reset_pswd_url, json=reset_pswd, headers=headers, verify=False, timeout=60)
+            logger.info(f"----API Log---- {reset_pswd_url}:::{reset_pswd_response.status_code}::::\n{reset_pswd_response.text}")
+            reset_pswd_response.raise_for_status()
+            logger.info("::::::RESET PASSWORD SUCCESSFULL::::::")
+        
         login_url = f"{base_url}/api/v2/login"
-        response = session.post(login_url, json=post_data, headers=headers, verify=False)
-
+        response = session.post(login_url, json=login_data, headers=headers, verify=False)
         logger.info(f"----Login session----:::{response.status_code}::::\n{response.text}")
         response.raise_for_status()
-        org_creation(base_url, session)    
-        yield session  # Provide the session object function to test functions
-        
-
+        org_creation(base_url, session)
+        yield session
     finally:
-        # Close the session when all tests are done
         session.close()
-        print("=+++++++++++++++++++++++++++++++")
         logger.info("::::::SESSION CLOSED::::::")
 
 def org_creation(base_url, session):
@@ -109,7 +116,6 @@ def org_creation(base_url, session):
     if not found:
         # org creation
         org_url = f"{base_url}/api/v2/organizations"
-        print(org_url, '---')
         data = {
     "description": "Description",
     "name": "CloudFabrix-1",
@@ -123,7 +129,8 @@ def pytest_addoption(parser):
     parser.addoption("--host", action="store", required=True, default=None, help="Platform IP address")
     parser.addoption("--user", action="store", required=True, default=None, help="Platform username")
     parser.addoption("--password", action="store", required=True, default=None, help="Platform password")
-    parser.addoption("--cleanup", action="store", default=False, help="Clean logs and reports")
+    parser.addoption("--cleanup", action="store_true", default=False, help="Clean logs and reports")
+    parser.addoption("--reset-password", action="store_true", default=False, help="reset admin password")
 
 @pytest.fixture(scope="session")
 def host(request):
@@ -136,3 +143,7 @@ def username(request):
 @pytest.fixture(scope="session")
 def password(request):
     return request.config.getoption("--password")
+
+@pytest.fixture(scope="session")
+def reset_password(request):
+    return request.config.getoption("--reset-password")
