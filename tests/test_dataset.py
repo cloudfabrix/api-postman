@@ -276,7 +276,7 @@ def test_deleted_dataset_verf_search(session, base_url, unique_id):
     'data=sample', 'data{sample', 'data}sample', 'data[sample]','data|sample','data:sample', 'data;sample', 
      'data<sample', 'data>sample', 'data,sample', 'data.sample', 'data/sample','data\\sample'
 ])
-def test_add_dataset_negative(session, base_url,name):
+def test_add_all_params_dataset_negative(session, base_url,name):
     url = base_url + "/api/v2/datasets"
     data = {
             "name": name,
@@ -301,14 +301,99 @@ def test_add_dataset_negative(session, base_url,name):
     assert response_json["num_items"] >= 0
 
 @pytest.mark.parametrize("name", [
+'data~sample', 'data`sample', 'data!sample', 'data@sample', 'data#sample', 'data$sample', 'data%sample', 
+    'data^sample', 'data&sample', 'data*sample', '(data)sample', 'data_sample', 'data+sample', 'data-sample', 
+    'data=sample', 'data{sample', 'data}sample', 'data[sample]','data|sample','data:sample', 'data;sample', 
+     'data<sample', 'data>sample', 'data,sample', 'data.sample', 'data/sample','data\\sample'
+])
+def test_get_all_params_dataset_verf(session, base_url, name):
+    url = base_url + "/api/v2/datasets"
+    data = {
+        "cfxql_query":f"name ~ '{name}'",
+        "offset":0,
+        "limit":100,
+        "sort":"-timestamp"
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    data = response.json()
+    dataset_name = data['datasets'][0]['name']
+    assert response.status_code == 200
+    assert dataset_name == name
+    
+''' to-do as the dataset is currenctly not taking special chars'''
+# @pytest.mark.parametrize("name", [
+#     'data~sample', 'data`sample', 'data!sample', 'data@sample', 'data#sample', 'data$sample', 'data%sample', 
+#     'data^sample', 'data&sample', 'data*sample', '(data)sample', 'data_sample', 'data+sample', 'data-sample', 
+#     'data=sample', 'data{sample', 'data}sample', 'data[sample]','data|sample','data:sample', 'data;sample', 
+#      'data<sample', 'data>sample', 'data,sample', 'data.sample', 'data/sample','data\\sample'
+# ])
+# def test_update_all_params_dataset_negative(session, base_url, name):
+#     url = base_url + f"/api/v2/datasets/dataset/{name}/data"
+#     data = {
+#         "replace": True
+#     }
+#     request_body = [
+#         {"__uuid": f"{name}", "column1":"row1"}
+#     ]
+#     response = session.put(url, params=data, json=request_body, headers=session.headers, verify=False, timeout=60)
+#     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+#     response.raise_for_status()
+
+# @pytest.mark.parametrize("name", [
+# 'data~sample', 'data`sample', 'data!sample', 'data@sample', 'data#sample', 'data$sample', 'data%sample', 
+#     'data^sample', 'data&sample', 'data*sample', '(data)sample', 'data_sample', 'data+sample', 'data-sample', 
+#     'data=sample', 'data{sample', 'data}sample', 'data[sample]','data|sample','data:sample', 'data;sample', 
+#      'data<sample', 'data>sample', 'data,sample', 'data.sample', 'data/sample','data\\sample'
+# ])
+# def test_get_all_params_updated_dataset_negative(session, base_url, name):
+#     url = base_url + "/api/v2/datasets"
+#     data = {
+#         "cfxql_query":f"name ~ '{name}'",
+#         "offset":0,
+#         "limit":100,
+#         "sort":"-timestamp"
+#     }
+#     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
+#     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+#     response.raise_for_status()
+#     data = response.json()
+#     print(data, '--------------------')
+#     dataset_name = data['datasets'][0]['name']
+#     assert response.status_code == 200
+#     assert dataset_name == name
+
+@pytest.mark.parametrize("name", [
     'data~sample', 'data`sample', 'data!sample', 'data@sample', 'data#sample', 'data$sample', 'data%sample', 
     'data^sample', 'data&sample', 'data*sample', '(data)sample', 'data_sample', 'data+sample', 'data-sample', 
     'data=sample', 'data{sample', 'data}sample', 'data[sample]','data|sample','data:sample', 'data;sample', 
-    'data<sample', 'data>sample', 'data,sample', 'data.sample', 'data/sample','data\\sample', 'data sample'
+     'data<sample', 'data>sample', 'data,sample', 'data.sample', 'data/sample','data\\sample'
 ])
-def test_delete_dataset_negative(session, base_url,name):
+def test_delete_all_params_dataset_negative(session, base_url,name):
     url = base_url + f"/api/v2/datasets/dataset/{name}"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    time.sleep(30)
     response.raise_for_status()
+
+@pytest.mark.parametrize("name", [
+    'data~sample', 'data`sample', 'data!sample', 'data@sample', 'data#sample', 'data$sample', 'data%sample', 
+    'data^sample', 'data&sample', 'data*sample', '(data)sample', 'data_sample', 'data+sample', 'data-sample', 
+    'data=sample', 'data{sample', 'data}sample', 'data[sample]','data|sample','data:sample', 'data;sample', 
+     'data<sample', 'data>sample', 'data,sample', 'data.sample', 'data/sample','data\\sample'
+])
+def test_get_deleted_all_params_dataset_verf(session, base_url, name):
+    url = base_url + "/api/v2/datasets"
+    data = {
+        "cfxql_query":f"name ~ '{name}'",
+        "offset":0,
+        "limit":100,
+        "sort":"-timestamp"
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    data = response.json()
+    dataset = data['num_items']
+    assert response.status_code == 200
+    assert dataset == 0
