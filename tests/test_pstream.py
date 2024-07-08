@@ -1,18 +1,20 @@
-import time
 from tests.conftest import logging
+import pytest 
 
 logger = logging.getLogger(__name__)
 
-def test_get_pstream(session, base_url):
+@pytest.mark.sanity
+def test_pstream_get(session, base_url):
     url = base_url + "/api/v2/pstreams"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_get_pstream_cfxql(session, base_url):
+@pytest.mark.sanity
+def test_pstream_get_cfxql(session, base_url):
     url = base_url + "/api/v2/pstreams"
     data = {
-        "cfxql_query":"name ~ 'rda'"
+        "cfxql_query":"name ~ 'rda_system_bot_package_changes'"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -20,34 +22,44 @@ def test_get_pstream_cfxql(session, base_url):
 
     response_json = response.json()
     assert response_json["num_items"] != 0
-    assert "rda" in response_json["pstreams"][0]["name"]
+    pstream_names = [pstream['name'] for pstream in response_json['pstreams']]
+    assert pstream_names == ['rda_system_bot_package_changes']
 
-def test_get_pstream_search(session, base_url):
+@pytest.mark.sanity
+def test_pstream_get_search(session, base_url):
     url = base_url + "/api/v2/pstreams"
     data = {
-        "search":"rda_datasets_meta"
+        "search":"rda_system_bot_package_changes"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
-    assert response_json["search"] == "rda_datasets_meta"
+    pstream_names = [pstream['name'] for pstream in response_json['pstreams']]
+    assert pstream_names == ['rda_system_bot_package_changes']
+    assert response_json["search"] == "rda_system_bot_package_changes"
     assert response_json["num_items"] != 0
 
-def test_get_pstream_sort(session, base_url):
+
+@pytest.mark.sanity
+def test_pstream_get_sort(session, base_url):
     url = base_url + "/api/v2/pstreams"
     data = {
-        "sort":"-name"
+        "sort":"name"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
-    assert response_json["sort"] == ['-name']
+    assert response_json["sort"] == ['name']
 
-def test_get_pstream_limit(session, base_url):
+    pstream_names = [pstream['name'] for pstream in response_json['pstreams']]
+    assert pstream_names == sorted(pstream_names)
+
+@pytest.mark.sanity
+def test_pstream_get_limit(session, base_url):
     url = base_url + "/api/v2/pstreams"
     data = {
         "limit":10
@@ -59,7 +71,12 @@ def test_get_pstream_limit(session, base_url):
     response_json = response.json()
     assert response_json["num_items"] == 10
 
-def test_add_pstream(session, base_url, unique_id):
+    pstream = response_json.get('pstreams', [])
+    num_pstream = len(pstream)
+    assert num_pstream == 10
+
+@pytest.mark.sanity
+def test_pstream_add(session, base_url, unique_id):
     url = base_url + "/api/v2/pstreams"
     request_body = {
         "attributes": {
@@ -72,14 +89,15 @@ def test_add_pstream(session, base_url, unique_id):
         "name": f"{unique_id}_pstream"
     }
     response = session.post(url, json=request_body, headers=session.headers, verify=False, timeout=60)
-    time.sleep(15)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["serviceResult"]["status"] == "SUBMIT_OK"
 
-def test_added_pstream_verf(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_pstream_added_verf(session, base_url, unique_id):
     url = base_url + "/api/v2/pstreams"
     data = {
         "search":f"{unique_id}_pstream"
@@ -92,8 +110,11 @@ def test_added_pstream_verf(session, base_url, unique_id):
     assert response_json["search"] == f"{unique_id}_pstream"
     assert response_json["num_items"] != 0
     assert response_json["pstreams"][0]["retention_days"] == 31
+    pstream_names = [pstream['name'] for pstream in response_json['pstreams']]
+    assert pstream_names == [f"{unique_id}_pstream"]
 
-def test_add_empty_name_pstream_verf(session, base_url):
+@pytest.mark.sanity
+def test_pstream_add_empty_name_verf(session, base_url):
     url = base_url + "/api/v2/pstreams"
     request_body = {
         "attributes": {
@@ -102,7 +123,7 @@ def test_add_empty_name_pstream_verf(session, base_url):
         "name": ""
     }
     response = session.post(url, json=request_body, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     # response.raise_for_status()
 
@@ -110,7 +131,8 @@ def test_add_empty_name_pstream_verf(session, base_url):
     actual_response = response.json()
     assert actual_response == expected_response
 
-def test_update_pstream(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_pstream_update(session, base_url, unique_id):
     url = base_url + f"/api/v2/pstreams/pstream/{unique_id}_pstream"
     request_body = {
         "attributes": {
@@ -122,14 +144,15 @@ def test_update_pstream(session, base_url, unique_id):
         }
     }
     response = session.put(url, json=request_body, headers=session.headers, verify=False, timeout=60)
-    time.sleep(15)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["serviceResult"]["status"] == "SUBMIT_OK"
 
-def test_updated_pstream_verf(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_pstream_updated_verf(session, base_url, unique_id):
     url = base_url + "/api/v2/pstreams"
     data = {
         "search":f"{unique_id}_pstream"
@@ -141,8 +164,11 @@ def test_updated_pstream_verf(session, base_url, unique_id):
     response_json = response.json()
     assert response_json["num_items"] != 0
     assert response_json["pstreams"][0]["retention_days"] == 62
+    pstream_names = [pstream['name'] for pstream in response_json['pstreams']]
+    assert pstream_names == [f"{unique_id}_pstream"]
 
-def test_delete_pstream(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_pstream_delete(session, base_url, unique_id):
     base_url = base_url
     unique_id = unique_id
     url = base_url + f"/api/v2/pstreams/pstream/{unique_id}_pstream"
@@ -150,14 +176,15 @@ def test_delete_pstream(session, base_url, unique_id):
         "delete_data": True
     }
     response = session.delete(url, params=data, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["serviceResult"]["status"] == "SUBMIT_OK"
 
-def test_deleted_pstream_verf(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_pstream_deleted_verf(session, base_url, unique_id):
     url = base_url + "/api/v2/pstreams"
     data = {
         "search":f"{unique_id}_pstream"
@@ -169,8 +196,11 @@ def test_deleted_pstream_verf(session, base_url, unique_id):
     response_json = response.json()
     assert response_json["search"] == f"{unique_id}_pstream"
     assert response_json["num_items"] == 0
+    pstream_names = [pstream['name'] for pstream in response_json['pstreams']]
+    assert pstream_names == []
 
-def test_get_pstream_data(session, base_url):
+@pytest.mark.sanity
+def test_pstream_get_data(session, base_url):
     # used existsing pstream
     url = base_url + "/api/v2/pstreams/pstream/rda_pstreams_meta/data"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
@@ -180,7 +210,8 @@ def test_get_pstream_data(session, base_url):
     response_json = response.json()
     assert response_json["num_items"] != 0
 
-def test_get_pstream_data_cfxql(session, base_url):
+@pytest.mark.sanity
+def test_pstream_get_data_cfxql(session, base_url):
     # used existsing pstream
     url = base_url + "/api/v2/pstreams/pstream/rda_pstreams_meta/data"
     data = {
@@ -194,42 +225,54 @@ def test_get_pstream_data_cfxql(session, base_url):
     assert response_json["num_items"] != 0
     assert "no" in response_json["pstream_data"][0]["system_defined"]
 
-def test_get_pstream_data_search(session, base_url):
+@pytest.mark.sanity
+def test_pstream_get_data_search(session, base_url):
     # used existsing pstream
     url = base_url + "/api/v2/pstreams/pstream/rda_pstreams_meta/data"
     data = {
-        "search":"oia-events-stream"
+        "search":"ml-regression-training-data"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     
     response_json = response.json()
-    assert response_json["search"] == "oia-events-stream"
+    assert response_json["search"] == "ml-regression-training-data"
+    pstream_names = [pstream['name'] for pstream in response_json['pstream_data']]
+    assert pstream_names == ["ml-regression-training-data"]
     assert response_json["num_items"] != 0
-
-def test_get_pstream_data_sort(session, base_url):
+    
+@pytest.mark.sanity
+def test_pstream_get_data_sort(session, base_url):
     # used existsing pstream
     url = base_url + "/api/v2/pstreams/pstream/rda_pstreams_meta/data"
     data = {
-        "sort":"-name"
+        "sort":"name"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
-    assert response_json["sort"] == ['-name']
+    assert response_json["sort"] == ['name']
 
-def test_get_pstream_data_limit(session, base_url):
+    pstream_names = [pstream['name'] for pstream in response_json['pstream_data']]
+    assert pstream_names == sorted(pstream_names)
+
+@pytest.mark.sanity
+def test_pstream_get_data_limit(session, base_url):
     # used existsing pstream
     url = base_url + "/api/v2/pstreams/pstream/rda_pstreams_meta/data"
     data = {
-        "limit":10
+        "limit":5
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
-    assert response_json["num_items"] == 10
+    assert response_json["num_items"] == 5
+
+    pstream = response_json.get('pstream_data', [])
+    num_pstream = len(pstream)
+    assert num_pstream == 5

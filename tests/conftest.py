@@ -5,6 +5,11 @@ import requests
 import logging.config
 import yaml
 import datetime
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+import paramiko
+import base64
+import subprocess
 
 def setup_logging():
     script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -21,7 +26,7 @@ def pytest_html_report_title(report):
     report.title = "CFX API Automation Report"
 
 def pytest_cmdline_preparse(args):
-    global html_report_path
+    global html_report_path, html_file_name
     if not os.path.exists('./reports'):
         os.makedirs('./reports')
     dt_str = time.strftime("%Y%m%d_%H%M")
@@ -109,7 +114,7 @@ def org_creation(base_url, session):
     organizations = data.get('organizations', [])
     found = False
     for org in organizations:
-        if org.get('name') == 'CloudFabrix-1':
+        if org.get('name') == 'OIA-CloudFabrix':
             found = True
             break
 
@@ -117,10 +122,10 @@ def org_creation(base_url, session):
         # org creation
         org_url = f"{base_url}/api/v2/organizations"
         data = {
-    "description": "Description",
-    "name": "CloudFabrix-1",
-    "tag": "CFX"
-    }
+        "description": "Description",
+        "name": "OIA-CloudFabrix",
+        "tag": "CFX"
+        }
         response = session.post(org_url, json=data, headers=session.headers, verify=False, timeout=60)
         logger.info(f"----API Log---- {org_url}:::{response.status_code}::::\n{response.text}")
         response.raise_for_status()
@@ -131,6 +136,10 @@ def pytest_addoption(parser):
     parser.addoption("--password", action="store", required=True, default=None, help="Platform password")
     parser.addoption("--cleanup", action="store_true", default=False, help="Clean logs and reports")
     parser.addoption("--reset-password", action="store_true", default=False, help="reset admin password")
+    parser.addoption("--post-to-slack", action="store_true", default=False, help="Use when want post the test results to slack")
+    parser.addoption("--slack-channel", default=None, help="Enter slack channel id to post test results in slack")
+    parser.addoption("--description", default='No_description_provided', help="Enter description for execution! Ex: OIA, AIA, OIA_Sanity & AIA_Sanity")
+    parser.addoption("--automation-user", default='CFX_name', help="Enter Executer Name")
 
 @pytest.fixture(scope="session")
 def host(request):
@@ -147,3 +156,177 @@ def password(request):
 @pytest.fixture(scope="session")
 def reset_password(request):
     return request.config.getoption("--reset-password")
+
+@pytest.fixture(scope="session")
+def post_to_slack(request):
+    return request.config.getoption("--post-to-slack")
+
+@pytest.fixture(scope="session")
+def slack_channel(request):
+    return request.config.getoption("--slack-channel")
+
+@pytest.fixture(scope="session")
+def description(request):
+    return request.config.getoption("--description")
+
+@pytest.fixture(scope="session")
+def automation_user(request):
+    return request.config.getoption("--automation-user")
+
+def pytest_configure(config):
+    raw_description = str(config.getoption('--description'))
+    description = raw_description.replace("_", " ").split()
+    final_description = " ".join(description)
+    config._metadata["Execution Description"] = final_description
+    config._metadata["Slack Channel"] = config.getoption('--slack-channel')
+    if config.getoption("--automation-user") is not None:
+        config._metadata["Automation Ran By"] = config.getoption('--automation-user')
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_sessionfinish(session, exitstatus):
+    global total_testcases, pass_count, fails_count, pass_percentage
+    total_testcases = len(session.items)
+    reporter = session.config.pluginmanager.get_plugin('terminalreporter')
+    passed = reporter.stats.get('passed', [])
+    pass_count = len(passed)
+    fails_count = total_testcases - pass_count
+    pass_percentage = (pass_count / total_testcases) * 100
+    
+    # print("Total_Testcases"+total_testcases, "Passed_Count"+pass_count, "Failed_Count"+fails_count, "Pass_Percentage"+pass_percentage)
+    # commented as the could'nt push the commit with slack API token key
+    client = """###"""
+    channel_id = str(session.config._metadata["Slack Channel"])
+    post_to_slack = session.config.getoption("--post-to-slack")
+    print(post_to_slack)
+    if post_to_slack == True:
+        try:
+            # Call the conversations.list method using the WebClient
+            result = client.chat_postMessage(
+                channel=channel_id,
+                text="Automation Report",
+                blocks=[
+                    {
+                        "type": "header",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "RDAF Platform APIs Automation Results",
+                        },
+                    },
+                    {
+                        "type": "section",
+                        "fields": [
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Automation Ran By:*\n{}".format(str(session.config._metadata["Automation Ran By"]))
+                            },
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Git Branch:*\n{}".format(str(get_current_branch_name()))
+                            }
+                        ]
+                    },
+                    {
+                        "type": "section",
+                        "fields": [
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Testcases Collected:*\n{}".format(
+                                    str(total_testcases)
+                                ),
+                            },
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Pass Percentage:*\n{}".format(
+                                    str(pass_percentage)
+                                ),
+                            },
+                        ],
+                    },
+                    {
+                        "type": "section",
+                        "fields": [
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Testcases Failed:*\n{}".format(
+                                    str(fails_count)
+                                ),
+                            },
+                            {
+                                "type": "mrkdwn",
+                                "text": "*Testcases Passed:*\n{}".format(
+                                    str(pass_count)
+                                ),
+                            },
+                        ],
+                    },
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "*Execution Description:*\n{}".format(
+                                str(session.config._metadata["Execution Description"])
+                            ),
+                        },
+                    },
+                    {
+                        "type": "actions",
+                        "elements": [
+                            {
+                                "type": "button",
+                                "text": {
+                                    "type": "plain_text",
+                                    "text": "Detailed Report",
+                                },
+                                "value": "click_me_123",
+                                "url": "{}".format(
+                                    'http://10.95.159.105/automation_reports/'
+                                    + html_file_name
+                                ),
+                            }
+                        ],
+                    },
+                ],
+            )
+            # Print result, which includes information about the message (like TS)
+            logger.info(result)
+
+        except SlackApiError as e:
+            logger.error(f"Error: {e}")
+
+def get_current_branch_name():
+    try:
+        branch_name = os.environ.get("GIT_BRANCH")
+        if not branch_name:
+            branch_name = subprocess.check_output(["git", "symbolic-ref", "--short", "HEAD"], text=True).strip()
+        return branch_name
+    except subprocess.CalledProcessError:
+        return None
+
+def decode(encoded_data):
+    decoded_bytes = base64.b64decode(encoded_data)
+    return decoded_bytes.decode('utf-8')
+
+def transfer_html_report(html_file_path):
+    centos_host = "10.95.159.105"
+    centos_username = decode('cm9vdA==')
+    centos_password = decode('YWJjZDEyMyQ=')
+    destination_path = "/var/www/html/automation_reports/"
+    try:
+        ssh_client = paramiko.SSHClient()
+        ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh_client.connect(hostname=centos_host, username=centos_username, password=centos_password)
+        sftp_client = ssh_client.open_sftp()
+        sftp_client.put(html_file_path, f"{destination_path}/{os.path.basename(html_file_path)}")
+        sftp_client.close()
+        print(f"HTML Report transferred successfully to {centos_host}")
+        return True
+    except Exception as e:
+        print(f"Error occurred during file transfer: {e}")
+        return False
+    finally:
+        ssh_client.close()
+
+def pytest_unconfigure(config):
+    post_to_slack_value = config.getoption("--post-to-slack")
+    if post_to_slack_value:
+        transfer_html_report(html_report_path)

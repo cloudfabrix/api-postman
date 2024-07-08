@@ -1,11 +1,25 @@
-import json
-import time
 from tests.conftest import logging
 import pytest
 
 logger = logging.getLogger(__name__)
+@pytest.mark.sanity
+# adding spam dataset for limit and sort as there are no default datasets
+def test_dataset_add_for_limit_sort(session, base_url, unique_id):
+    url = base_url + "/api/v2/datasets"
+    for i in range(10):
+        dataset_name = f"{chr(97 + i)}_dataset"
+        data = {
+            "name": dataset_name,
+            "folder": "Default",
+            "schema_name": "",
+            "tag": ""
+        }
+        response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
+        logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+        response.raise_for_status()
 
-def test_get_dataset(session, base_url):
+@pytest.mark.sanity
+def test_dataset_get(session, base_url):
     url = base_url + "/api/v2/datasets"
     data = {
         "offset":0,
@@ -13,14 +27,15 @@ def test_get_dataset(session, base_url):
         "sort":"-timestamp"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
-    time.sleep(10)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_get_dataset_cfxql(session, base_url):
+@pytest.mark.sanity
+def test_dataset_get_cfxql(session, base_url):
     url = base_url + "/api/v2/datasets"
     data = {
-        "cfxql_query":"name ~ 'sample'",
+        "cfxql_query":"name ~ 'a_dataset'",
         "offset":0,
         "limit":100,
         "sort":"-timestamp"
@@ -28,8 +43,11 @@ def test_get_dataset_cfxql(session, base_url):
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
+    response_json = response.json()
+    dataset_names = [dataset['name'] for dataset in response_json['datasets']]
+    assert dataset_names == ['a_dataset']
 
-def test_get_dataset_cfxql_negative(session, base_url):
+def test_dataset_get_cfxql_negative(session, base_url):
     url = base_url + "/api/v2/datasets"
     data = {
         "cfxql_query":"name ~ 'negative'",
@@ -41,10 +59,12 @@ def test_get_dataset_cfxql_negative(session, base_url):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_get_dataset_search(session, base_url):
+
+@pytest.mark.sanity
+def test_dataset_get_search(session, base_url):
     url = base_url + "/api/v2/datasets"
     data = {
-        "search":"synthetic_syslogs_dataset",
+        "search":"b_dataset",
         "offset":0,
         "limit":100,
         "sort":"-timestamp"
@@ -52,8 +72,11 @@ def test_get_dataset_search(session, base_url):
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
+    response_json = response.json()
+    dataset_names = [dataset['name'] for dataset in response_json['datasets']]
+    assert dataset_names == ['b_dataset']
 
-def test_get_dataset_search_negative(session, base_url):
+def test_dataset_get_search_negative(session, base_url):
     url = base_url + "/api/v2/datasets"
     data = {
         "search":"negative",
@@ -65,20 +88,70 @@ def test_get_dataset_search_negative(session, base_url):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_get_dataset_limit(session, base_url):
+@pytest.mark.sanity
+def test_dataset_get_limit(session, base_url):
     url = base_url + "/api/v2/datasets"
     data = {
         "offset":0,
         "limit":3,
-        "sort":"-timestamp"
+        "sort":"name"
     }
     response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
-    assert response_json["num_items"] == 0
+    assert response_json["num_items"] == 3
 
-def test_add_dataset(session, base_url, unique_id):
+    dataset = response_json.get('datasets', [])
+    num_dataset = len(dataset)
+    assert num_dataset == 3
+
+@pytest.mark.sanity
+def test_dataset_get_sort(session, base_url):
+    url = base_url + "/api/v2/datasets"
+    data = {
+        "offset":0,
+        "limit":3,
+        "sort":"name"
+    }
+    response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
+    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+    response.raise_for_status()
+    response_json = response.json()
+
+    dashboard_names = [dashboard['name'] for dashboard in response_json['datasets']]
+    assert dashboard_names == sorted(dashboard_names)
+
+    response_json = response.json()
+    assert response_json["sort"] == ['name']
+
+@pytest.mark.sanity
+# deleting spam dataset for limit and sort as there are no default datasets
+def test_dataset_delete_for_limit_sort(session, base_url):
+    for i in range(10):
+        dataset_name = f"{chr(97 + i)}_dataset"
+        url = base_url + f"/api/v2/datasets/dataset/{dataset_name}"
+        response = session.delete(url, headers=session.headers, verify=False, timeout=60)
+        logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+        response.raise_for_status()
+
+@pytest.mark.sanity
+# check if the spam datasets exists
+def test_dataset_deleted_verf_for_limit_sort(session, base_url, unique_id):
+    url = base_url + "/api/v2/datasets"
+    for i in range(10):
+        dataset_name = f"{chr(97 + i)}_dataset"
+        data = {
+            "search":f"{dataset_name}"
+        }
+        response = session.get(url, params=data, headers=session.headers, verify=False, timeout=60)
+        logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
+        response.raise_for_status()
+        response_json = response.json()
+        assert response_json["num_items"] == 0
+
+@pytest.mark.sanity
+def test_dataset_add(session, base_url, unique_id):
     url = base_url + "/api/v2/datasets"
     data = {
         "name": f"{unique_id}_dataset",
@@ -88,22 +161,10 @@ def test_add_dataset(session, base_url, unique_id):
     }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    time.sleep(15)
+    
     response.raise_for_status()
 
-def test_added_dataset_verf(session, base_url, unique_id):
-    url = base_url + "/api/v2/datasets"
-    data = {
-        "name": f"{unique_id}_dataset",
-        "folder": "Default",
-        "schema_name": "",
-        "tag": "test"
-    }
-    response = session.post(url, json=data, headers=session.headers, verify=False, timeout=40)
-    logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    assert response.status_code == 409
-
-def test_get_dataset_added_negative(session, base_url, unique_id):
+def test_dataset_get_added_negative(session, base_url):
     url = base_url + "/api/v2/datasets"
     data = {
         "name": f"negative",
@@ -115,7 +176,8 @@ def test_get_dataset_added_negative(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     assert response.status_code == 409
 
-def test_get_added_dataset_search(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_dataset_get_added_search(session, base_url, unique_id):
     url = base_url + "/api/v2/datasets"
     data = {
         "search":f"{unique_id}_dataset"
@@ -124,9 +186,12 @@ def test_get_added_dataset_search(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
+    dataset_names = [dataset['name'] for dataset in response_json['datasets']]
+    assert dataset_names == [f"{unique_id}_dataset"]
     assert response_json["search"] == f"{unique_id}_dataset"
 
-def test_update_dataset_data(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_dataset_update_data(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset/data"
     data = {
         "replace": True
@@ -138,19 +203,8 @@ def test_update_dataset_data(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-# def test_update_dataset_data_negative(session, base_url, unique_id):
-#     url = base_url + f"/api/v2/datasets/dataset/negative_dataset/data"
-#     data = {
-#         "replace": True
-#     }
-#     request_body = [
-#         {"__uuid": f"{unique_id}", "column1":"row1"}
-#     ]
-#     response = session.put(url, params=data, json=request_body, headers=session.headers, verify=False, timeout=60)
-#     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-#     response.raise_for_status()
-
-def test_replace_dataset_data(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_dataset_replace_data(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset/data"
     data = {
         "replace": True
@@ -162,7 +216,7 @@ def test_replace_dataset_data(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_replace_dataset_data_negative(session, base_url, unique_id):
+def test_dataset_replace_data_negative(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset/data"
     data = {
         "replace": True
@@ -174,7 +228,8 @@ def test_replace_dataset_data_negative(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_get_added_dataset_data(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_dataset_get_added_data(session, base_url, unique_id):
     # need fix
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset/data"
     data = {
@@ -187,7 +242,8 @@ def test_get_added_dataset_data(session, base_url, unique_id):
     response_json = response.json()
     response_json["dataset_data"] == [{"__uuid": f"{unique_id}", "column1":"row2"}]
 
-def test_delete_dataset_rows(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_dataset_delete_rows(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset/data"
     data = {
         "keys":"column1"
@@ -199,7 +255,7 @@ def test_delete_dataset_rows(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_delete_dataset_rows_negative(session, base_url, unique_id):
+def test_dataset_delete_rows_negative(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/negative_dataset/data"
     data = {
         "keys":"column1"
@@ -209,35 +265,37 @@ def test_delete_dataset_rows_negative(session, base_url, unique_id):
     ]
     response = session.delete(url, params=data, json=request_body, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    response.raise_for_status()
+    assert response.status_code == 404
 
-def test_delete_all_dataset_data(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_dataset_delete_all_data(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset/data/all"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_delete_all_dataset_data_negative(session, base_url, unique_id):
+def test_dataset_delete_all_data_negative(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/negative_dataset/data/all"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    response.raise_for_status()
+    assert response.status_code == 404
 
-def test_delete_dataset(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_dataset_delete(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/{unique_id}_dataset"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    time.sleep(15)
     response.raise_for_status()
 
-def test_delete_dataset_negative(session, base_url, unique_id):
+def test_dataset_delete_negative(session, base_url, unique_id):
     url = base_url + f"/api/v2/datasets/dataset/negative_dataset"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    time.sleep(15)
+    
     response.raise_for_status()
 
-def test_deleted_dataset_verf_cfxql(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_dataset_deleted_verf_cfxql(session, base_url, unique_id):
     url = base_url + "/api/v2/datasets"
     data = {
         "cfxql_query":f"name='{unique_id}_dataset'"
@@ -246,9 +304,12 @@ def test_deleted_dataset_verf_cfxql(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
+    dataset_names = [dataset['name'] for dataset in response_json['datasets']]
+    assert dataset_names == []
     assert response_json["num_items"] == 0
 
-def test_deleted_dataset_verf_cfxql_negative(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_dataset_deleted_verf_cfxql_negative(session, base_url, unique_id):
     url = base_url + "/api/v2/datasets"
     data = {
         "cfxql_query":f"name='neagtive_dataset'"
@@ -259,7 +320,8 @@ def test_deleted_dataset_verf_cfxql_negative(session, base_url, unique_id):
     response_json = response.json()
     assert response_json["num_items"] == 0
 
-def test_deleted_dataset_verf_search(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_dataset_deleted_verf_search(session, base_url, unique_id):
     url = base_url + "/api/v2/datasets"
     data = {
         "search":f"{unique_id}_dataset"
@@ -268,6 +330,8 @@ def test_deleted_dataset_verf_search(session, base_url, unique_id):
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
     response_json = response.json()
+    dataset_names = [dataset['name'] for dataset in response_json['datasets']]
+    assert dataset_names == []
     assert response_json["num_items"] == 0
 
 @pytest.mark.parametrize("name", [
@@ -276,7 +340,7 @@ def test_deleted_dataset_verf_search(session, base_url, unique_id):
     'data=sample', 'data{sample', 'data}sample', 'data[sample]','data|sample','data:sample', 'data;sample', 
      'data<sample', 'data>sample', 'data,sample', 'data.sample', 'data/sample','data\\sample'
 ])
-def test_add_all_params_dataset_negative(session, base_url,name):
+def test_dataset_add_all_params(session, base_url,name):
     url = base_url + "/api/v2/datasets"
     data = {
             "name": name,
@@ -286,7 +350,7 @@ def test_add_all_params_dataset_negative(session, base_url,name):
     }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
-    time.sleep(12)
+    
     data_schema = {
     "cfxql_query":f"name = '{name}'",
     "offset":0,
@@ -306,7 +370,7 @@ def test_add_all_params_dataset_negative(session, base_url,name):
     'data=sample', 'data{sample', 'data}sample', 'data[sample]','data|sample','data:sample', 'data;sample', 
      'data<sample', 'data>sample', 'data,sample', 'data.sample', 'data/sample','data\\sample'
 ])
-def test_get_all_params_dataset_verf(session, base_url, name):
+def test_dataset_get_all_params_verf(session, base_url, name):
     url = base_url + "/api/v2/datasets"
     data = {
         "cfxql_query":f"name ~ '{name}'",
@@ -359,7 +423,6 @@ def test_get_all_params_dataset_verf(session, base_url, name):
 #     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
 #     response.raise_for_status()
 #     data = response.json()
-#     print(data, '--------------------')
 #     dataset_name = data['datasets'][0]['name']
 #     assert response.status_code == 200
 #     assert dataset_name == name
@@ -370,7 +433,7 @@ def test_get_all_params_dataset_verf(session, base_url, name):
     'data=sample', 'data{sample', 'data}sample', 'data[sample]','data|sample','data:sample', 'data;sample', 
      'data<sample', 'data>sample', 'data,sample', 'data.sample', 'data/sample','data\\sample'
 ])
-def test_delete_all_params_dataset_negative(session, base_url,name):
+def test_dataset_delete_all_params(session, base_url,name):
     url = base_url + f"/api/v2/datasets/dataset/{name}"
     response = session.delete(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -382,7 +445,7 @@ def test_delete_all_params_dataset_negative(session, base_url,name):
     'data=sample', 'data{sample', 'data}sample', 'data[sample]','data|sample','data:sample', 'data;sample', 
      'data<sample', 'data>sample', 'data,sample', 'data.sample', 'data/sample','data\\sample'
 ])
-def test_get_deleted_all_params_dataset_verf(session, base_url, name):
+def test_dataset_get_deleted_all_params_verf(session, base_url, name):
     url = base_url + "/api/v2/datasets"
     data = {
         "cfxql_query":f"name ~ '{name}'",

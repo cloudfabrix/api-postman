@@ -1,15 +1,17 @@
-import time
+import pytest
 from tests.conftest import logging
 
 logger = logging.getLogger(__name__)
 
-def test_get_user_groups(session, base_url):
+@pytest.mark.sanity
+def test_usergroups_get(session, base_url):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
-def test_get_org_data(session, base_url):
+@pytest.mark.sanity
+def test_usergroups_get_org_data(session, base_url):
     url = base_url + "/api/v2/organizations"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -18,13 +20,14 @@ def test_get_org_data(session, base_url):
     response_json = response.json()
     global c_name, c_id, tenentId
     for org in response_json['organizations']:
-        if org['name'] == 'CloudFabrix-1':
+        if org['name'] == 'OIA-CloudFabrix':
             c_name = org['customerName']
             c_id = org['customerId']
             tenentId = org['parentResourceId']
             break
 
-def test_add_user_group(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_add(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
     data = {       
         "chatbot_policy": "policy",
@@ -41,14 +44,15 @@ def test_add_user_group(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.post(url, json=data, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
 
-def test_get_added_user_groups(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_get_added(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -58,39 +62,45 @@ def test_get_added_user_groups(session, base_url, unique_id):
 
     assert any(group['name'] == f'{unique_id}_user_group' for group in user_groups)
 
-def test_edit_usergroup_msp_admin(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_edit_msp_admin(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
     data = {
-    "chatbot_policy":"policy-update",
-    "description":"MSP admin update",
-    "name":f"{unique_id}_user_group",
-    "profile":"msp-admin",
-    "project_cfxql": f"customerName='{c_name}'",
-    "selection_type": "cfxql_filter",
-    "tenantId":f"{tenentId}"
+  "profile": "msp-admin",
+  "chatbot_policy": "policy-update",
+  "tenantId": f"{tenentId}",
+  "projects": [
+    {
+      "customerId": f"{c_id}",
+      "customerName": f"{c_name}"
     }
+  ],
+  "selection_type": "tabular_report"
+}
+
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
 
-def test_get_edit_usergroup_msp_admin(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_get_edit_msp_admin(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response_json = response.json()
     response.raise_for_status()
     user_group = next((group for group in response_json.get('user_groups', []) if group['name'] == f'{unique_id}_user_group'), None)
-
     if user_group and user_group.get('chatbot_policy') == 'policy-update':
         assert True
     else:
         assert False
 
-def test_edit_usergroup_msp_user(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_edit_msp_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
     data = {
     "chatbot_policy":"policy-update",
@@ -102,14 +112,15 @@ def test_edit_usergroup_msp_user(session, base_url, unique_id):
     "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
 
-def test_get_edit_usergroup_msp_user(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_get_edit_msp_user(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -123,7 +134,8 @@ def test_get_edit_usergroup_msp_user(session, base_url, unique_id):
     else:
         assert False
 
-def test_edit_usergroup_msp_user_read_only(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_edit_msp_user_read_only(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
     data = {
     "chatbot_policy":"policy-update",
@@ -135,14 +147,15 @@ def test_edit_usergroup_msp_user_read_only(session, base_url, unique_id):
     "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
 
-def test_get_edit_usergroup_msp_user_read_only(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_get_edit_msp_user_read_only(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -156,7 +169,8 @@ def test_get_edit_usergroup_msp_user_read_only(session, base_url, unique_id):
     else:
         assert False
 
-def test_edit_usergroup_tenant_admin_profile(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_edit_tenant_admin_profile(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
     data = {       
         "chatbot_policy": "policy update",
@@ -173,14 +187,15 @@ def test_edit_usergroup_tenant_admin_profile(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
 
-def test_get_edit_usergroup_tenant_admin_profile(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_get_edit_tenant_admin_profile(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -194,7 +209,8 @@ def test_get_edit_usergroup_tenant_admin_profile(session, base_url, unique_id):
     else:
         assert False
 
-def test_edit_usergroup_tenant_user_profile(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_edit_tenant_user_profile(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
     data = {       
         "chatbot_policy": "policy update",
@@ -211,14 +227,15 @@ def test_edit_usergroup_tenant_user_profile(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
 
-def test_get_edit_usergroup_tenant_user_profile(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_get_edit_tenant_user_profile(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -232,7 +249,8 @@ def test_get_edit_usergroup_tenant_user_profile(session, base_url, unique_id):
     else:
         assert False
 
-def test_edit_usergroup_tenant_user_read_only(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_edit_tenant_user_read_only(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
     data = {       
         "chatbot_policy": "policy update",
@@ -249,14 +267,15 @@ def test_edit_usergroup_tenant_user_read_only(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
 
-def test_get_edit_usergroup_tenant_user_read_only(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_get_edit_tenant_user_read_only(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -270,7 +289,8 @@ def test_get_edit_usergroup_tenant_user_read_only(session, base_url, unique_id):
     else:
         assert False
 
-def test_edit_usergroup_l3_user(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_edit_l3_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
     data = {       
         "chatbot_policy": "policy update",
@@ -287,14 +307,15 @@ def test_edit_usergroup_l3_user(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
 
-def test_get_edit_usergroup_l3_user(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_get_edit_l3_user(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -308,7 +329,8 @@ def test_get_edit_usergroup_l3_user(session, base_url, unique_id):
     else:
         assert False
 
-def test_edit_usergroup_l1_user(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_edit_l1_user(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
     data = {       
         "chatbot_policy": "policy update",
@@ -325,14 +347,15 @@ def test_edit_usergroup_l1_user(session, base_url, unique_id):
         "tenantId":f"{tenentId}"
     }
     response = session.put(url, json=data, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
 
-def test_get_edit_usergroup_l1_user(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_get_edit_l1_user(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
@@ -346,20 +369,22 @@ def test_get_edit_usergroup_l1_user(session, base_url, unique_id):
     else:
         assert False
 
-def test_delete_user_group(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_delete(session, base_url, unique_id):
     url = base_url + f"/api/v2/user_groups/user_group/{unique_id}_user_group"
     data = {
         "tenantId":f"{tenentId}"
     }
     response = session.delete(url, json=data, headers=session.headers, verify=False, timeout=60)
-    #time.sleep(5)
+    
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")
     response.raise_for_status()
 
     response_json = response.json()
     assert response_json["status"] == "SUBMIT_OK"
 
-def test_get_deleted_user_groups(session, base_url, unique_id):
+@pytest.mark.sanity
+def test_usergroups_get_deleted(session, base_url, unique_id):
     url = base_url + "/api/v2/user_groups"
     response = session.get(url, headers=session.headers, verify=False, timeout=60)
     logger.info(f"----API Log---- {url}:::{response.status_code}::::\n{response.text}")

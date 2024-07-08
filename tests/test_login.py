@@ -1,11 +1,11 @@
 import requests
-import time
 from tests.conftest import logging
 import pytest
 
 logger = logging.getLogger(__name__)
 
-def test_POST_login(base_url, username, password):
+@pytest.mark.sanity
+def test_login_POST(base_url, username, password):
     session = requests.Session()
     post_data = {
         "user": username,
@@ -16,7 +16,8 @@ def test_POST_login(base_url, username, password):
     logger.info(f"---- API Log ---- {url}:::{response.status_code}::::{response.text}")
     response.raise_for_status()
 
-def test_POST_login_negative_user(base_url, password):
+
+def test_login_POST_negative_user(base_url, password):
     session = requests.Session()
     post_data = {
         "user": "unknow@cfx.com",
@@ -27,7 +28,7 @@ def test_POST_login_negative_user(base_url, password):
     logger.info(f"---- API Log ---- {url}:::{response.status_code}::::{response.text}")
     assert response.status_code == 400
 
-def test_POST_login_negative_password(base_url, username, password):
+def test_login_POST_negative_password(base_url, username, password):
     session = requests.Session()
     post_data = {
         "user": username,
@@ -37,4 +38,3 @@ def test_POST_login_negative_password(base_url, username, password):
     response = session.post(url, json=post_data, headers=session.headers, verify=False, timeout=60)
     logger.info(f"---- API Log ---- {url}:::{response.status_code}::::{response.text}")
     assert response.status_code == 401
-
