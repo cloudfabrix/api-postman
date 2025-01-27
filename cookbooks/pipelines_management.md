@@ -3,6 +3,101 @@
 > [!NOTE]
 > Access to the APIs listed below requires appropriate user role permissions. Please ensure you are logged in with the correct credentials to proceed.
 
+
+## Get All Versions of a Published Pipeline
+
+### Endpoint:
+GET `/api/v2/pipelines/pipeline/{name}/versions`
+
+### Description:
+Retrieve a list of all versions of a specified published pipeline.
+
+### Path Parameters:
+- `name` (string): The name of the pipeline. **Required.**
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/pipelines/pipeline/test_pipeline/versions' \
+--header 'Accept: application/json' \
+--header 'Authorization: ••••••' \
+--header 'Cookie: __cfxsession=ab0ae6b5-5ce1-4b93-a19f-86770f802850; cfx_saas_session=4f5b60f8a3464131a7abec85209b3f75; rdafportal=rdaf-portal-1|Z5eNE|Z5eNE'
+```
+
+### Output:
+![get_all_pipeline_versions](https://github.com/user-attachments/assets/a1824865-0263-4049-b5bb-835bae78517d)
+
+
+## Get All Versions of a Draft Pipeline
+
+### Endpoint:
+GET `/api/v2/pipelines/draft/{name}/versions`
+
+### Description:
+Retrieve a list of all versions of a specified draft pipeline.
+
+### Path Parameters:
+- `name` (string): The name of the pipeline. **Required.**
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/pipelines/draft/test_draft_pipeline/versions' \
+--header 'Accept: application/json' \
+--header 'Authorization: {{apiKey}}' \
+--header 'Cookie: __cfxsession=ab0ae6b5-5ce1-4b93-a19f-86770f802850; cfx_saas_session=4f5b60f8a3464131a7abec85209b3f75; rdafportal=rdaf-portal-1|Z5eNm|Z5eNE'
+```
+
+### Output:
+![get_all_draft_pipeline_versions](https://github.com/user-attachments/assets/2bf92c91-7257-4649-88fc-7edb60593b6b)
+
+
+## Get a Specific Version of a Published Pipeline
+
+### Endpoint:
+GET `/api/v2/pipelines/pipeline/{name}/version/{version}`
+
+### Description:
+Retrieve the content and details of a specific version of a published pipeline.
+
+### Path Parameters:
+- `name` (string): The name of the pipeline. **Required.**
+- `version` (string): The version of the pipeline to retrieve. **Required.**
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/pipelines/pipeline/test_pipeline/version/2025_01_27_2' \
+--header 'Accept: application/json' \
+--header 'Authorization: {{apiKey}}' \
+--header 'Cookie: __cfxsession=ab0ae6b5-5ce1-4b93-a19f-86770f802850; cfx_saas_session=4f5b60f8a3464131a7abec85209b3f75; rdafportal=rdaf-portal-1|Z5eQ1|Z5eNE'
+```
+
+### Output:
+![get_a_pipeline_version](https://github.com/user-attachments/assets/4e4b48e3-0907-461c-8f0e-5e6efe329e8e)
+
+
+## Get a Specific Version of a Draft Pipeline
+
+### Endpoint:
+GET `/api/v2/pipelines/draft/{name}/version/{version}`
+
+### Description:
+Retrieve the content and details of a specific version of a draft pipeline.
+
+### Path Parameters:
+- `name` (string): The name of the pipeline. **Required.**
+- `version` (string): The version of the pipeline to retrieve. **Required.**
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/pipelines/draft/test_draft_pipeline/version/2025_01_27_2' \
+--header 'Accept: application/json' \
+--header 'Authorization: {{apiKey}}' \
+--header 'Cookie: __cfxsession=ab0ae6b5-5ce1-4b93-a19f-86770f802850; cfx_saas_session=4f5b60f8a3464131a7abec85209b3f75; rdafportal=rdaf-portal-1|Z5ePc|Z5eNE'
+```
+
+### Output:
+![get_specific_draft_pipeline](https://github.com/user-attachments/assets/1bca605d-5712-402c-bfd2-22730be8aeb8)
+
+
 ## Add a Published Pipeline
 
 ### Endpoint:
@@ -353,3 +448,229 @@ curl --location --request DELETE 'https://10.95.125.95/api/v2/pipelines/draft/ex
 
 ### Output:
 ![delete_all_versions_draft_pipeline](https://github.com/user-attachments/assets/3cb0f85a-37c6-4b33-bb42-6b5c1d9876f3)
+
+
+## Get Traces for Pipelines
+
+### Endpoint:
+GET `/api/v2/pipelines/traces`
+
+### Description:
+Retrieve traces for all pipelines.
+
+### Query Parameters:
+- `cfxql_query` (string, optional):  
+  Use CFXQL to filter the results.  
+  Example: `"status='success'"`
+
+- `search` (string, optional):
+  search across fields: ['pipeline_name', 'jobid', 'status_type', 'bot', 'query']
+
+- `sort` (list of strings, optional):  
+  Fields to sort the results by. Use `-` before the field name for descending order.  
+  Example: `["timestamp", "-status"]`
+
+- `offset` (integer, optional, default: 0):  
+  The starting point for the results.
+
+- `limit` (integer, optional, default: 100):  
+  The maximum number of results to return. Must be 1 or greater.
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/pipelines/traces?offset=0&limit=100&sort=-timestamp' \
+--header 'Accept: application/json' \
+--header 'Authorization: {{apiKey}}' \
+--header 'Cookie: __cfxsession=ab0ae6b5-5ce1-4b93-a19f-86770f802850; cfx_saas_session=4f5b60f8a3464131a7abec85209b3f75; rdafportal=rdaf-portal-1|Z5eWK|Z5eNE'
+```
+### Output:
+![get_traces](https://github.com/user-attachments/assets/7d6d1491-6deb-490e-887a-a6b4d6ff3b8c)
+
+
+## Get Traces of a Pipeline
+
+### Endpoint:
+GET `/api/v2/pipelines/{name}/traces`
+
+### Description:
+Retrieve traces for a specific pipeline, with optional filtering and sorting capabilities.
+
+### Path Parameters:
+- `name` (string): The name of the pipeline. **Required.**
+
+### Query Parameters:
+- `cfxql_query` (string, optional):  
+  Use CFXQL to filter the results.  
+  Example: `"status='success'"`
+
+- `sort` (list of strings, optional):  
+  Fields to sort the results by. Use `-` before the field name for descending order.  
+  Example: `["timestamp", "-status"]`
+
+- `offset` (integer, optional, default: 0):  
+  The starting point for the results.
+
+- `limit` (integer, optional, default: 100):  
+  The maximum number of results to return. Must be 1 or greater.
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/pipelines/test_ad/traces' \
+--header 'Accept: application/json' \
+--header 'Authorization: {{apiKey}}' \
+--header 'Cookie: __cfxsession=ab0ae6b5-5ce1-4b93-a19f-86770f802850; cfx_saas_session=4f5b60f8a3464131a7abec85209b3f75; rdafportal=rdaf-portal-1|Z5eW7|Z5eNE'
+```
+### Output:
+![get_specific_traces](https://github.com/user-attachments/assets/ef0d7475-f39a-4c1d-a9b1-d6964473766c)
+
+
+## Get Traces for a Specific Pipeline Version
+
+### Endpoint:
+GET `/api/v2/pipelines/{name}/version/{version}/traces`
+
+### Description:
+Retrieve execution traces for a specific version of a pipeline, with options for filtering, sorting, and pagination.
+
+### Path Parameters:
+- `name` (string): The name of the pipeline. **Required.**
+- `version` (string): The version of the pipeline. **Required.**
+
+### Query Parameters:
+- `cfxql_query` (string, optional):  
+  Use CFXQL to filter the results.  
+  Example: `"status='success'"`
+
+- `sort` (list of strings, optional):  
+  Fields to sort the results by. Use `-` before the field name for descending order.  
+  Example: `["timestamp", "-status"]`
+
+- `offset` (integer, optional, default: 0):  
+  The starting point for the results. Useful for pagination.
+
+- `limit` (integer, optional, default: 100):  
+  The maximum number of results to return. Must be 1 or greater.
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/pipelines/test_ad/version/2025_01_24_1/traces' \
+--header 'Accept: application/json' \
+--header 'Authorization: {{apiKey}}' \
+--header 'Cookie: __cfxsession=c167ed14-2ce7-43af-b108-49cc6d04cd68; cfx_saas_session=67cc97815b224271b0401b3385df9cf7; rdafportal=rdaf-portal-1|Z5eYw|Z5eNE'
+```
+
+### Output:
+![get_pipeline_version_traces](https://github.com/user-attachments/assets/4920f3ec-c517-464b-ac21-22e74f449d1e)
+
+
+## Get Logs for Pipelines
+
+### Endpoint:
+GET `/api/v2/pipelines/logs`
+
+### Description:
+Retrieve logs for all pipelines.
+
+### Query Parameters:
+- `cfxql_query` (string, optional):  
+  Use CFXQL to filter the results.  
+  Example: `"error='bot not found'"`
+
+- `search` (string, optional):
+  search across fields: ['pipeline_name', 'jobid', 'message']
+
+- `sort` (list of strings, optional):  
+  Fields to sort the results by. Use `-` before the field name for descending order.  
+  Example: `["timestamp"]`
+
+- `offset` (integer, optional, default: 0):  
+  The starting point for the results.
+
+- `limit` (integer, optional, default: 100):  
+  The maximum number of results to return. Must be 1 or greater.
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/pipelines/logs' \
+--header 'Accept: application/json' \
+--header 'Authorization: {{apiKey}}' \
+--header 'Cookie: __cfxsession=c167ed14-2ce7-43af-b108-49cc6d04cd68; cfx_saas_session=67cc97815b224271b0401b3385df9cf7; rdafportal=rdaf-portal-1|Z5eZg|Z5eNE'
+```
+### Output:
+![get_logs](https://github.com/user-attachments/assets/c334b70a-b0af-44c2-8860-bd2878b78e01)
+
+
+## Get Logs of a Pipeline
+
+### Endpoint:
+GET `/api/v2/pipelines/{name}/logs`
+
+### Description:
+Retrieve logs for a specific pipeline, with optional filtering and sorting capabilities.
+
+### Path Parameters:
+- `name` (string): The name of the pipeline. **Required.**
+
+### Query Parameters:
+- `cfxql_query` (string, optional):  
+  Use CFXQL to filter the results.  
+  Example: `"error='credential asset-discovery not found'"`
+
+- `sort` (list of strings, optional):  
+  Fields to sort the results by. Use `-` before the field name for descending order.  
+  Example: `["timestamp", "-status"]`
+
+- `offset` (integer, optional, default: 0):  
+  The starting point for the results.
+
+- `limit` (integer, optional, default: 100):  
+  The maximum number of results to return. Must be 1 or greater.
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/pipelines/test_ad/logs' \
+--header 'Accept: application/json' \
+--header 'Authorization: {{apiKey}}' \
+--header 'Cookie: __cfxsession=c167ed14-2ce7-43af-b108-49cc6d04cd68; cfx_saas_session=67cc97815b224271b0401b3385df9cf7; rdafportal=rdaf-portal-1|Z5eaW|Z5eNE'
+```
+### Output:
+![get_pipeline_logs](https://github.com/user-attachments/assets/258a310a-ae18-4f93-8b66-6e5bd8c19710)
+
+
+## Get Logs for a Specific Pipeline Version
+
+### Endpoint:
+GET `/api/v2/pipelines/{name}/version/{version}/logs`
+
+### Description:
+Retrieve execution logs for a specific version of a pipeline, with options for filtering, sorting, and pagination.
+
+### Path Parameters:
+- `name` (string): The name of the pipeline. **Required.**
+- `version` (string): The version of the pipeline. **Required.**
+
+### Query Parameters:
+- `cfxql_query` (string, optional):  
+  Use CFXQL to filter the results.  
+  Example: `"error='pstream query failed'"`
+
+- `sort` (list of strings, optional):  
+  Fields to sort the results by. Use `-` before the field name for descending order.  
+  Example: `["timestamp", "-status"]`
+
+- `offset` (integer, optional, default: 0):  
+  The starting point for the results. Useful for pagination.
+
+- `limit` (integer, optional, default: 100):  
+  The maximum number of results to return. Must be 1 or greater.
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/pipelines/test_ad/version/2025_01_24_1/logs' \
+--header 'Accept: application/json' \
+--header 'Authorization: {{apiKey}}' \
+--header 'Cookie: __cfxsession=c167ed14-2ce7-43af-b108-49cc6d04cd68; cfx_saas_session=67cc97815b224271b0401b3385df9cf7; rdafportal=rdaf-portal-1|Z5eaw|Z5eNE'
+```
+
+### Output:
+![get_pipeline_version_logs](https://github.com/user-attachments/assets/2b024dcb-21ba-4735-b007-d0cecde75dec)
