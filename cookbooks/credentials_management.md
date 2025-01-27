@@ -82,6 +82,33 @@ curl --location 'https://10.95.125.95/api/v2/credentials' \
 
 
 
+## Get a Credential
+
+### Endpoint:
+GET `/api/v2/credentials/credential/{name}`
+
+### Description:
+This endpoint retrieves a specific credential by its name and type.
+
+### Path Parameters:
+- `name` (string): The name of the credential. **Required.**
+
+### Query Parameters:
+- `type` (string): The type of the credential. **Required.**
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/credentials/credential/jack95_ssh_credential?type=ssh-cred' \
+--header 'Accept: application/json' \
+--header 'Authorization: {{apiKey}}' \
+--header 'Cookie: __cfxsession=ab0ae6b5-5ce1-4b93-a19f-86770f802850; cfx_saas_session=4f5b60f8a3464131a7abec85209b3f75; rdafportal=rdaf-portal-1|Z5d/0|Z5d92'
+```
+
+### Output:
+![get_a_credential_output](https://github.com/user-attachments/assets/97eba5cc-1178-4ce3-a593-334578b4f984)
+
+
+
 ## Edit a Credential
 
 ### Endpoint:

@@ -48,6 +48,30 @@ curl --location 'https://10.95.125.95/api/v2/blueprints' \
 ![add_blueprint_output](https://github.com/user-attachments/assets/66f4762b-292c-4190-b6eb-2071b33f4cdf)
 
 
+
+## Get a Blueprint
+
+### Endpoint:
+GET `/api/v2/blueprints/blueprint/{id}`
+
+### Description:
+Retrieve details of a specific blueprint using its unique identifier.
+
+### Path Parameters:
+- `id` (string): The unique identifier of the blueprint. **Required.**
+
+### Example Request:
+```shell cURL
+curl --location 'https://10.95.125.95/api/v2/blueprints/blueprint/sample scheduled blueprint' \
+--header 'Accept: application/json' \
+--header 'Authorization: {{apiKey}}' \
+--header 'Cookie: __cfxsession=ab0ae6b5-5ce1-4b93-a19f-86770f802850; cfx_saas_session=4f5b60f8a3464131a7abec85209b3f75; rdafportal=rdaf-portal-1|Z5eEP|Z5d92'
+```
+### Output:
+![get_a_blueprint_output](https://github.com/user-attachments/assets/28d5edfd-221c-4a41-9bce-c6ee7362a87f)
+
+
+
 ## Edit an Existing Blueprint
 
 ### Endpoint:
