@@ -407,7 +407,7 @@ curl --location --request DELETE 'https://10.95.125.95/api/v2/pipelines/draft/ex
 ## Delete All Versions of a Published Pipeline
 
 ### Endpoint:
-DELETE `/api/v2/pipelines/pipeline/{name}/all_versions`
+DELETE `/api/v2/pipelines/pipeline/{name}`
 
 ### Description:
 Delete all versions of a published pipeline.
@@ -417,20 +417,20 @@ Delete all versions of a published pipeline.
 
 ### Example Request:
 ```shell cURL
-curl --location --request DELETE 'https://10.95.125.95/api/v2/pipelines/pipeline/example_publish_pipeline/all_versions' \
+curl --location --request DELETE 'https://10.95.125.95/api/v2/pipelines/pipeline/test_ad' \
 --header 'Accept: application/json' \
 --header 'Authorization: {{apiKey}}' \
 --header 'Cookie: __cfxsession=85cd76a0-c9c5-4d4b-905c-7ab6b250ed7e; cfx_saas_session=e5f90bb9a4a746e1b49d76f60d373ba1; rdafportal=rdaf-portal-1|Z0QfC|Z0QB7'
 ```
 
 ### Output:
-![delete_all_versions_published_pipeline](https://github.com/user-attachments/assets/8fa04d15-5a9a-4d3a-b59c-ba5edf0d7da3)
+**![delete_all_versions_pipelines](https://github.com/user-attachments/assets/6cc6341d-deaf-446d-a4ce-09fa65970467)
 
 
 ## Delete All Versions of a Draft Pipeline
 
 ### Endpoint:
-DELETE `/api/v2/pipelines/draft/{name}/all_versions`
+DELETE `/api/v2/pipelines/draft/{name}`
 
 ### Description:
 Delete all versions of a draft pipeline.
@@ -440,14 +440,14 @@ Delete all versions of a draft pipeline.
 
 ### Example Request:
 ```shell cURL
-curl --location --request DELETE 'https://10.95.125.95/api/v2/pipelines/draft/example_draft_pipeline/all_versions' \
+curl --location --request DELETE 'https://10.95.125.95/api/v2/pipelines/draft/test_ad_one' \
 --header 'Accept: application/json' \
 --header 'Authorization: {{apiKey}}' \
 --header 'Cookie: __cfxsession=85cd76a0-c9c5-4d4b-905c-7ab6b250ed7e; cfx_saas_session=e5f90bb9a4a746e1b49d76f60d373ba1; rdafportal=rdaf-portal-1|Z0QgU|Z0QB7'
 ```
 
 ### Output:
-![delete_all_versions_draft_pipeline](https://github.com/user-attachments/assets/3cb0f85a-37c6-4b33-bb42-6b5c1d9876f3)
+![delete_pipelines_all_versions](https://github.com/user-attachments/assets/55eb0501-0db1-4d6f-b717-f716be14ffca)
 
 
 ## Get Traces for Pipelines
