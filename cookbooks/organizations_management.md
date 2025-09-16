@@ -20,7 +20,7 @@ curl --location 'https://10.95.125.95/api/v2/organizations' \
 ```
 
 ### Output:
-![get_organizations_output](https://github.com/user-attachments/assets/organizations_response)
+<img width="1497" height="878" alt="image" src="https://github.com/user-attachments/assets/565ba823-9d14-42e4-8463-6ce5c689b61e" />
 
 ---
 
@@ -52,7 +52,8 @@ curl --location 'https://10.95.125.95/api/v2/organizations/organization/dcc5c8e8
 ```
 
 #### Output:
-![get_alert_endpoints_output](https://github.com/user-attachments/assets/alert_endpoints_response)
+<img width="1497" height="878" alt="image" src="https://github.com/user-attachments/assets/376c3d9b-5077-4822-85b3-84a81d3ffd8f" />
+
 
 ### Get All Endpoint Types
 
@@ -71,7 +72,7 @@ curl --location 'https://10.95.125.95/api/v2/organizations/configuration/endpoin
 ```
 
 #### Output:
-![get_endpoint_types_output](https://github.com/user-attachments/assets/endpoint_types_response)
+<img width="1497" height="878" alt="image" src="https://github.com/user-attachments/assets/5337cada-5837-4959-a3ca-c8d26a5dde70" />
 
 ### Get Fields for a Specific Endpoint Type
 
@@ -93,7 +94,7 @@ curl --location 'https://10.95.125.95/api/v2/organizations/configuration/endpoin
 ```
 
 #### Output:
-![get_endpoint_type_fields_output](https://github.com/user-attachments/assets/endpoint_type_fields_response)
+<img width="1497" height="878" alt="image" src="https://github.com/user-attachments/assets/f75dbb26-6914-4bc4-8054-c7d1414c377e" />
 
 ### Add an Alert Endpoint in an Organization
 
@@ -112,12 +113,12 @@ Add a new alert endpoint to a specific organization.
 | `customerId`               | string  | Customer ID (required)                         |
 | `name`                     | string  | Endpoint name (required)                       |
 | `endpointType`             | string  | Type of endpoint (required)                    |
-| `endpointRole`             | string  | Role of endpoint (default: 'source', valid: 'source', 'target', 'mixed')          |
+| `endpointRole`             | string  | Role of endpoint (default: 'source') [Options: 'source', 'target', 'mixed']          |
 | `description`              | string  | Endpoint description (optional)                |
 | `attributes`               | object  | Additional attributes (optional)               |
 | `enabled`                  | string  | Enable status: "Yes" or "No" (default: "No")  |
 | `publishToStreamFlag`      | boolean | Publish to stream flag (default: false)       |
-| `publishStreamType`        | string  | Stream type (default: "NATS", valid: 'NATS' & 'Kafka')                 |
+| `publishStreamType`        | string  | Stream type (default: "NATS") [Options: 'NATS' & 'Kafka']                 |
 | `publishToStreamOnlyFlag` | boolean | Publish to stream only flag (default: false) |
 
 #### Example Request:
@@ -142,7 +143,7 @@ curl --location 'https://10.95.125.95/api/v2/organizations/organization/dcc5c8e8
 ```
 
 #### Output:
-![add_alert_endpoint_output](https://github.com/user-attachments/assets/add_alert_endpoint_response)
+<img width="1497" height="878" alt="image" src="https://github.com/user-attachments/assets/1c141d8c-889c-4561-862a-1ea66473acb9" />
 
 ### Update an Alert Endpoint of an Organization
 
@@ -171,7 +172,7 @@ curl --location --request PUT 'https://10.95.125.95/api/v2/organizations/organiz
   "name": "test_alert_ep",
   "endpointType": "webhook-basic",
   "endpointRole": "source",
-  "description": "test_ep_webhook_api",
+  "description": "test_EDIT_ep_webhook_api",
   "attributes": {},
   "enabled": "Yes",
   "publishToStreamFlag": false,
@@ -181,7 +182,7 @@ curl --location --request PUT 'https://10.95.125.95/api/v2/organizations/organiz
 ```
 
 #### Output:
-![update_alert_endpoint_output](https://github.com/user-attachments/assets/update_alert_endpoint_response)
+<img width="1497" height="878" alt="image" src="https://github.com/user-attachments/assets/09091567-785b-43ab-84b4-4aca1a19e23a" />
 
 ---
 ## Common Configuration Management
@@ -192,7 +193,7 @@ curl --location --request PUT 'https://10.95.125.95/api/v2/organizations/organiz
 GET `/api/v2/organizations/configuration/endpoints/{endpoint_id}`
 
 #### Description:
-Retrieve details of a specific endpoint.
+Retrieve details of a specific event endpoint.
 
 #### Path Parameters:
 - `endpoint_id` (string): ID of the endpoint. **Required.**
@@ -206,7 +207,7 @@ curl --location 'https://10.95.125.95/api/v2/organizations/configuration/endpoin
 ```
 
 #### Output:
-![get_configuration_endpoint_output](https://github.com/user-attachments/assets/get_configuration_endpoint_response)
+<img width="1497" height="878" alt="image" src="https://github.com/user-attachments/assets/58b4b5f3-9058-4418-8773-125780105c12" />
 
 ### Enable an Existing Endpoint
 
@@ -214,7 +215,7 @@ curl --location 'https://10.95.125.95/api/v2/organizations/configuration/endpoin
 PUT `/api/v2/organizations/configuration/endpoints/{endpoint_id}/enable`
 
 #### Description:
-Enable an existing configuration endpoint.
+Enable an existing configuration event endpoint.
 
 #### Path Parameters:
 - `endpoint_id` (string): ID of the endpoint. **Required.**
@@ -228,7 +229,7 @@ curl --location --request PUT 'https://10.95.125.95/api/v2/organizations/configu
 ```
 
 #### Output:
-![enable_endpoint_output](https://github.com/user-attachments/assets/enable_endpoint_response)
+<img width="1501" height="523" alt="image" src="https://github.com/user-attachments/assets/099929df-a75d-4931-808a-b80bfa5fbacb" />
 
 ### Disable an Existing Endpoint
 
@@ -236,7 +237,7 @@ curl --location --request PUT 'https://10.95.125.95/api/v2/organizations/configu
 PUT `/api/v2/organizations/configuration/endpoints/{endpoint_id}/disable`
 
 #### Description:
-Disable an existing configuration endpoint.
+Disable an existing configuration event endpoint.
 
 #### Path Parameters:
 - `endpoint_id` (string): ID of the endpoint. **Required.**
@@ -250,7 +251,7 @@ curl --location --request PUT 'https://10.95.125.95/api/v2/organizations/configu
 ```
 
 #### Output:
-![disable_endpoint_output](https://github.com/user-attachments/assets/disable_endpoint_response)
+<img width="1501" height="523" alt="image" src="https://github.com/user-attachments/assets/e3b77e1b-8bc6-47f2-a469-3a313aa028ac" />
 
 ### Delete a specific Endpoint using endpoint_id
 
@@ -258,7 +259,7 @@ curl --location --request PUT 'https://10.95.125.95/api/v2/organizations/configu
 DELETE `/api/v2/organizations/configuration/endpoints/{endpoint_id}`
 
 #### Description:
-Delete a specific endpoint from the system.
+Delete a specific event endpoint from the system.
 
 #### Path Parameters:
 - `endpoint_id` (string): ID of the endpoint. **Required.**
@@ -272,14 +273,14 @@ curl --location --request DELETE 'https://10.95.125.95/api/v2/organizations/conf
 ```
 
 #### Output:
-![delete_endpoint_output](https://github.com/user-attachments/assets/delete_endpoint_response)
+<img width="1501" height="523" alt="image" src="https://github.com/user-attachments/assets/79703b69-d229-4dab-a4ee-d953c5b530ad" />
 
 ---
 
 ## Usage Notes
 
 > [!IMPORTANT]
-> The APIs for incident & message endpoints follow the same pattern as the alert endpoints documented below. You can use these examples as a template for incident and message endpoint management by replacing "alerts" with "incidents" or "messages" in the endpoint URLs and following the same request/response structure.
+> The APIs for incident & message endpoints follow the same pattern as the alert endpoints documented. You can use these examples as a template for incident and message endpoint management by replacing "alerts" with "incidents" or "messages" in the endpoint URLs and following the same request/response structure.
 
 ### For Incident Endpoints
 To manage incident endpoints, use the same API structure but replace "alerts" with "incidents" in the URLs:
