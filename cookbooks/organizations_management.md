@@ -129,11 +129,11 @@ curl --location 'https://10.95.125.95/api/v2/organizations/organization/dcc5c8e8
 --header 'Authorization: {{apiKey}}' \
 --header 'Cookie: __cfxsession=your_session_id; cfx_saas_session=your_saas_session; rdafportal=rdaf-portal-1|your_portal_session' \
 --data '{
-  "customerId": "0a40637055e84074b606cf50119d7c6d",
-  "name": "test_alert_ep",
+  "customerId": "08366c5e1e654bd69a4a59b472d49ca2",
+  "name": "test_api_ep0",
   "endpointType": "webhook-basic",
   "endpointRole": "source",
-  "description": "test_ep_webhook_api",
+  "description": "desc_api_test0",
   "attributes": {},
   "enabled": "No",
   "publishToStreamFlag": false,
@@ -143,7 +143,7 @@ curl --location 'https://10.95.125.95/api/v2/organizations/organization/dcc5c8e8
 ```
 
 #### Output:
-<img width="1497" height="878" alt="image" src="https://github.com/user-attachments/assets/1c141d8c-889c-4561-862a-1ea66473acb9" />
+<img width="1486" height="709" alt="image" src="https://github.com/user-attachments/assets/aad747a8-be08-4f9d-8df5-cc226026fe15" />
 
 ### Update an Alert Endpoint of an Organization
 
@@ -168,11 +168,11 @@ curl --location --request PUT 'https://10.95.125.95/api/v2/organizations/organiz
 --header 'Authorization: {{apiKey}}' \
 --header 'Cookie: __cfxsession=your_session_id; cfx_saas_session=your_saas_session; rdafportal=rdaf-portal-1|your_portal_session' \
 --data '{
-  "customerId": "0a40637055e84074b606cf50119d7c6d",
-  "name": "test_alert_ep",
+  "customerId": "08366c5e1e654bd69a4a59b472d49ca2",
+  "name": "test_api_ep0",
   "endpointType": "webhook-basic",
   "endpointRole": "source",
-  "description": "test_EDIT_ep_webhook_api",
+  "description": "desc_api_test0_updated",
   "attributes": {},
   "enabled": "Yes",
   "publishToStreamFlag": false,
@@ -182,7 +182,7 @@ curl --location --request PUT 'https://10.95.125.95/api/v2/organizations/organiz
 ```
 
 #### Output:
-<img width="1497" height="878" alt="image" src="https://github.com/user-attachments/assets/09091567-785b-43ab-84b4-4aca1a19e23a" />
+<img width="1486" height="709" alt="image" src="https://github.com/user-attachments/assets/96c17fa8-da78-4656-bbb3-0047e20f035d" />
 
 ---
 ## Common Configuration Management
@@ -295,7 +295,7 @@ To manage message endpoints, use the same API structure but replace "alerts" wit
 - `PUT /api/v2/organizations/organization/{id}/configuration/messages/endpoints/{endpoint_id}`
 ---
 
-## Alert Mappings Management
+## Event Mappings Management - Alerts
 
 ### Get All Alert Mappings of an Organization
 
@@ -667,6 +667,9 @@ Add a new correlation policy to a specific organization.
 #### Important Notes:
 - **Alert Attributes**: Use `GET /api/v2/organizations/organization/{id}/configuration/policies/correlation/alert-attributes` to fetch available alert attributes for use in `groupBy` fields.
 - **Selection Criteria**: Used for filtering alerts based on specific conditions.
+
+- **Graphs**: Use `GET /api/v2/graphdb/graphs` to fetch available graphs for the topology based policy.
+- **Relationship Maps**: Use `GET /api/v2/stacks/relationship-maps` to fetch available relationship maps for the topology based policy.
 
 #### Example Request (Correlate Burst):
 ```shell cURL
