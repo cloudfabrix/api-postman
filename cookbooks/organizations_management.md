@@ -349,6 +349,7 @@ Add a new alert mapping to a specific organization.
 | `sourcepipeline`           | array   | Array of source pipelines (required)          |
 | `mappingtype`              | string  | Type of mapping (optional)                     |
 | `mappingscript`            | string  | Mapping script (optional)                      |
+| `scriptinput`            | string  | Script Input (optional)                      |
 
 #### Important Notes:
 - **SourceId and TargetId**: Use the `GET /api/v2/organizations/organization/{id}/configuration/alerts/endpoints` API to get endpoint IDs. Use `endpointId` where `endpointRole==source` as `sourceId` and `endpointId` where `endpointRole==target` as `targetId`.
